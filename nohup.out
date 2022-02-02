@@ -1,0 +1,336 @@
+[I 11:38:27.023 NotebookApp] Serving notebooks from local directory: /home/cosenza/thesis/Polyphemus
+[I 11:38:27.023 NotebookApp] Jupyter Notebook 6.4.6 is running at:
+[I 11:38:27.023 NotebookApp] http://localhost:1234/?token=572a7722da3916c7c1696a464fcd32b4276f15c98ec8e3e2
+[I 11:38:27.023 NotebookApp]  or http://127.0.0.1:1234/?token=572a7722da3916c7c1696a464fcd32b4276f15c98ec8e3e2
+[I 11:38:27.023 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[C 11:38:27.026 NotebookApp] 
+    
+    To access the notebook, open this file in a browser:
+        file:///home/cosenza/.local/share/jupyter/runtime/nbserver-86928-open.html
+    Or copy and paste one of these URLs:
+        http://localhost:1234/?token=572a7722da3916c7c1696a464fcd32b4276f15c98ec8e3e2
+     or http://127.0.0.1:1234/?token=572a7722da3916c7c1696a464fcd32b4276f15c98ec8e3e2
+[I 11:39:06.735 NotebookApp] 302 GET /?token=572a7722da3916c7c1696a464fcd32b4276f15c98ec8e3e2 (::1) 0.740000ms
+[I 11:39:27.967 NotebookApp] Kernel started: 56322c2d-7b95-4d99-b071-f8772335ea56, name: python3
+[I 11:40:48.903 NotebookApp] Starting buffering for 56322c2d-7b95-4d99-b071-f8772335ea56:feff5e62a36245529f66006b7ccaa402
+[I 11:40:59.043 NotebookApp] Discarding 10 buffered messages for 56322c2d-7b95-4d99-b071-f8772335ea56:feff5e62a36245529f66006b7ccaa402
+[I 11:41:19.860 NotebookApp] Starting buffering for 56322c2d-7b95-4d99-b071-f8772335ea56:ff34d120ad4146218a8e8ca7c8229387
+[I 11:41:20.244 NotebookApp] Kernel restarted: 56322c2d-7b95-4d99-b071-f8772335ea56
+[I 11:41:20.435 NotebookApp] Restoring connection for 56322c2d-7b95-4d99-b071-f8772335ea56:ff34d120ad4146218a8e8ca7c8229387
+[I 11:41:20.752 NotebookApp] Replaying 14 buffered messages
+[I 11:41:27.356 NotebookApp] Starting buffering for 56322c2d-7b95-4d99-b071-f8772335ea56:ff34d120ad4146218a8e8ca7c8229387
+[I 11:41:30.868 NotebookApp] Kernel shutdown: 56322c2d-7b95-4d99-b071-f8772335ea56
+[I 11:41:37.061 NotebookApp] Kernel started: 33deb487-167f-455a-9f85-3225b7bfcfa0, name: python3
+[I 11:42:22.414 NotebookApp] Saving file at /midi-Copy1.ipynb
+[I 11:42:29.040 NotebookApp] Starting buffering for 33deb487-167f-455a-9f85-3225b7bfcfa0:4ea324f336114ac5b6d66de05088629a
+[I 11:42:37.674 NotebookApp] Discarding 9 buffered messages for 33deb487-167f-455a-9f85-3225b7bfcfa0:4ea324f336114ac5b6d66de05088629a
+[I 11:43:08.108 NotebookApp] Starting buffering for 33deb487-167f-455a-9f85-3225b7bfcfa0:2e9179eb9fef4f43a50286e31e2e84d7
+[I 11:43:08.387 NotebookApp] Kernel restarted: 33deb487-167f-455a-9f85-3225b7bfcfa0
+[I 11:43:08.750 NotebookApp] Restoring connection for 33deb487-167f-455a-9f85-3225b7bfcfa0:2e9179eb9fef4f43a50286e31e2e84d7
+[I 11:43:08.919 NotebookApp] Replaying 12 buffered messages
+[I 11:44:38.439 NotebookApp] Saving file at /midi-Copy1.ipynb
+[I 11:46:14.484 NotebookApp] Starting buffering for 33deb487-167f-455a-9f85-3225b7bfcfa0:2e9179eb9fef4f43a50286e31e2e84d7
+[I 11:46:47.466 NotebookApp] Kernel interrupted: 33deb487-167f-455a-9f85-3225b7bfcfa0
+[I 11:48:30.447 NotebookApp] Saving file at /midi-Copy1.ipynb
+[I 11:50:26.150 NotebookApp] Kernel interrupted: 33deb487-167f-455a-9f85-3225b7bfcfa0
+[I 11:50:30.515 NotebookApp] Saving file at /midi-Copy1.ipynb
+[I 11:50:32.359 NotebookApp] Saving file at /midi-Copy1.ipynb
+[I 11:50:34.179 NotebookApp] Saving file at /midi-Copy1.ipynb
+[I 11:50:46.962 NotebookApp] Saving file at /midi-Copy1.ipynb
+[I 11:51:21.573 NotebookApp] Saving file at /midi-Copy1.ipynb
+[W 11:52:23.081 NotebookApp] Notebook plot.ipynb is not trusted
+[I 11:52:25.572 NotebookApp] Kernel started: b1c7c0a6-f0d5-4c30-9d84-483fde262453, name: python3
+[I 11:52:32.399 NotebookApp] Saving file at /midi-Copy1.ipynb
+[I 11:54:28.562 NotebookApp] Saving file at /plot.ipynb
+[W 11:54:28.563 NotebookApp] Notebook plot.ipynb is not trusted
+[I 11:54:34.260 NotebookApp] Saving file at /midi-Copy1.ipynb
+[I 11:56:36.240 NotebookApp] Saving file at /midi-Copy1.ipynb
+[I 11:58:27.534 NotebookApp] Saving file at /plot.ipynb
+[W 11:58:27.535 NotebookApp] Notebook plot.ipynb is not trusted
+[I 11:58:38.607 NotebookApp] Saving file at /midi-Copy1.ipynb
+[I 12:00:40.920 NotebookApp] Saving file at /midi-Copy1.ipynb
+[I 12:03:33.937 NotebookApp] Saving file at /midi-Copy1.ipynb
+[I 12:06:21.672 NotebookApp] Saving file at /midi-Copy1.ipynb
+[I 12:09:43.233 NotebookApp] Saving file at /midi-Copy1.ipynb
+[I 12:13:49.426 NotebookApp] Saving file at /midi-Copy1.ipynb
+[I 12:18:40.506 NotebookApp] Saving file at /midi-Copy1.ipynb
+[I 12:24:27.169 NotebookApp] Saving file at /midi-Copy1.ipynb
+[I 12:31:21.148 NotebookApp] Saving file at /midi-Copy1.ipynb
+[I 12:39:32.924 NotebookApp] Saving file at /midi-Copy1.ipynb
+[I 12:49:14.548 NotebookApp] Saving file at /midi-Copy1.ipynb
+[I 13:00:47.322 NotebookApp] Saving file at /midi-Copy1.ipynb
+[I 13:14:23.843 NotebookApp] Saving file at /midi-Copy1.ipynb
+[I 13:30:35.035 NotebookApp] Saving file at /midi-Copy1.ipynb
+[I 13:38:27.507 NotebookApp] Saving file at /plot.ipynb
+[W 13:38:27.508 NotebookApp] Notebook plot.ipynb is not trusted
+[I 13:40:27.309 NotebookApp] Saving file at /plot.ipynb
+[W 13:40:27.309 NotebookApp] Notebook plot.ipynb is not trusted
+[I 13:47:38.220 NotebookApp] Saving file at /midi-Copy1.ipynb
+[I 14:04:46.046 NotebookApp] Saving file at /midi-Copy1.ipynb
+[I 14:12:27.935 NotebookApp] Saving file at /plot.ipynb
+[W 14:12:27.935 NotebookApp] Notebook plot.ipynb is not trusted
+[I 14:16:28.685 NotebookApp] Saving file at /plot.ipynb
+[W 14:16:28.686 NotebookApp] Notebook plot.ipynb is not trusted
+[I 14:20:28.342 NotebookApp] Saving file at /plot.ipynb
+[W 14:20:28.342 NotebookApp] Notebook plot.ipynb is not trusted
+[I 14:21:10.541 NotebookApp] Saving file at /midi-Copy1.ipynb
+[I 14:22:27.966 NotebookApp] Saving file at /plot.ipynb
+[W 14:22:27.967 NotebookApp] Notebook plot.ipynb is not trusted
+[I 14:28:28.327 NotebookApp] Saving file at /plot.ipynb
+[W 14:28:28.328 NotebookApp] Notebook plot.ipynb is not trusted
+[I 14:30:30.289 NotebookApp] Saving file at /plot.ipynb
+[W 14:30:30.290 NotebookApp] Notebook plot.ipynb is not trusted
+[I 14:38:24.220 NotebookApp] Saving file at /midi-Copy1.ipynb
+[I 14:55:59.040 NotebookApp] Saving file at /midi-Copy1.ipynb
+[I 15:12:28.613 NotebookApp] Saving file at /midi-Copy1.ipynb
+[I 15:12:31.507 NotebookApp] Saving file at /plot.ipynb
+[W 15:12:31.508 NotebookApp] Notebook plot.ipynb is not trusted
+[W 15:18:26.261 NotebookApp] WebSocket ping timeout after 119813 ms.
+[W 15:18:29.657 NotebookApp] WebSocket ping timeout after 119784 ms.
+[W 15:18:29.816 NotebookApp] zmq message arrived on closed channel
+[W 15:18:30.078 NotebookApp] zmq message arrived on closed channel
+[W 15:18:30.079 NotebookApp] zmq message arrived on closed channel
+[W 15:18:30.080 NotebookApp] zmq message arrived on closed channel
+[W 15:18:30.272 NotebookApp] zmq message arrived on closed channel
+[W 15:18:30.501 NotebookApp] zmq message arrived on closed channel
+[W 15:18:30.502 NotebookApp] zmq message arrived on closed channel
+[W 15:18:30.696 NotebookApp] zmq message arrived on closed channel
+[W 15:18:30.921 NotebookApp] zmq message arrived on closed channel
+[W 15:18:30.921 NotebookApp] zmq message arrived on closed channel
+[W 15:18:31.116 NotebookApp] zmq message arrived on closed channel
+[I 15:18:31.264 NotebookApp] Starting buffering for b1c7c0a6-f0d5-4c30-9d84-483fde262453:a971a219056e4867ad4c470b941fc00a
+[W 15:18:31.378 NotebookApp] zmq message arrived on closed channel
+[W 15:18:31.379 NotebookApp] zmq message arrived on closed channel
+[W 15:18:31.574 NotebookApp] zmq message arrived on closed channel
+[W 15:18:31.806 NotebookApp] zmq message arrived on closed channel
+[W 15:18:31.807 NotebookApp] zmq message arrived on closed channel
+[W 15:18:32.003 NotebookApp] zmq message arrived on closed channel
+[W 15:18:32.362 NotebookApp] zmq message arrived on closed channel
+[W 15:18:32.363 NotebookApp] zmq message arrived on closed channel
+[W 15:18:32.364 NotebookApp] zmq message arrived on closed channel
+[W 15:18:32.555 NotebookApp] zmq message arrived on closed channel
+[W 15:18:32.894 NotebookApp] zmq message arrived on closed channel
+[W 15:18:32.895 NotebookApp] zmq message arrived on closed channel
+[W 15:18:33.089 NotebookApp] zmq message arrived on closed channel
+[W 15:18:33.336 NotebookApp] zmq message arrived on closed channel
+[W 15:18:33.337 NotebookApp] zmq message arrived on closed channel
+[W 15:18:33.533 NotebookApp] zmq message arrived on closed channel
+[W 15:18:33.780 NotebookApp] zmq message arrived on closed channel
+[W 15:18:33.781 NotebookApp] zmq message arrived on closed channel
+[W 15:18:33.976 NotebookApp] zmq message arrived on closed channel
+[W 15:18:34.310 NotebookApp] zmq message arrived on closed channel
+[W 15:18:34.311 NotebookApp] zmq message arrived on closed channel
+[W 15:18:34.502 NotebookApp] zmq message arrived on closed channel
+[I 15:18:34.658 NotebookApp] Starting buffering for 33deb487-167f-455a-9f85-3225b7bfcfa0:42f03c09193d497ab52206b95f78a6b2
+[I 15:19:21.490 NotebookApp] Restoring connection for b1c7c0a6-f0d5-4c30-9d84-483fde262453:a971a219056e4867ad4c470b941fc00a
+[I 15:19:21.771 NotebookApp] Restoring connection for 33deb487-167f-455a-9f85-3225b7bfcfa0:42f03c09193d497ab52206b95f78a6b2
+[I 15:19:21.771 NotebookApp] Replaying 322 buffered messages
+[I 15:30:29.044 NotebookApp] Saving file at /midi-Copy1.ipynb
+[I 15:38:27.942 NotebookApp] Saving file at /plot.ipynb
+[W 15:38:27.943 NotebookApp] Notebook plot.ipynb is not trusted
+[I 15:44:27.807 NotebookApp] Saving file at /plot.ipynb
+[W 15:44:27.807 NotebookApp] Notebook plot.ipynb is not trusted
+[I 15:45:25.955 NotebookApp] Saving file at /midi-Copy1.ipynb
+[I 16:02:45.092 NotebookApp] Saving file at /midi-Copy1.ipynb
+[W 16:20:51.490 NotebookApp] WebSocket ping timeout after 119877 ms.
+[W 16:20:51.772 NotebookApp] WebSocket ping timeout after 119850 ms.
+[W 16:20:51.797 NotebookApp] zmq message arrived on closed channel
+[W 16:20:52.036 NotebookApp] zmq message arrived on closed channel
+[W 16:20:52.037 NotebookApp] zmq message arrived on closed channel
+[W 16:20:52.231 NotebookApp] zmq message arrived on closed channel
+[W 16:20:52.444 NotebookApp] zmq message arrived on closed channel
+[W 16:20:52.445 NotebookApp] zmq message arrived on closed channel
+[W 16:20:52.446 NotebookApp] zmq message arrived on closed channel
+[W 16:20:52.639 NotebookApp] zmq message arrived on closed channel
+[W 16:20:52.867 NotebookApp] zmq message arrived on closed channel
+[W 16:20:52.868 NotebookApp] zmq message arrived on closed channel
+[W 16:20:53.061 NotebookApp] zmq message arrived on closed channel
+[W 16:20:53.324 NotebookApp] zmq message arrived on closed channel
+[W 16:20:53.325 NotebookApp] zmq message arrived on closed channel
+[W 16:20:53.520 NotebookApp] zmq message arrived on closed channel
+[W 16:20:53.774 NotebookApp] zmq message arrived on closed channel
+[W 16:20:53.775 NotebookApp] zmq message arrived on closed channel
+[W 16:20:53.968 NotebookApp] zmq message arrived on closed channel
+[W 16:20:54.206 NotebookApp] zmq message arrived on closed channel
+[W 16:20:54.207 NotebookApp] zmq message arrived on closed channel
+[W 16:20:54.403 NotebookApp] zmq message arrived on closed channel
+[W 16:20:54.669 NotebookApp] zmq message arrived on closed channel
+[W 16:20:54.670 NotebookApp] zmq message arrived on closed channel
+[W 16:20:54.671 NotebookApp] zmq message arrived on closed channel
+[W 16:20:54.862 NotebookApp] zmq message arrived on closed channel
+[W 16:20:55.158 NotebookApp] zmq message arrived on closed channel
+[W 16:20:55.159 NotebookApp] zmq message arrived on closed channel
+[W 16:20:55.352 NotebookApp] zmq message arrived on closed channel
+[W 16:20:55.609 NotebookApp] zmq message arrived on closed channel
+[W 16:20:55.610 NotebookApp] zmq message arrived on closed channel
+[W 16:20:55.804 NotebookApp] zmq message arrived on closed channel
+[W 16:20:56.048 NotebookApp] zmq message arrived on closed channel
+[W 16:20:56.048 NotebookApp] zmq message arrived on closed channel
+[W 16:20:56.242 NotebookApp] zmq message arrived on closed channel
+[I 16:20:56.492 NotebookApp] Starting buffering for b1c7c0a6-f0d5-4c30-9d84-483fde262453:a971a219056e4867ad4c470b941fc00a
+[W 16:20:56.569 NotebookApp] zmq message arrived on closed channel
+[W 16:20:56.570 NotebookApp] zmq message arrived on closed channel
+[W 16:20:56.762 NotebookApp] zmq message arrived on closed channel
+[I 16:20:56.773 NotebookApp] Starting buffering for 33deb487-167f-455a-9f85-3225b7bfcfa0:42f03c09193d497ab52206b95f78a6b2
+[I 17:21:27.805 NotebookApp] Serving notebooks from local directory: /home/cosenza/thesis/Polyphemus
+[I 17:21:27.805 NotebookApp] Jupyter Notebook 6.4.6 is running at:
+[I 17:21:27.805 NotebookApp] http://localhost:1235/?token=87e325b96ee3101ce743445340dae7dccc697693f31ea940
+[I 17:21:27.805 NotebookApp]  or http://127.0.0.1:1235/?token=87e325b96ee3101ce743445340dae7dccc697693f31ea940
+[I 17:21:27.805 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[C 17:21:27.809 NotebookApp] 
+    
+    To access the notebook, open this file in a browser:
+        file:///home/cosenza/.local/share/jupyter/runtime/nbserver-76467-open.html
+    Or copy and paste one of these URLs:
+        http://localhost:1235/?token=87e325b96ee3101ce743445340dae7dccc697693f31ea940
+     or http://127.0.0.1:1235/?token=87e325b96ee3101ce743445340dae7dccc697693f31ea940
+[I 17:22:17.910 NotebookApp] Kernel started: 4accd2e8-b927-4856-8ddc-943043020212, name: python3
+[I 17:24:19.202 NotebookApp] Saving file at /midi-Copy1.ipynb
+[I 17:25:59.390 NotebookApp] KernelRestarter: restarting kernel (1/5), keep random ports
+[I 17:27:04.467 NotebookApp] Starting buffering for 4accd2e8-b927-4856-8ddc-943043020212:00690264a28a41b282ecbf7cbee12898
+[I 17:27:09.571 NotebookApp] Interrupted...
+[I 17:27:09.572 NotebookApp] Shutting down 1 kernel
+[I 17:27:09.572 NotebookApp] Kernel shutdown: 4accd2e8-b927-4856-8ddc-943043020212
+Traceback (most recent call last):
+  File "/home/cosenza/anaconda3/envs/thesis/bin/jupyter-notebook", line 11, in <module>
+    sys.exit(main())
+  File "/home/cosenza/.local/lib/python3.7/site-packages/jupyter_core/application.py", line 264, in launch_instance
+    return super(JupyterApp, cls).launch_instance(argv=argv, **kwargs)
+  File "/home/cosenza/.local/lib/python3.7/site-packages/traitlets/config/application.py", line 846, in launch_instance
+    app.start()
+  File "/home/cosenza/.local/lib/python3.7/site-packages/notebook/notebookapp.py", line 2388, in start
+    self.cleanup_kernels()
+  File "/home/cosenza/.local/lib/python3.7/site-packages/notebook/notebookapp.py", line 2167, in cleanup_kernels
+    run_sync(self.kernel_manager.shutdown_all())
+  File "/home/cosenza/.local/lib/python3.7/site-packages/jupyter_client/utils.py", line 26, in wrapped
+    raise e
+  File "/home/cosenza/.local/lib/python3.7/site-packages/jupyter_client/utils.py", line 23, in wrapped
+    return loop.run_until_complete(future)
+  File "/home/cosenza/.local/lib/python3.7/site-packages/nest_asyncio.py", line 75, in run_until_complete
+    self._run_once()
+  File "/home/cosenza/.local/lib/python3.7/site-packages/nest_asyncio.py", line 111, in _run_once
+    handle._run()
+  File "/home/cosenza/anaconda3/envs/thesis/lib/python3.7/asyncio/events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/cosenza/.local/lib/python3.7/site-packages/nest_asyncio.py", line 183, in step
+    step_orig(task, exc)
+  File "/home/cosenza/anaconda3/envs/thesis/lib/python3.7/asyncio/tasks.py", line 249, in __step
+    result = coro.send(None)
+  File "/home/cosenza/.local/lib/python3.7/site-packages/jupyter_client/multikernelmanager.py", line 262, in _async_shutdown_all
+    futs = [ensure_async(self.shutdown_kernel(kid, now=now)) for kid in set(kids)]
+  File "/home/cosenza/.local/lib/python3.7/site-packages/jupyter_client/multikernelmanager.py", line 262, in <listcomp>
+    futs = [ensure_async(self.shutdown_kernel(kid, now=now)) for kid in set(kids)]
+  File "/home/cosenza/.local/lib/python3.7/site-packages/notebook/services/kernels/kernelmanager.py", line 304, in shutdown_kernel
+    self.pinned_superclass.shutdown_kernel(self, kernel_id, now=now, restart=restart)
+  File "/home/cosenza/.local/lib/python3.7/site-packages/jupyter_client/utils.py", line 26, in wrapped
+    raise e
+  File "/home/cosenza/.local/lib/python3.7/site-packages/jupyter_client/utils.py", line 23, in wrapped
+    return loop.run_until_complete(future)
+  File "/home/cosenza/.local/lib/python3.7/site-packages/nest_asyncio.py", line 75, in run_until_complete
+    self._run_once()
+  File "/home/cosenza/.local/lib/python3.7/site-packages/nest_asyncio.py", line 111, in _run_once
+    handle._run()
+  File "/home/cosenza/anaconda3/envs/thesis/lib/python3.7/asyncio/events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/cosenza/.local/lib/python3.7/site-packages/nest_asyncio.py", line 183, in step
+    step_orig(task, exc)
+  File "/home/cosenza/anaconda3/envs/thesis/lib/python3.7/asyncio/tasks.py", line 249, in __step
+    result = coro.send(None)
+  File "/home/cosenza/.local/lib/python3.7/site-packages/jupyter_client/multikernelmanager.py", line 225, in _async_shutdown_kernel
+    await ensure_async(km.shutdown_kernel(now, restart))
+  File "/home/cosenza/.local/lib/python3.7/site-packages/jupyter_client/utils.py", line 26, in wrapped
+    raise e
+  File "/home/cosenza/.local/lib/python3.7/site-packages/jupyter_client/utils.py", line 23, in wrapped
+    return loop.run_until_complete(future)
+  File "/home/cosenza/.local/lib/python3.7/site-packages/nest_asyncio.py", line 75, in run_until_complete
+    self._run_once()
+  File "/home/cosenza/.local/lib/python3.7/site-packages/nest_asyncio.py", line 111, in _run_once
+    handle._run()
+  File "/home/cosenza/anaconda3/envs/thesis/lib/python3.7/asyncio/events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/cosenza/.local/lib/python3.7/site-packages/nest_asyncio.py", line 183, in step
+    step_orig(task, exc)
+  File "/home/cosenza/anaconda3/envs/thesis/lib/python3.7/asyncio/tasks.py", line 249, in __step
+    result = coro.send(None)
+  File "/home/cosenza/.local/lib/python3.7/site-packages/jupyter_client/manager.py", line 472, in _async_shutdown_kernel
+    await ensure_async(self.finish_shutdown(restart=restart))
+  File "/home/cosenza/.local/lib/python3.7/site-packages/jupyter_client/utils.py", line 26, in wrapped
+    raise e
+  File "/home/cosenza/.local/lib/python3.7/site-packages/jupyter_client/utils.py", line 23, in wrapped
+    return loop.run_until_complete(future)
+  File "/home/cosenza/.local/lib/python3.7/site-packages/nest_asyncio.py", line 75, in run_until_complete
+    self._run_once()
+  File "/home/cosenza/.local/lib/python3.7/site-packages/nest_asyncio.py", line 98, in _run_once
+    event_list = self._selector.select(timeout)
+  File "/home/cosenza/anaconda3/envs/thesis/lib/python3.7/selectors.py", line 468, in select
+    fd_event_list = self._selector.poll(timeout, max_ev)
+KeyboardInterrupt
+[I 17:28:38.412 NotebookApp] KernelRestarter: restarting kernel (1/5), keep random ports
+[I 17:28:53.432 NotebookApp] KernelRestarter: restarting kernel (1/5), keep random ports
+[C 17:29:36.870 NotebookApp] received signal 15, stopping
+[I 17:29:36.871 NotebookApp] Shutting down 2 kernels
+[I 17:29:36.889 NotebookApp] Discarding 26871 buffered messages for 33deb487-167f-455a-9f85-3225b7bfcfa0:42f03c09193d497ab52206b95f78a6b2
+[I 17:29:36.946 NotebookApp] Kernel shutdown: 33deb487-167f-455a-9f85-3225b7bfcfa0
+[I 17:29:37.051 NotebookApp] Kernel shutdown: b1c7c0a6-f0d5-4c30-9d84-483fde262453
+[C 17:29:37.939 NotebookApp] received signal 15, stopping
+/home/cosenza/.local/lib/python3.7/site-packages/jupyter_client/multikernelmanager.py:262: RuntimeWarning: coroutine 'ensure_async' was never awaited
+  futs = [ensure_async(self.shutdown_kernel(kid, now=now)) for kid in set(kids)]
+RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+Traceback (most recent call last):
+  File "/home/cosenza/anaconda3/envs/thesis/bin/jupyter-notebook", line 11, in <module>
+    sys.exit(main())
+  File "/home/cosenza/.local/lib/python3.7/site-packages/jupyter_core/application.py", line 264, in launch_instance
+    return super(JupyterApp, cls).launch_instance(argv=argv, **kwargs)
+  File "/home/cosenza/.local/lib/python3.7/site-packages/traitlets/config/application.py", line 846, in launch_instance
+    app.start()
+  File "/home/cosenza/.local/lib/python3.7/site-packages/notebook/notebookapp.py", line 2388, in start
+    self.cleanup_kernels()
+  File "/home/cosenza/.local/lib/python3.7/site-packages/notebook/notebookapp.py", line 2167, in cleanup_kernels
+    run_sync(self.kernel_manager.shutdown_all())
+  File "/home/cosenza/.local/lib/python3.7/site-packages/jupyter_client/utils.py", line 26, in wrapped
+    raise e
+  File "/home/cosenza/.local/lib/python3.7/site-packages/jupyter_client/utils.py", line 23, in wrapped
+    return loop.run_until_complete(future)
+  File "/home/cosenza/.local/lib/python3.7/site-packages/nest_asyncio.py", line 81, in run_until_complete
+    return f.result()
+  File "/home/cosenza/anaconda3/envs/thesis/lib/python3.7/asyncio/futures.py", line 181, in result
+    raise self._exception
+  File "/home/cosenza/anaconda3/envs/thesis/lib/python3.7/asyncio/tasks.py", line 249, in __step
+    result = coro.send(None)
+  File "/home/cosenza/.local/lib/python3.7/site-packages/jupyter_client/multikernelmanager.py", line 262, in _async_shutdown_all
+    futs = [ensure_async(self.shutdown_kernel(kid, now=now)) for kid in set(kids)]
+  File "/home/cosenza/.local/lib/python3.7/site-packages/jupyter_client/multikernelmanager.py", line 262, in <listcomp>
+    futs = [ensure_async(self.shutdown_kernel(kid, now=now)) for kid in set(kids)]
+  File "/home/cosenza/.local/lib/python3.7/site-packages/notebook/services/kernels/kernelmanager.py", line 304, in shutdown_kernel
+    self.pinned_superclass.shutdown_kernel(self, kernel_id, now=now, restart=restart)
+  File "/home/cosenza/.local/lib/python3.7/site-packages/jupyter_client/utils.py", line 26, in wrapped
+    raise e
+  File "/home/cosenza/.local/lib/python3.7/site-packages/jupyter_client/utils.py", line 23, in wrapped
+    return loop.run_until_complete(future)
+  File "/home/cosenza/.local/lib/python3.7/site-packages/nest_asyncio.py", line 81, in run_until_complete
+    return f.result()
+  File "/home/cosenza/anaconda3/envs/thesis/lib/python3.7/asyncio/futures.py", line 181, in result
+    raise self._exception
+  File "/home/cosenza/anaconda3/envs/thesis/lib/python3.7/asyncio/tasks.py", line 249, in __step
+    result = coro.send(None)
+  File "/home/cosenza/.local/lib/python3.7/site-packages/jupyter_client/multikernelmanager.py", line 225, in _async_shutdown_kernel
+    await ensure_async(km.shutdown_kernel(now, restart))
+  File "/home/cosenza/.local/lib/python3.7/site-packages/jupyter_client/utils.py", line 26, in wrapped
+    raise e
+  File "/home/cosenza/.local/lib/python3.7/site-packages/jupyter_client/utils.py", line 23, in wrapped
+    return loop.run_until_complete(future)
+  File "/home/cosenza/.local/lib/python3.7/site-packages/nest_asyncio.py", line 81, in run_until_complete
+    return f.result()
+  File "/home/cosenza/anaconda3/envs/thesis/lib/python3.7/asyncio/futures.py", line 181, in result
+    raise self._exception
+  File "/home/cosenza/anaconda3/envs/thesis/lib/python3.7/asyncio/tasks.py", line 249, in __step
+    result = coro.send(None)
+  File "/home/cosenza/.local/lib/python3.7/site-packages/jupyter_client/manager.py", line 472, in _async_shutdown_kernel
+    await ensure_async(self.finish_shutdown(restart=restart))
+  File "/home/cosenza/.local/lib/python3.7/site-packages/jupyter_client/utils.py", line 26, in wrapped
+    raise e
+  File "/home/cosenza/.local/lib/python3.7/site-packages/jupyter_client/utils.py", line 23, in wrapped
+    return loop.run_until_complete(future)
+  File "/home/cosenza/.local/lib/python3.7/site-packages/nest_asyncio.py", line 80, in run_until_complete
+    'Event loop stopped before Future completed.')
+RuntimeError: Event loop stopped before Future completed.
