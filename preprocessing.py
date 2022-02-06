@@ -4,10 +4,8 @@ from itertools import product
 import pypianoroll as pproll
 import time
 from tqdm.auto import tqdm
-import numpy as np
-import torch
-import random
 import sys
+import numpy as np
 
 
 class MIDIPreprocessor():
@@ -35,9 +33,9 @@ DUR_PAD = 98
 MAX_DUR = 96
 
 # Number of time steps per quarter note
-# To get bar resolution -> RESOLUTION*4
+# (To get bar resolution -> RESOLUTION*4)
 RESOLUTION = 8
-NUM_BARS = 1
+NUM_BARS = 2
 
 
 def preprocess_file(filepath, dest_dir, num_samples):
@@ -164,8 +162,9 @@ def preprocess_file(filepath, dest_dir, num_samples):
                     # Skip note if there is no more space
                     continue
 
-                track_tensor[t, notes_counter[t], 0] = note.pitch
-                dur = min(MAX_DUR, note.duration)
+                pitch = max(min(note.pitch, 127), 0)
+                track_tensor[t, notes_counter[t], 0] = pitch
+                dur = max(min(MAX_DUR, note.duration), 1)
                 track_tensor[t, notes_counter[t], 1] = dur-1
                 notes_counter[t] += 1
 
@@ -226,6 +225,7 @@ def preprocess_file(filepath, dest_dir, num_samples):
             non_perc = seq_tensor[1:, ...]
             #non_perc = seq_tensor
             non_perc[cond, 0] += shift
+            non_perc[cond, 0] = np.clip(non_perc[cond, 0], a_min=0, a_max=127)
 
             # Save sample (seq_tensor and seq_acts) to file
             curr_sample = str(num_samples + saved_samples)
@@ -260,8 +260,7 @@ def preprocess_dataset(dataset_dir, dest_dir, num_files=45129, early_exit=None):
     # Visit recursively the directories inside the dataset directory
     for dirpath, dirs, files in os.walk(dataset_dir):
 
-        # Sort alphabetically the found directories
-        # (to help guess the remaining time)
+        # Sort alphabetically the directories
         dirs.sort()
 
         print("Current path:", dirpath)

@@ -1,0 +1,5012 @@
+nohup: ignoring input
+Starting preprocessing
+  0%|          | 0/45129 [00:00<?, ?it/s]  0%|          | 1/45129 [00:00<11:51:23,  1.06it/s]  0%|          | 2/45129 [00:01<12:01:54,  1.04it/s]/home/cosenza/anaconda3/envs/thesis/lib/python3.7/site-packages/pretty_midi/pretty_midi.py:101: RuntimeWarning: Tempo, Key or Time signature change events found on non-zero tracks.  This is not a valid type 0 or type 1 MIDI file.  Tempo, Key or Time Signature may be wrong.
+  RuntimeWarning)
+  0%|          | 3/45129 [00:03<13:08:30,  1.05s/it]  0%|          | 4/45129 [00:03<11:39:27,  1.08it/s]  0%|          | 5/45129 [00:04<11:50:23,  1.06it/s]  0%|          | 6/45129 [00:05<11:48:15,  1.06it/s]  0%|          | 7/45129 [00:06<10:46:33,  1.16it/s]  0%|          | 8/45129 [00:07<11:23:07,  1.10it/s]  0%|          | 9/45129 [00:07<9:14:54,  1.36it/s]   0%|          | 10/45129 [00:08<10:01:20,  1.25it/s]  0%|          | 11/45129 [00:09<8:43:55,  1.44it/s]   0%|          | 12/45129 [00:09<7:47:09,  1.61it/s]  0%|          | 13/45129 [00:10<7:36:51,  1.65it/s]  0%|          | 14/45129 [00:11<8:28:06,  1.48it/s]  0%|          | 15/45129 [00:11<6:31:08,  1.92it/s]Current path: data/lmd_matched
+
+Current path: data/lmd_matched/A
+
+Current path: data/lmd_matched/A/A
+
+Current path: data/lmd_matched/A/A/A
+
+Current path: data/lmd_matched/A/A/A/TRAAAGR128F425B14B
+
+Preprocessing file data/lmd_matched/A/A/A/TRAAAGR128F425B14B/1d9d16a9da90c090809c153754823c2b.mid
+Processing combination 1 of 7
+Processing combination 2 of 7
+Processing combination 3 of 7
+Processing combination 4 of 7
+Processing combination 5 of 7
+Processing combination 6 of 7
+Processing combination 7 of 7
+File preprocessing finished. Saved samples: 230
+
+Total number of seen files: 1
+Number of unique files: 1
+Total number of non filtered songs: 1
+Total number of saved samples: 230
+
+Preprocessing file data/lmd_matched/A/A/A/TRAAAGR128F425B14B/5dd29e99ed7bd3cc0c5177a6e9de22ea.mid
+Processing combination 1 of 5
+Processing combination 2 of 5
+Processing combination 3 of 5
+Processing combination 4 of 5
+Processing combination 5 of 5
+File preprocessing finished. Saved samples: 156
+
+Total number of seen files: 2
+Number of unique files: 2
+Total number of non filtered songs: 2
+Total number of saved samples: 386
+
+Preprocessing file data/lmd_matched/A/A/A/TRAAAGR128F425B14B/dac3cdd0db6341d8dc14641e44ed0d44.mid
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples: 177
+
+Total number of seen files: 3
+Number of unique files: 3
+Total number of non filtered songs: 3
+Total number of saved samples: 563
+
+Preprocessing file data/lmd_matched/A/A/A/TRAAAGR128F425B14B/b97c529ab9ef783a849b896816001748.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 216
+
+Total number of seen files: 4
+Number of unique files: 4
+Total number of non filtered songs: 4
+Total number of saved samples: 779
+
+Current path: data/lmd_matched/A/A/A/TRAAAZF12903CCCF6B
+
+Preprocessing file data/lmd_matched/A/A/A/TRAAAZF12903CCCF6B/c24989559d170135b9c6546d1d2df20b.mid
+Processing combination 1 of 16
+Processing combination 2 of 16
+Processing combination 3 of 16
+Processing combination 4 of 16
+Processing combination 5 of 16
+Processing combination 6 of 16
+Processing combination 7 of 16
+Processing combination 8 of 16
+Processing combination 9 of 16
+Processing combination 10 of 16
+Processing combination 11 of 16
+Processing combination 12 of 16
+Processing combination 13 of 16
+Processing combination 14 of 16
+Processing combination 15 of 16
+Processing combination 16 of 16
+File preprocessing finished. Saved samples: 140
+
+Total number of seen files: 5
+Number of unique files: 5
+Total number of non filtered songs: 5
+Total number of saved samples: 919
+
+Preprocessing file data/lmd_matched/A/A/A/TRAAAZF12903CCCF6B/ddb6a3db65461dca1a43de72f5375d8b.mid
+Processing combination 1 of 16
+Processing combination 2 of 16
+Processing combination 3 of 16
+Processing combination 4 of 16
+Processing combination 5 of 16
+Processing combination 6 of 16
+Processing combination 7 of 16
+Processing combination 8 of 16
+Processing combination 9 of 16
+Processing combination 10 of 16
+Processing combination 11 of 16
+Processing combination 12 of 16
+Processing combination 13 of 16
+Processing combination 14 of 16
+Processing combination 15 of 16
+Processing combination 16 of 16
+File preprocessing finished. Saved samples: 140
+
+Total number of seen files: 6
+Number of unique files: 6
+Total number of non filtered songs: 6
+Total number of saved samples: 1059
+
+Preprocessing file data/lmd_matched/A/A/A/TRAAAZF12903CCCF6B/6304d2bba4282f8bd74322828c30f0c7.mid
+Processing combination 1 of 6
+Processing combination 2 of 6
+Processing combination 3 of 6
+Processing combination 4 of 6
+Processing combination 5 of 6
+Processing combination 6 of 6
+File preprocessing finished. Saved samples: 272
+
+Total number of seen files: 7
+Number of unique files: 7
+Total number of non filtered songs: 7
+Total number of saved samples: 1331
+
+Preprocessing file data/lmd_matched/A/A/A/TRAAAZF12903CCCF6B/dfea6fd75926c571a87db789280d059d.mid
+Processing combination 1 of 16
+Processing combination 2 of 16
+Processing combination 3 of 16
+Processing combination 4 of 16
+Processing combination 5 of 16
+Processing combination 6 of 16
+Processing combination 7 of 16
+Processing combination 8 of 16
+Processing combination 9 of 16
+Processing combination 10 of 16
+Processing combination 11 of 16
+Processing combination 12 of 16
+Processing combination 13 of 16
+Processing combination 14 of 16
+Processing combination 15 of 16
+Processing combination 16 of 16
+File preprocessing finished. Saved samples: 140
+
+Total number of seen files: 8
+Number of unique files: 8
+Total number of non filtered songs: 8
+Total number of saved samples: 1471
+
+Preprocessing file data/lmd_matched/A/A/A/TRAAAZF12903CCCF6B/05f21994c71a5f881e64f45c8d706165.mid
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples: 65
+
+Total number of seen files: 9
+Number of unique files: 9
+Total number of non filtered songs: 9
+Total number of saved samples: 1536
+
+Preprocessing file data/lmd_matched/A/A/A/TRAAAZF12903CCCF6B/10288ea8e07b70c17f872fda82b94330.mid
+Processing combination 1 of 16
+Processing combination 2 of 16
+Processing combination 3 of 16
+Processing combination 4 of 16
+Processing combination 5 of 16
+Processing combination 6 of 16
+Processing combination 7 of 16
+Processing combination 8 of 16
+Processing combination 9 of 16
+Processing combination 10 of 16
+Processing combination 11 of 16
+Processing combination 12 of 16
+Processing combination 13 of 16
+Processing combination 14 of 16
+Processing combination 15 of 16
+Processing combination 16 of 16
+File preprocessing finished. Saved samples: 140
+
+Total number of seen files: 10
+Number of unique files: 10
+Total number of non filtered songs: 10
+Total number of saved samples: 1676
+
+Current path: data/lmd_matched/A/A/B
+
+Current path: data/lmd_matched/A/A/B/TRAABVM128F92CA9DC
+
+Preprocessing file data/lmd_matched/A/A/B/TRAABVM128F92CA9DC/59a78b8268b8e3a14210ef68dff1b604.mid
+Processing combination 1 of 7
+Processing combination 2 of 7
+Processing combination 3 of 7
+Processing combination 4 of 7
+Processing combination 5 of 7
+Processing combination 6 of 7
+Processing combination 7 of 7
+File preprocessing finished. Saved samples: 155
+
+Total number of seen files: 11
+Number of unique files: 11
+Total number of non filtered songs: 11
+Total number of saved samples: 1831
+
+Preprocessing file data/lmd_matched/A/A/B/TRAABVM128F92CA9DC/9cbeabb5f08aa5102af322e63e760426.mid
+Processing combination 1 of 7
+Processing combination 2 of 7
+Processing combination 3 of 7
+Processing combination 4 of 7
+Processing combination 5 of 7
+Processing combination 6 of 7
+Processing combination 7 of 7
+File preprocessing finished. Saved samples: 155
+
+Total number of seen files: 12
+Number of unique files: 12
+Total number of non filtered songs: 12
+Total number of saved samples: 1986
+
+Preprocessing file data/lmd_matched/A/A/B/TRAABVM128F92CA9DC/39d6c288e1bd93d4705e7a86555347da.mid
+Processing combination 1 of 5
+Processing combination 2 of 5
+Processing combination 3 of 5
+Processing combination 4 of 5
+Processing combination 5 of 5
+File preprocessing finished. Saved samples: 92
+
+Total number of seen files: 13
+Number of unique files: 13
+Total number of non filtered songs: 13
+Total number of saved samples: 2078
+
+Preprocessing file data/lmd_matched/A/A/B/TRAABVM128F92CA9DC/65acb795990699cb8d767858dfe34e69.mid
+Processing combination 1 of 5
+Processing combination 2 of 5
+Processing combination 3 of 5
+Processing combination 4 of 5
+Processing combination 5 of 5
+File preprocessing finished. Saved samples: 281
+
+Total number of seen files: 14
+Number of unique files: 14
+Total number of non filtered songs: 14
+Total number of saved samples: 2359
+
+Preprocessing file data/lmd_matched/A/A/B/TRAABVM128F92CA9DC/0dd4d2b9fbcf96a0fa363a1918255e58.mid
+Processing combination 1 of 3
+Processing combination 2 of 3
+Processing combination 3 of 3
+File preprocessing finished. Saved samples: 11
+
+Total number of seen files: 15
+Number of unique files: 15
+Total number of non filtered songs: 15
+Total number of saved samples: 2370
+
+Current path: data/lmd_matched/A/A/B/TRAABXH128F42955D6
+
+Preprocessing file data/lmd_matched/A/A/B/TRAABXH128F42955D6/ce420d73fb6b57e105669b88b3544244.mid  0%|          | 16/45129 [00:11<7:06:22,  1.76it/s]  0%|          | 17/45129 [00:12<6:06:18,  2.05it/s]  0%|          | 18/45129 [00:12<5:27:03,  2.30it/s]  0%|          | 19/45129 [00:13<6:25:45,  1.95it/s]  0%|          | 20/45129 [00:13<4:59:03,  2.51it/s]  0%|          | 21/45129 [00:14<6:56:17,  1.81it/s]  0%|          | 22/45129 [00:15<8:26:30,  1.48it/s]  0%|          | 23/45129 [00:15<7:13:34,  1.73it/s]  0%|          | 24/45129 [00:16<8:19:37,  1.50it/s]  0%|          | 25/45129 [00:16<6:26:56,  1.94it/s]  0%|          | 26/45129 [00:17<7:48:22,  1.60it/s]  0%|          | 27/45129 [00:18<8:54:30,  1.41it/s]  0%|          | 28/45129 [00:20<14:14:53,  1.14s/it]  0%|          | 29/45129 [00:25<28:15:06,  2.26s/it]  0%|          | 30/45129 [00:25<21:35:24,  1.72s/it]  0%|          | 31/45129 [00:26<17:25:21,  1.39s/it]
+Processing combination 1 of 7
+Processing combination 2 of 7
+Processing combination 3 of 7
+Processing combination 4 of 7
+Processing combination 5 of 7
+Processing combination 6 of 7
+Processing combination 7 of 7
+File preprocessing finished. Saved samples: 242
+
+Total number of seen files: 16
+Number of unique files: 16
+Total number of non filtered songs: 16
+Total number of saved samples: 2612
+
+Preprocessing file data/lmd_matched/A/A/B/TRAABXH128F42955D6/f0530fc78e565ffcd17b732c6a3551c3.mid
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples: 104
+
+Total number of seen files: 17
+Number of unique files: 17
+Total number of non filtered songs: 17
+Total number of saved samples: 2716
+
+Preprocessing file data/lmd_matched/A/A/B/TRAABXH128F42955D6/01ffb8729a2465bfa7f9ba0288c89e24.mid
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples: 94
+
+Total number of seen files: 18
+Number of unique files: 18
+Total number of non filtered songs: 18
+Total number of saved samples: 2810
+
+Preprocessing file data/lmd_matched/A/A/B/TRAABXH128F42955D6/04266ac849c1d3814dc03bbf61511b33.mid
+Processing combination 1 of 7
+Processing combination 2 of 7
+Processing combination 3 of 7
+Processing combination 4 of 7
+Processing combination 5 of 7
+Processing combination 6 of 7
+Processing combination 7 of 7
+File preprocessing finished. Saved samples: 242
+
+Total number of seen files: 19
+Number of unique files: 19
+Total number of non filtered songs: 19
+Total number of saved samples: 3052
+
+Preprocessing file data/lmd_matched/A/A/B/TRAABXH128F42955D6/13b25b729cff5e64c80ab93c093e533b.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 20
+Number of unique files: 20
+Total number of non filtered songs: 19
+Total number of saved samples: 3052
+
+Current path: data/lmd_matched/A/A/C
+
+Current path: data/lmd_matched/A/A/C/TRAACQE12903CC706C
+
+Preprocessing file data/lmd_matched/A/A/C/TRAACQE12903CC706C/1ee7c9ad5f18b2659789d9608c951ca5.mid
+Processing combination 1 of 8
+Processing combination 2 of 8
+Processing combination 3 of 8
+Processing combination 4 of 8
+Processing combination 5 of 8
+Processing combination 6 of 8
+Processing combination 7 of 8
+Processing combination 8 of 8
+File preprocessing finished. Saved samples: 386
+
+Total number of seen files: 21
+Number of unique files: 21
+Total number of non filtered songs: 20
+Total number of saved samples: 3438
+
+Preprocessing file data/lmd_matched/A/A/C/TRAACQE12903CC706C/a430c8a66816b4d4ab1fc3ba12ad1a1d.mid
+Processing combination 1 of 8
+Processing combination 2 of 8
+Processing combination 3 of 8
+Processing combination 4 of 8
+Processing combination 5 of 8
+Processing combination 6 of 8
+Processing combination 7 of 8
+Processing combination 8 of 8
+File preprocessing finished. Saved samples: 386
+
+Total number of seen files: 22
+Number of unique files: 22
+Total number of non filtered songs: 21
+Total number of saved samples: 3824
+
+Preprocessing file data/lmd_matched/A/A/C/TRAACQE12903CC706C/f1be134b947dfde3eece2861546ffd82.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 23
+Number of unique files: 23
+Total number of non filtered songs: 21
+Total number of saved samples: 3824
+
+Current path: data/lmd_matched/A/A/D
+
+Current path: data/lmd_matched/A/A/D/TRAADKW128E079503A
+
+Preprocessing file data/lmd_matched/A/A/D/TRAADKW128E079503A/3797e9b9a101c110b7375c74dd4c70b1.mid
+Processing combination 1 of 6
+Processing combination 2 of 6
+Processing combination 3 of 6
+Processing combination 4 of 6
+Processing combination 5 of 6
+Processing combination 6 of 6
+File preprocessing finished. Saved samples: 528
+
+Total number of seen files: 24
+Number of unique files: 24
+Total number of non filtered songs: 22
+Total number of saved samples: 4352
+
+Preprocessing file data/lmd_matched/A/A/D/TRAADKW128E079503A/72cae5077339f6abaee4cad318b1e923.mid
+Processing combination 1 of 6
+Processing combination 2 of 6
+Processing combination 3 of 6
+Processing combination 4 of 6
+Processing combination 5 of 6
+Processing combination 6 of 6
+File preprocessing finished. Saved samples: 90
+
+Total number of seen files: 25
+Number of unique files: 25
+Total number of non filtered songs: 23
+Total number of saved samples: 4442
+
+Current path: data/lmd_matched/A/A/E
+
+Current path: data/lmd_matched/A/A/E/TRAAEEH128E0795DFE
+
+Preprocessing file data/lmd_matched/A/A/E/TRAAEEH128E0795DFE/a4675567a24cdddd4cd16f1c1ec688ab.mid
+Processing combination 1 of 6
+Processing combination 2 of 6
+Processing combination 3 of 6
+Processing combination 4 of 6
+Processing combination 5 of 6
+Processing combination 6 of 6
+File preprocessing finished. Saved samples: 341
+
+Total number of seen files: 26
+Number of unique files: 26
+Total number of non filtered songs: 24
+Total number of saved samples: 4783
+
+Preprocessing file data/lmd_matched/A/A/E/TRAAEEH128E0795DFE/893d879dc7b254eca10c2e522386e6cf.mid
+Processing combination 1 of 8
+Processing combination 2 of 8
+Processing combination 3 of 8
+Processing combination 4 of 8
+Processing combination 5 of 8
+Processing combination 6 of 8
+Processing combination 7 of 8
+Processing combination 8 of 8
+File preprocessing finished. Saved samples: 586
+
+Total number of seen files: 27
+Number of unique files: 27
+Total number of non filtered songs: 25
+Total number of saved samples: 5369
+
+Preprocessing file data/lmd_matched/A/A/E/TRAAEEH128E0795DFE/1d4bc885db6d9522de2d6636cf8b0e7e.mid
+Processing combination 1 of 10
+Processing combination 2 of 10
+Processing combination 3 of 10
+Processing combination 4 of 10
+Processing combination 5 of 10
+Processing combination 6 of 10
+Processing combination 7 of 10
+Processing combination 8 of 10
+Processing combination 9 of 10
+Processing combination 10 of 10
+File preprocessing finished. Saved samples: 659
+
+Total number of seen files: 28
+Number of unique files: 28
+Total number of non filtered songs: 26
+Total number of saved samples: 6028
+
+Current path: data/lmd_matched/A/A/E/TRAAEJH128E0785506
+
+Preprocessing file data/lmd_matched/A/A/E/TRAAEJH128E0785506/8644d702d122b16d60cb7117e974bde9.mid
+Processing combination 1 of 36
+Processing combination 2 of 36
+Processing combination 3 of 36
+Processing combination 4 of 36
+Processing combination 5 of 36
+Processing combination 6 of 36
+Processing combination 7 of 36
+Processing combination 8 of 36
+Processing combination 9 of 36
+Processing combination 10 of 36
+Processing combination 11 of 36
+Processing combination 12 of 36
+Processing combination 13 of 36
+Processing combination 14 of 36
+Processing combination 15 of 36
+Processing combination 16 of 36
+Processing combination 17 of 36
+Processing combination 18 of 36
+Processing combination 19 of 36
+Processing combination 20 of 36
+Processing combination 21 of 36
+Processing combination 22 of 36
+Processing combination 23 of 36
+Processing combination 24 of 36
+Processing combination 25 of 36
+Processing combination 26 of 36
+Processing combination 27 of 36
+Processing combination 28 of 36
+Processing combination 29 of 36
+Processing combination 30 of 36
+Processing combination 31 of 36
+Processing combination 32 of 36
+Processing combination 33 of 36
+Processing combination 34 of 36
+Processing combination 35 of 36
+Processing combination 36 of 36
+File preprocessing finished. Saved samples: 577
+
+Total number of seen files: 29
+Number of unique files: 29
+Total number of non filtered songs: 27
+Total number of saved samples: 6605
+
+Preprocessing file data/lmd_matched/A/A/E/TRAAEJH128E0785506/ed1a64a2fda057bf43d939be111a169f.mid
+Processing combination 1 of 3
+Processing combination 2 of 3
+Processing combination 3 of 3
+File preprocessing finished. Saved samples: 118
+
+Total number of seen files: 30
+Number of unique files: 30
+Total number of non filtered songs: 28
+Total number of saved samples: 6723
+
+Preprocessing file data/lmd_matched/A/A/E/TRAAEJH128E0785506/abe7cedef2342c5be94fcd3ddcf99675.mid
+Processing combination 1 of 3
+Processing combination 2 of 3
+Processing combination 3 of 3
+File preprocessing finished. Saved samples: 118
+
+Total number of seen files: 31
+Number of unique files: 31
+Total number of non filtered songs: 29
+Total number of saved samples:  0%|          | 32/45129 [00:28<19:31:48,  1.56s/it]  0%|          | 33/45129 [00:28<14:58:46,  1.20s/it]  0%|          | 34/45129 [00:29<13:24:05,  1.07s/it]  0%|          | 35/45129 [00:30<12:57:00,  1.03s/it]  0%|          | 36/45129 [00:30<10:40:30,  1.17it/s]  0%|          | 37/45129 [00:33<16:52:31,  1.35s/it]  0%|          | 38/45129 [00:37<26:23:55,  2.11s/it] 6841
+
+Current path: data/lmd_matched/A/A/F
+
+Current path: data/lmd_matched/A/A/F/TRAAFMT128F429DB58
+
+Preprocessing file data/lmd_matched/A/A/F/TRAAFMT128F429DB58/0a4f2051b572ebe007647fcab0114dd8.mid
+Processing combination 1 of 10
+Processing combination 2 of 10
+Processing combination 3 of 10
+Processing combination 4 of 10
+Processing combination 5 of 10
+Processing combination 6 of 10
+Processing combination 7 of 10
+Processing combination 8 of 10
+Processing combination 9 of 10
+Processing combination 10 of 10
+File preprocessing finished. Saved samples: 369
+
+Total number of seen files: 32
+Number of unique files: 32
+Total number of non filtered songs: 30
+Total number of saved samples: 7210
+
+Current path: data/lmd_matched/A/A/G
+
+Current path: data/lmd_matched/A/A/G/TRAAGCZ128F93210FD
+
+Preprocessing file data/lmd_matched/A/A/G/TRAAGCZ128F93210FD/ed659b5f46e1530fea93bc3b61ae4164.mid
+Song skipped (3/4 time signature)
+Total number of seen files: 33
+Number of unique files: 33
+Total number of non filtered songs: 30
+Total number of saved samples: 7210
+
+Current path: data/lmd_matched/A/A/G/TRAAGKR12903CFC1E5
+
+Preprocessing file data/lmd_matched/A/A/G/TRAAGKR12903CFC1E5/9f485e9941f346678570d04d20fc90a5.mid
+Processing combination 1 of 5
+Processing combination 2 of 5
+Processing combination 3 of 5
+Processing combination 4 of 5
+Processing combination 5 of 5
+File preprocessing finished. Saved samples: 278
+
+Total number of seen files: 34
+Number of unique files: 34
+Total number of non filtered songs: 31
+Total number of saved samples: 7488
+
+Preprocessing file data/lmd_matched/A/A/G/TRAAGKR12903CFC1E5/cb50d24e03f113ba8655da7796116f55.mid
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples: 212
+
+Total number of seen files: 35
+Number of unique files: 35
+Total number of non filtered songs: 32
+Total number of saved samples: 7700
+
+Preprocessing file data/lmd_matched/A/A/G/TRAAGKR12903CFC1E5/dc8aefaf5df4741186cbb158a4c6f0e0.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 36
+Number of unique files: 36
+Total number of non filtered songs: 32
+Total number of saved samples: 7700
+
+Current path: data/lmd_matched/A/A/G/TRAAGMC128F4292D0F
+
+Preprocessing file data/lmd_matched/A/A/G/TRAAGMC128F4292D0F/52b6febfe8da6bb7c2653aa7e982297f.mid
+Processing combination 1 of 66
+Processing combination 2 of 66
+Processing combination 3 of 66
+Processing combination 4 of 66
+Processing combination 5 of 66
+Processing combination 6 of 66
+Processing combination 7 of 66
+Processing combination 8 of 66
+Processing combination 9 of 66
+Processing combination 10 of 66
+Processing combination 11 of 66
+Processing combination 12 of 66
+Processing combination 13 of 66
+Processing combination 14 of 66
+Processing combination 15 of 66
+Processing combination 16 of 66
+Processing combination 17 of 66
+Processing combination 18 of 66
+Processing combination 19 of 66
+Processing combination 20 of 66
+Processing combination 21 of 66
+Processing combination 22 of 66
+Processing combination 23 of 66
+Processing combination 24 of 66
+Processing combination 25 of 66
+Processing combination 26 of 66
+Processing combination 27 of 66
+Processing combination 28 of 66
+Processing combination 29 of 66
+Processing combination 30 of 66
+Processing combination 31 of 66
+Processing combination 32 of 66
+Processing combination 33 of 66
+Processing combination 34 of 66
+Processing combination 35 of 66
+Processing combination 36 of 66
+Processing combination 37 of 66
+Processing combination 38 of 66
+Processing combination 39 of 66
+Processing combination 40 of 66
+Processing combination 41 of 66
+Processing combination 42 of 66
+Processing combination 43 of 66
+Processing combination 44 of 66
+Processing combination 45 of 66
+Processing combination 46 of 66
+Processing combination 47 of 66
+Processing combination 48 of 66
+Processing combination 49 of 66
+Processing combination 50 of 66
+Processing combination 51 of 66
+Processing combination 52 of 66
+Processing combination 53 of 66
+Processing combination 54 of 66
+Processing combination 55 of 66
+Processing combination 56 of 66
+Processing combination 57 of 66
+Processing combination 58 of 66
+Processing combination 59 of 66
+Processing combination 60 of 66
+Processing combination 61 of 66
+Processing combination 62 of 66
+Processing combination 63 of 66
+Processing combination 64 of 66
+Processing combination 65 of 66
+Processing combination 66 of 66
+File preprocessing finished. Saved samples: 224
+
+Total number of seen files: 37
+Number of unique files: 37
+Total number of non filtered songs: 33
+Total number of saved samples: 7924
+
+Preprocessing file data/lmd_matched/A/A/G/TRAAGMC128F4292D0F/0644195d1a3d14e0a0bd3d8b30dc68da.mid
+Processing combination 1 of 55
+Processing combination 2 of 55
+Processing combination 3 of 55
+Processing combination 4 of 55
+Processing combination 5 of 55
+Processing combination 6 of 55
+Processing combination 7 of 55
+Processing combination 8 of 55
+Processing combination 9 of 55
+Processing combination 10 of 55
+Processing combination 11 of 55
+Processing combination 12 of 55
+Processing combination 13 of 55
+Processing combination 14 of 55
+Processing combination 15 of 55
+Processing combination 16 of 55
+Processing combination 17 of 55
+Processing combination 18 of 55
+Processing combination 19 of 55
+Processing combination 20 of 55
+Processing combination 21 of 55
+Processing combination 22 of 55
+Processing combination 23 of 55
+Processing combination 24 of 55
+Processing combination 25 of 55
+Processing combination 26 of 55
+Processing combination 27 of 55
+Processing combination 28 of 55
+Processing combination 29 of 55
+Processing combination 30 of 55
+Processing combination 31 of 55
+Processing combination 32 of 55
+Processing combination 33 of 55
+Processing combination 34 of 55
+Processing combination 35 of 55
+Processing combination 36 of 55
+Processing combination 37 of 55
+Processing combination 38 of 55
+Processing combination 39 of 55
+Processing combination 40 of 55
+Processing combination 41 of 55
+Processing combination 42 of 55
+Processing combination 43 of 55
+Processing combination 44 of 55
+Processing combination 45 of 55
+Processing combination 46 of 55
+Processing combination 47 of 55
+Processing combination 48 of 55
+Processing combination 49 of 55
+Processing combination 50 of 55
+Processing combination 51 of 55
+Processing combination 52 of 55
+Processing combination 53 of 55
+Processing combination 54 of 55
+Processing combination 55 of 55
+File preprocessing finished. Saved samples: 955
+
+Total number of seen files: 38
+Number of unique files: 38
+Total number of non filtered songs: 34
+Total number of saved samples: 8879
+
+Preprocessing file data/lmd_matched/A/A/G/TRAAGMC128F4292D0F/1fecb8a2e5e9df4df423793909d52d33.mid
+Processing combination 1 of 55
+Processing combination 2 of 55
+Processing combination 3 of 55
+Processing combination 4 of 55
+Processing combination 5 of 55
+Processing combination 6 of 55
+Processing combination 7 of 55
+Processing combination 8 of 55
+Processing combination 9 of 55
+Processing combination 10 of 55
+Processing combination 11 of 55
+Processing combination 12 of 55
+Processing combination 13 of 55
+Processing combination 14 of 55
+Processing combination 15 of 55
+Processing combination 16 of 55
+Processing combination 17 of 55
+Processing combination 18 of 55
+Processing combination 19 of 55
+Processing combination 20 of 55
+Processing combination 21 of 55
+Processing combination 22 of 55
+Processing combination 23 of 55
+Processing combination 24 of 55
+Processing combination 25 of 55
+Processing combination 26 of 55
+Processing combination 27 of 55
+Processing combination 28 of 55
+Processing combination 29 of 55
+Processing combination 30 of 55
+Processing combination 31 of 55
+Processing combination 32 of 55
+Processing combination 33 of 55
+Processing combination 34 of 55
+Processing combination 35 of 55
+Processing combination 36 of 55
+Processing combination 37 of 55
+Processing combination 38 of 55
+Processing combination 39 of 55
+Processing combination 40 of 55
+Processing combination 41 of 55
+Processing combination 42 of 55
+Processing combination 43 of 55
+Processing combination 44 of 55
+Processing combination 45 of 55
+Processing combination  0%|          | 39/45129 [00:41<32:42:20,  2.61s/it]  0%|          | 40/45129 [00:42<26:46:45,  2.14s/it]  0%|          | 41/45129 [00:42<21:23:34,  1.71s/it]  0%|          | 42/45129 [00:43<17:50:44,  1.42s/it]  0%|          | 43/45129 [00:43<13:30:27,  1.08s/it]  0%|          | 44/45129 [00:44<10:35:55,  1.18it/s]  0%|          | 45/45129 [00:44<8:32:47,  1.47it/s]   0%|          | 46/45129 [00:44<7:07:11,  1.76it/s]  0%|          | 47/45129 [00:45<6:05:22,  2.06it/s]  0%|          | 48/45129 [00:45<5:23:35,  2.32it/s]  0%|          | 49/45129 [00:45<4:10:44,  3.00it/s]  0%|          | 50/45129 [00:46<5:33:21,  2.25it/s]  0%|          | 51/45129 [00:46<4:38:19,  2.70it/s]  0%|          | 52/45129 [00:46<3:42:54,  3.37it/s]  0%|          | 53/45129 [00:47<7:29:11,  1.67it/s]  0%|          | 55/45129 [00:47<4:28:53,  2.79it/s]  0%|          | 56/45129 [00:48<4:21:29,  2.87it/s]  0%|          | 57/45129 [00:48<3:57:59,  3.16it/s]  0%|          | 58/45129 [00:48<3:32:57,  3.53it/s]  0%|          | 59/45129 [00:49<5:27:42,  2.29it/s] 46 of 55
+Processing combination 47 of 55
+Processing combination 48 of 55
+Processing combination 49 of 55
+Processing combination 50 of 55
+Processing combination 51 of 55
+Processing combination 52 of 55
+Processing combination 53 of 55
+Processing combination 54 of 55
+Processing combination 55 of 55
+File preprocessing finished. Saved samples: 955
+
+Total number of seen files: 39
+Number of unique files: 39
+Total number of non filtered songs: 35
+Total number of saved samples: 9834
+
+Preprocessing file data/lmd_matched/A/A/G/TRAAGMC128F4292D0F/7c2e695d0593d35ca3b0913549754f18.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 295
+
+Total number of seen files: 40
+Number of unique files: 40
+Total number of non filtered songs: 36
+Total number of saved samples: 10129
+
+Preprocessing file data/lmd_matched/A/A/G/TRAAGMC128F4292D0F/3bcef98aa322c4a083efe43a962768d8.mid
+Processing combination 1 of 5
+Processing combination 2 of 5
+Processing combination 3 of 5
+Processing combination 4 of 5
+Processing combination 5 of 5
+File preprocessing finished. Saved samples: 233
+
+Total number of seen files: 41
+Number of unique files: 41
+Total number of non filtered songs: 37
+Total number of saved samples: 10362
+
+Current path: data/lmd_matched/A/A/G/TRAAGMJ12903CAD7D4
+
+Preprocessing file data/lmd_matched/A/A/G/TRAAGMJ12903CAD7D4/f581b1b49a489237dacdad231ffd93d0.mid
+Processing combination 1 of 8
+Processing combination 2 of 8
+Processing combination 3 of 8
+Processing combination 4 of 8
+Processing combination 5 of 8
+Processing combination 6 of 8
+Processing combination 7 of 8
+Processing combination 8 of 8
+File preprocessing finished. Saved samples: 276
+
+Total number of seen files: 42
+Number of unique files: 42
+Total number of non filtered songs: 38
+Total number of saved samples: 10638
+
+Current path: data/lmd_matched/A/A/H
+
+Current path: data/lmd_matched/A/A/H/TRAAHOQ12903CC6A5A
+
+Preprocessing file data/lmd_matched/A/A/H/TRAAHOQ12903CC6A5A/ef151167b73f832302b0a6c396a7478b.mid
+Song skipped (5/4 time signature)
+Total number of seen files: 43
+Number of unique files: 43
+Total number of non filtered songs: 38
+Total number of saved samples: 10638
+
+Preprocessing file data/lmd_matched/A/A/H/TRAAHOQ12903CC6A5A/e011cdcd57bad978efcc4c3bdb10ed93.mid
+Song skipped (5/4 time signature)
+Total number of seen files: 44
+Number of unique files: 44
+Total number of non filtered songs: 38
+Total number of saved samples: 10638
+
+Preprocessing file data/lmd_matched/A/A/H/TRAAHOQ12903CC6A5A/b6386668991ad99634b62cf45288d3b9.mid
+Song skipped (5/4 time signature)
+Total number of seen files: 45
+Number of unique files: 45
+Total number of non filtered songs: 38
+Total number of saved samples: 10638
+
+Preprocessing file data/lmd_matched/A/A/H/TRAAHOQ12903CC6A5A/d7a8c9f4507fd61db78a1fbeb476840a.mid
+Song skipped (5/4 time signature)
+Total number of seen files: 46
+Number of unique files: 46
+Total number of non filtered songs: 38
+Total number of saved samples: 10638
+
+Preprocessing file data/lmd_matched/A/A/H/TRAAHOQ12903CC6A5A/753c3c0ee26c9203af868b59cfd10705.mid
+Song skipped (5/4 time signature)
+Total number of seen files: 47
+Number of unique files: 47
+Total number of non filtered songs: 38
+Total number of saved samples: 10638
+
+Preprocessing file data/lmd_matched/A/A/H/TRAAHOQ12903CC6A5A/5770cb9a2a7e9504924e47bf9ac6d772.mid
+Song skipped (5/4 time signature)
+Total number of seen files: 48
+Number of unique files: 48
+Total number of non filtered songs: 38
+Total number of saved samples: 10638
+
+Current path: data/lmd_matched/A/A/J
+
+Current path: data/lmd_matched/A/A/J/TRAAJSX128F4275A1D
+
+Preprocessing file data/lmd_matched/A/A/J/TRAAJSX128F4275A1D/5371900e23c32e3df9acc18c6ec007ca.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 49
+Number of unique files: 49
+Total number of non filtered songs: 38
+Total number of saved samples: 10638
+
+Preprocessing file data/lmd_matched/A/A/J/TRAAJSX128F4275A1D/888faffc6844f13e0ff299b456033f13.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 165
+
+Total number of seen files: 50
+Number of unique files: 50
+Total number of non filtered songs: 39
+Total number of saved samples: 10803
+
+Current path: data/lmd_matched/A/A/K
+
+Current path: data/lmd_matched/A/A/K/TRAAKDJ12903D09573
+
+Preprocessing file data/lmd_matched/A/A/K/TRAAKDJ12903D09573/6a1d2c23184432ac2f466a2bea7d3fb6.mid
+Song skipped (2/4 time signature)
+Total number of seen files: 51
+Number of unique files: 51
+Total number of non filtered songs: 39
+Total number of saved samples: 10803
+
+Current path: data/lmd_matched/A/A/K/TRAAKLG128F93453BB
+
+Preprocessing file data/lmd_matched/A/A/K/TRAAKLG128F93453BB/773cf705f2a810394ce3677477045194.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 52
+Number of unique files: 52
+Total number of non filtered songs: 39
+Total number of saved samples: 10803
+
+Preprocessing file data/lmd_matched/A/A/K/TRAAKLG128F93453BB/f80e05ccb1e03331e0eff9ec9161456d.mid
+Processing combination 1 of 8
+Processing combination 2 of 8
+Processing combination 3 of 8
+Processing combination 4 of 8
+Processing combination 5 of 8
+Processing combination 6 of 8
+Processing combination 7 of 8
+Processing combination 8 of 8
+File preprocessing finished. Saved samples: 565
+
+Total number of seen files: 53
+Number of unique files: 53
+Total number of non filtered songs: 40
+Total number of saved samples: 11368
+
+Current path: data/lmd_matched/A/A/K/TRAAKMU128F9355D15
+
+Preprocessing file data/lmd_matched/A/A/K/TRAAKMU128F9355D15/2916a5fa9a03b6718497df02324b56d5.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 54
+Number of unique files: 54
+Total number of non filtered songs: 40
+Total number of saved samples: 11368
+
+Current path: data/lmd_matched/A/A/K/TRAAKOM12903D14D9F
+
+Preprocessing file data/lmd_matched/A/A/K/TRAAKOM12903D14D9F/e6ff782caed26e61bd117a362285fcb9.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 55
+Number of unique files: 55
+Total number of non filtered songs: 40
+Total number of saved samples: 11368
+
+Current path: data/lmd_matched/A/A/K/TRAAKQA128F424B272
+
+Preprocessing file data/lmd_matched/A/A/K/TRAAKQA128F424B272/526750c2fe52fa1c6a2c13f2dc8e677c.mid
+Processing combination 1 of 1
+File preprocessing finished. Saved samples: 88
+
+Total number of seen files: 56
+Number of unique files: 56
+Total number of non filtered songs: 41
+Total number of saved samples: 11456
+
+Current path: data/lmd_matched/A/A/K/TRAAKQS128F4224DE1
+
+Preprocessing file data/lmd_matched/A/A/K/TRAAKQS128F4224DE1/1b81df0cf9b1c649b279d8b6f02ce43d.mid
+Song skipped (2/4 time signature)
+Total number of seen files: 57
+Number of unique files: 57
+Total number of non filtered songs: 41
+Total number of saved samples: 11456
+
+Preprocessing file data/lmd_matched/A/A/K/TRAAKQS128F4224DE1/c043540e28d203eab8a32bb907606c0a.mid
+Song skipped (2/4 time signature)
+Total number of seen files: 58
+Number of unique files: 58
+Total number of non filtered songs: 41
+Total number of saved samples: 11456
+
+Current path: data/lmd_matched/A/A/L
+
+Current path: data/lmd_matched/A/A/L/TRAALAH128E078234A
+
+Preprocessing file data/lmd_matched/A/A/L/TRAALAH128E078234A/b3e2c3f566c5e20de4cd4e3c262addad.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 166
+
+Total number of seen files: 59
+Number of unique files: 59
+Total number of non filtered songs: 42
+Total number of saved samples: 11622
+
+Preprocessing file data/lmd_matched/A/A/L/TRAALAH128E078234A/8cfecf566c75342d13c327f8a7abc414.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 60
+Number of unique files: 60
+Total number of non filtered songs: 42
+Total number of saved samples: 11622
+
+Current path: data/lmd_matched/A/A/M
+
+Current path: data/lmd_matched/A/A/M/TRAAMBM128F4248306  0%|          | 61/45129 [00:50<4:23:08,  2.85it/s]  0%|          | 62/45129 [00:52<11:11:24,  1.12it/s]  0%|          | 63/45129 [00:53<10:57:14,  1.14it/s]  0%|          | 64/45129 [00:53<8:59:56,  1.39it/s]   0%|          | 65/45129 [00:54<9:20:06,  1.34it/s]  0%|          | 67/45129 [00:54<5:41:47,  2.20it/s]  0%|          | 68/45129 [00:55<6:06:30,  2.05it/s]  0%|          | 69/45129 [00:55<6:21:41,  1.97it/s]  0%|          | 70/45129 [00:56<6:59:16,  1.79it/s]  0%|          | 71/45129 [00:57<6:31:49,  1.92it/s]  0%|          | 72/45129 [00:57<5:45:12,  2.18it/s]  0%|          | 74/45129 [00:57<4:02:47,  3.09it/s]  0%|          | 75/45129 [00:58<6:11:37,  2.02it/s]  0%|          | 76/45129 [00:59<5:59:51,  2.09it/s]  0%|          | 77/45129 [01:02<16:49:40,  1.34s/it]  0%|          | 78/45129 [01:03<14:06:25,  1.13s/it]  0%|          | 79/45129 [01:04<13:04:26,  1.04s/it]  0%|          | 80/45129 [01:04<10:26:58,  1.20it/s]
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/15c9a9b5b552bd20ab5fc48cfef99dc0.mid
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples: 124
+
+Total number of seen files: 61
+Number of unique files: 61
+Total number of non filtered songs: 43
+Total number of saved samples: 11746
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/56b01ce51bceac98b10e5a5603a7a137.mid
+Processing combination 1 of 18
+Processing combination 2 of 18
+Processing combination 3 of 18
+Processing combination 4 of 18
+Processing combination 5 of 18
+Processing combination 6 of 18
+Processing combination 7 of 18
+Processing combination 8 of 18
+Processing combination 9 of 18
+Processing combination 10 of 18
+Processing combination 11 of 18
+Processing combination 12 of 18
+Processing combination 13 of 18
+Processing combination 14 of 18
+Processing combination 15 of 18
+Processing combination 16 of 18
+Processing combination 17 of 18
+Processing combination 18 of 18
+File preprocessing finished. Saved samples: 992
+
+Total number of seen files: 62
+Number of unique files: 62
+Total number of non filtered songs: 44
+Total number of saved samples: 12738
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/97efe4525ef99704647aee697d64313c.mid
+Processing combination 1 of 3
+Processing combination 2 of 3
+Processing combination 3 of 3
+File preprocessing finished. Saved samples: 250
+
+Total number of seen files: 63
+Number of unique files: 63
+Total number of non filtered songs: 45
+Total number of saved samples: 12988
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/0435c5ba618a4e13d66e233b900aa7c5.mid
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples: 60
+
+Total number of seen files: 64
+Number of unique files: 64
+Total number of non filtered songs: 46
+Total number of saved samples: 13048
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/a5732a3ad48e915d63512cf0a30b5834.mid
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples: 197
+
+Total number of seen files: 65
+Number of unique files: 65
+Total number of non filtered songs: 47
+Total number of saved samples: 13245
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/a982d7d7bd6616f92f1b122db3eb64e9.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 66
+Number of unique files: 66
+Total number of non filtered songs: 47
+Total number of saved samples: 13245
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/9bb9885f60046364d3258d859cf6b31c.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 67
+Number of unique files: 67
+Total number of non filtered songs: 47
+Total number of saved samples: 13245
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/d92d8ed77c0473927589e102eb2a7db2.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 127
+
+Total number of seen files: 68
+Number of unique files: 68
+Total number of non filtered songs: 48
+Total number of saved samples: 13372
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/f6900a405ca19f9c9e2e04939a62e504.mid
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples: 197
+
+Total number of seen files: 69
+Number of unique files: 69
+Total number of non filtered songs: 49
+Total number of saved samples: 13569
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/8bf8df762b8dbdd2ef53d7ce0a32d8d7.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 319
+
+Total number of seen files: 70
+Number of unique files: 70
+Total number of non filtered songs: 50
+Total number of saved samples: 13888
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/e1d00da168c939e3ade53643ac3e0d7d.mid
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples: 194
+
+Total number of seen files: 71
+Number of unique files: 71
+Total number of non filtered songs: 51
+Total number of saved samples: 14082
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/3caeffa7c12bf9dc85155ccd9a2f0c0c.mid
+Song skipped (1/4 time signature)
+Total number of seen files: 72
+Number of unique files: 72
+Total number of non filtered songs: 51
+Total number of saved samples: 14082
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/1d2b92aa9e454280cca21fae99ebce8e.mid
+Song skipped (Invalid song format)
+Total number of seen files: 73
+Number of unique files: 73
+Total number of non filtered songs: 51
+Total number of saved samples: 14082
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/107e4bc3d4ba312c14fcd0b82d7eb663.mid
+Song skipped (3/4 time signature)
+Total number of seen files: 74
+Number of unique files: 74
+Total number of non filtered songs: 51
+Total number of saved samples: 14082
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/bbbc16a60182dcb1f08bf94683900271.mid
+Processing combination 1 of 6
+Processing combination 2 of 6
+Processing combination 3 of 6
+Processing combination 4 of 6
+Processing combination 5 of 6
+Processing combination 6 of 6
+File preprocessing finished. Saved samples: 77
+
+Total number of seen files: 75
+Number of unique files: 75
+Total number of non filtered songs: 52
+Total number of saved samples: 14159
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/73d82b7216a4de1aeddf1b48ec48f77a.mid
+Processing combination 1 of 5
+Processing combination 2 of 5
+Processing combination 3 of 5
+Processing combination 4 of 5
+Processing combination 5 of 5
+File preprocessing finished. Saved samples: 66
+
+Total number of seen files: 76
+Number of unique files: 76
+Total number of non filtered songs: 53
+Total number of saved samples: 14225
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/7c84b0611f25f20feb2039011c3bec40.mid
+Processing combination 1 of 21
+Processing combination 2 of 21
+Processing combination 3 of 21
+Processing combination 4 of 21
+Processing combination 5 of 21
+Processing combination 6 of 21
+Processing combination 7 of 21
+Processing combination 8 of 21
+Processing combination 9 of 21
+Processing combination 10 of 21
+Processing combination 11 of 21
+Processing combination 12 of 21
+Processing combination 13 of 21
+Processing combination 14 of 21
+Processing combination 15 of 21
+Processing combination 16 of 21
+Processing combination 17 of 21
+Processing combination 18 of 21
+Processing combination 19 of 21
+Processing combination 20 of 21
+Processing combination 21 of 21
+File preprocessing finished. Saved samples: 1412
+
+Total number of seen files: 77
+Number of unique files: 77
+Total number of non filtered songs: 54
+Total number of saved samples: 15637
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/5a59acb9f6b867f57989301aed230db0.mid
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples: 207
+
+Total number of seen files: 78
+Number of unique files: 78
+Total number of non filtered songs: 55
+Total number of saved samples: 15844
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/da26449830718e812406ac3fdb756235.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 332
+
+Total number of seen files: 79
+Number of unique files: 79
+Total number of non filtered songs: 56
+Total number of saved samples: 16176
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/1f6de55312dad4ce4dcd4dfc4a79cd85.mid
+Song skipped (2/4 time signature)
+Total number of seen files: 80
+Number of unique files: 80
+Total number of non filtered songs: 56
+Total number of saved samples: 16176
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/94e492ecdaca73da351f598eae08102c.mid
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples:  0%|          | 81/45129 [01:05<10:11:36,  1.23it/s]  0%|          | 82/45129 [01:05<9:44:58,  1.28it/s]   0%|          | 84/45129 [01:06<6:42:06,  1.87it/s]  0%|          | 85/45129 [01:06<5:48:08,  2.16it/s]  0%|          | 87/45129 [01:07<4:30:24,  2.78it/s]  0%|          | 88/45129 [01:09<10:02:52,  1.25it/s]  0%|          | 90/45129 [01:09<6:23:03,  1.96it/s]   0%|          | 91/45129 [01:09<5:49:17,  2.15it/s]  0%|          | 92/45129 [01:10<5:00:02,  2.50it/s]  0%|          | 94/45129 [01:10<4:27:03,  2.81it/s]  0%|          | 95/45129 [01:12<8:06:32,  1.54it/s]  0%|          | 96/45129 [01:12<7:08:22,  1.75it/s]  0%|          | 97/45129 [01:13<6:57:19,  1.80it/s]  0%|          | 98/45129 [01:13<7:24:25,  1.69it/s]  0%|          | 99/45129 [01:14<7:40:33,  1.63it/s]  0%|          | 101/45129 [01:15<6:07:25,  2.04it/s] 44
+
+Total number of seen files: 81
+Number of unique files: 81
+Total number of non filtered songs: 57
+Total number of saved samples: 16220
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/e2d4cdbbb6fe11229a4e319ef46b98e5.mid
+Processing combination 1 of 3
+Processing combination 2 of 3
+Processing combination 3 of 3
+File preprocessing finished. Saved samples: 121
+
+Total number of seen files: 82
+Number of unique files: 82
+Total number of non filtered songs: 58
+Total number of saved samples: 16341
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/cfdc20d17d7ae95f3493dbf1c3177148.mid
+Song skipped (Invalid song format)
+Total number of seen files: 83
+Number of unique files: 83
+Total number of non filtered songs: 58
+Total number of saved samples: 16341
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/f84ec63eb31474202096bd4b0cf37ec9.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 388
+
+Total number of seen files: 84
+Number of unique files: 84
+Total number of non filtered songs: 59
+Total number of saved samples: 16729
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/7dce548aa69262bf39236111a4c97345.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 85
+Number of unique files: 85
+Total number of non filtered songs: 59
+Total number of saved samples: 16729
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/15005eebb626c3c59e001505e4b19f9c.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 86
+Number of unique files: 86
+Total number of non filtered songs: 59
+Total number of saved samples: 16729
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/f1a5575dfe75d65ae66a6ad17a7667ca.mid
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples: 194
+
+Total number of seen files: 87
+Number of unique files: 87
+Total number of non filtered songs: 60
+Total number of saved samples: 16923
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/a4cb302458db58a9546e5821635f5f5a.mid
+Processing combination 1 of 20
+Processing combination 2 of 20
+Processing combination 3 of 20
+Processing combination 4 of 20
+Processing combination 5 of 20
+Processing combination 6 of 20
+Processing combination 7 of 20
+Processing combination 8 of 20
+Processing combination 9 of 20
+Processing combination 10 of 20
+Processing combination 11 of 20
+Processing combination 12 of 20
+Processing combination 13 of 20
+Processing combination 14 of 20
+Processing combination 15 of 20
+Processing combination 16 of 20
+Processing combination 17 of 20
+Processing combination 18 of 20
+Processing combination 19 of 20
+Processing combination 20 of 20
+File preprocessing finished. Saved samples: 1047
+
+Total number of seen files: 88
+Number of unique files: 88
+Total number of non filtered songs: 61
+Total number of saved samples: 17970
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/29651d82201f3d4de58e28791f479f62.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 89
+Number of unique files: 89
+Total number of non filtered songs: 61
+Total number of saved samples: 17970
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/94320b98ebc34a9c646771bce14649b3.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 90
+Number of unique files: 90
+Total number of non filtered songs: 61
+Total number of saved samples: 17970
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/80c6042804c536b3e70393d29248824e.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 91
+Number of unique files: 91
+Total number of non filtered songs: 61
+Total number of saved samples: 17970
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/d296522612f8211e4f9bc2d45952df46.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 92
+Number of unique files: 92
+Total number of non filtered songs: 61
+Total number of saved samples: 17970
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/0db8d22419753eebf225f605a50448a9.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 93
+Number of unique files: 93
+Total number of non filtered songs: 61
+Total number of saved samples: 17970
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/7e1f7b9134e07ec789e2b2c2f3cbe7c5.mid
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples: 134
+
+Total number of seen files: 94
+Number of unique files: 94
+Total number of non filtered songs: 62
+Total number of saved samples: 18104
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/1e1711b1e1ed430eeca9c9de7668c348.mid
+Processing combination 1 of 22
+Processing combination 2 of 22
+Processing combination 3 of 22
+Processing combination 4 of 22
+Processing combination 5 of 22
+Processing combination 6 of 22
+Processing combination 7 of 22
+Processing combination 8 of 22
+Processing combination 9 of 22
+Processing combination 10 of 22
+Processing combination 11 of 22
+Processing combination 12 of 22
+Processing combination 13 of 22
+Processing combination 14 of 22
+Processing combination 15 of 22
+Processing combination 16 of 22
+Processing combination 17 of 22
+Processing combination 18 of 22
+Processing combination 19 of 22
+Processing combination 20 of 22
+Processing combination 21 of 22
+Processing combination 22 of 22
+File preprocessing finished. Saved samples: 501
+
+Total number of seen files: 95
+Number of unique files: 95
+Total number of non filtered songs: 63
+Total number of saved samples: 18605
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/9fc7d0b6541a335e4122d18776139dab.mid
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples: 121
+
+Total number of seen files: 96
+Number of unique files: 96
+Total number of non filtered songs: 64
+Total number of saved samples: 18726
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/f9b95854ca147413ac7c8638e89431da.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 388
+
+Total number of seen files: 97
+Number of unique files: 97
+Total number of non filtered songs: 65
+Total number of saved samples: 19114
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/14fc8ea81038fce0e6b9e417aeaed483.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 183
+
+Total number of seen files: 98
+Number of unique files: 98
+Total number of non filtered songs: 66
+Total number of saved samples: 19297
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/6b5da013dbc27491d817d9ba6da5838a.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 99
+Number of unique files: 99
+Total number of non filtered songs: 66
+Total number of saved samples: 19297
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/05eff3c1d6e3ebc308e5b91e23bcce0d.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 100
+Number of unique files: 100
+Total number of non filtered songs: 66
+Total number of saved samples: 19297
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/11164506887d27c3df4b19bf6fb19017.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 137
+
+Total number of seen files: 101
+Number of unique files: 101
+Total number of non filtered songs: 67
+Total number of saved samples: 19434
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/5541fc9a78d0ae0d8346fd7aa6a96310.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)  0%|          | 103/45129 [01:16<6:08:39,  2.04it/s]  0%|          | 104/45129 [01:16<5:07:02,  2.44it/s]  0%|          | 105/45129 [01:16<4:40:14,  2.68it/s]  0%|          | 106/45129 [01:16<4:39:46,  2.68it/s]  0%|          | 107/45129 [01:17<4:29:05,  2.79it/s]  0%|          | 110/45129 [01:17<2:31:19,  4.96it/s]  0%|          | 111/45129 [01:18<5:03:21,  2.47it/s]  0%|          | 112/45129 [01:19<6:52:00,  1.82it/s]  0%|          | 113/45129 [01:19<5:53:29,  2.12it/s]  0%|          | 114/45129 [01:21<8:06:14,  1.54it/s]  0%|          | 115/45129 [01:22<9:56:14,  1.26it/s]  0%|          | 116/45129 [01:23<11:09:42,  1.12it/s]  0%|          | 117/45129 [01:24<12:11:41,  1.03it/s]  0%|          | 118/45129 [01:24<9:12:42,  1.36it/s] 
+Total number of seen files: 102
+Number of unique files: 102
+Total number of non filtered songs: 67
+Total number of saved samples: 19434
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/54f5ee03fd4e2041e3cf2eb16137a3d7.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 386
+
+Total number of seen files: 103
+Number of unique files: 103
+Total number of non filtered songs: 68
+Total number of saved samples: 19820
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/d0495f6f239d5e90f7649a47be6784e6.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 104
+Number of unique files: 104
+Total number of non filtered songs: 68
+Total number of saved samples: 19820
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/a36a3c9a029372e5bf9532404d445f17.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 105
+Number of unique files: 105
+Total number of non filtered songs: 68
+Total number of saved samples: 19820
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMBM128F4248306/dd13109d4cc520902898e942b2a04883.mid
+Processing combination 1 of 6
+Processing combination 2 of 6
+Processing combination 3 of 6
+Processing combination 4 of 6
+Processing combination 5 of 6
+Processing combination 6 of 6
+File preprocessing finished. Saved samples: 3
+
+Total number of seen files: 106
+Number of unique files: 106
+Total number of non filtered songs: 69
+Total number of saved samples: 19823
+
+Current path: data/lmd_matched/A/A/M/TRAAMLX12903CF5B92
+
+Preprocessing file data/lmd_matched/A/A/M/TRAAMLX12903CF5B92/853741216077b06fce632a09ec2622af.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 107
+Number of unique files: 107
+Total number of non filtered songs: 69
+Total number of saved samples: 19823
+
+Current path: data/lmd_matched/A/A/N
+
+Current path: data/lmd_matched/A/A/N/TRAANTZ128E0792529
+
+Preprocessing file data/lmd_matched/A/A/N/TRAANTZ128E0792529/f887e1c22ea4b6fa3aa82b55c7ef722c.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 108
+Number of unique files: 108
+Total number of non filtered songs: 69
+Total number of saved samples: 19823
+
+Preprocessing file data/lmd_matched/A/A/N/TRAANTZ128E0792529/689c4bf6e5302a2f383f335c26b6ab9b.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 109
+Number of unique files: 109
+Total number of non filtered songs: 69
+Total number of saved samples: 19823
+
+Preprocessing file data/lmd_matched/A/A/N/TRAANTZ128E0792529/fbb3c5fb40e135961f7fb523e8ffd564.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 110
+Number of unique files: 110
+Total number of non filtered songs: 69
+Total number of saved samples: 19823
+
+Current path: data/lmd_matched/A/A/N/TRAANZE128F148BF55
+
+Preprocessing file data/lmd_matched/A/A/N/TRAANZE128F148BF55/0597bf18743a5aacfedc981eb58c9da9.mid
+Processing combination 1 of 14
+Processing combination 2 of 14
+Processing combination 3 of 14
+Processing combination 4 of 14
+Processing combination 5 of 14
+Processing combination 6 of 14
+Processing combination 7 of 14
+Processing combination 8 of 14
+Processing combination 9 of 14
+Processing combination 10 of 14
+Processing combination 11 of 14
+Processing combination 12 of 14
+Processing combination 13 of 14
+Processing combination 14 of 14
+File preprocessing finished. Saved samples: 430
+
+Total number of seen files: 111
+Number of unique files: 111
+Total number of non filtered songs: 70
+Total number of saved samples: 20253
+
+Preprocessing file data/lmd_matched/A/A/N/TRAANZE128F148BF55/80734565854179a97770db8c44b4ab14.mid
+Processing combination 1 of 12
+Processing combination 2 of 12
+Processing combination 3 of 12
+Processing combination 4 of 12
+Processing combination 5 of 12
+Processing combination 6 of 12
+Processing combination 7 of 12
+Processing combination 8 of 12
+Processing combination 9 of 12
+Processing combination 10 of 12
+Processing combination 11 of 12
+Processing combination 12 of 12
+File preprocessing finished. Saved samples: 388
+
+Total number of seen files: 112
+Number of unique files: 112
+Total number of non filtered songs: 71
+Total number of saved samples: 20641
+
+Preprocessing file data/lmd_matched/A/A/N/TRAANZE128F148BF55/57d11af9bfa6fd994bdbf49c7810f8b2.mid
+Processing combination 1 of 10
+Processing combination 2 of 10
+Processing combination 3 of 10
+Processing combination 4 of 10
+Processing combination 5 of 10
+Processing combination 6 of 10
+Processing combination 7 of 10
+Processing combination 8 of 10
+Processing combination 9 of 10
+Processing combination 10 of 10
+File preprocessing finished. Saved samples: 144
+
+Total number of seen files: 113
+Number of unique files: 113
+Total number of non filtered songs: 72
+Total number of saved samples: 20785
+
+Preprocessing file data/lmd_matched/A/A/N/TRAANZE128F148BF55/bcb22f23d63b673cfced0e3a2189366e.mid
+Processing combination 1 of 14
+Processing combination 2 of 14
+Processing combination 3 of 14
+Processing combination 4 of 14
+Processing combination 5 of 14
+Processing combination 6 of 14
+Processing combination 7 of 14
+Processing combination 8 of 14
+Processing combination 9 of 14
+Processing combination 10 of 14
+Processing combination 11 of 14
+Processing combination 12 of 14
+Processing combination 13 of 14
+Processing combination 14 of 14
+File preprocessing finished. Saved samples: 430
+
+Total number of seen files: 114
+Number of unique files: 114
+Total number of non filtered songs: 73
+Total number of saved samples: 21215
+
+Preprocessing file data/lmd_matched/A/A/N/TRAANZE128F148BF55/57d2cdba98bb3730ae8a3ac76e96cb71.mid
+Processing combination 1 of 14
+Processing combination 2 of 14
+Processing combination 3 of 14
+Processing combination 4 of 14
+Processing combination 5 of 14
+Processing combination 6 of 14
+Processing combination 7 of 14
+Processing combination 8 of 14
+Processing combination 9 of 14
+Processing combination 10 of 14
+Processing combination 11 of 14
+Processing combination 12 of 14
+Processing combination 13 of 14
+Processing combination 14 of 14
+File preprocessing finished. Saved samples: 430
+
+Total number of seen files: 115
+Number of unique files: 115
+Total number of non filtered songs: 74
+Total number of saved samples: 21645
+
+Preprocessing file data/lmd_matched/A/A/N/TRAANZE128F148BF55/5dd9a1111794b80ef271ee9e8a0f7f01.mid
+Processing combination 1 of 14
+Processing combination 2 of 14
+Processing combination 3 of 14
+Processing combination 4 of 14
+Processing combination 5 of 14
+Processing combination 6 of 14
+Processing combination 7 of 14
+Processing combination 8 of 14
+Processing combination 9 of 14
+Processing combination 10 of 14
+Processing combination 11 of 14
+Processing combination 12 of 14
+Processing combination 13 of 14
+Processing combination 14 of 14
+File preprocessing finished. Saved samples: 430
+
+Total number of seen files: 116
+Number of unique files: 116
+Total number of non filtered songs: 75
+Total number of saved samples: 22075
+
+Preprocessing file data/lmd_matched/A/A/N/TRAANZE128F148BF55/ff66ddfef7865f20dacfd4401575770e.mid
+Processing combination 1 of 14
+Processing combination 2 of 14
+Processing combination 3 of 14
+Processing combination 4 of 14
+Processing combination 5 of 14
+Processing combination 6 of 14
+Processing combination 7 of 14
+Processing combination 8 of 14
+Processing combination 9 of 14
+Processing combination 10 of 14
+Processing combination 11 of 14
+Processing combination 12 of 14
+Processing combination 13 of 14
+Processing combination 14 of 14
+File preprocessing finished. Saved samples: 430
+
+Total number of seen files: 117
+Number of unique files: 117
+Total number of non filtered songs: 76
+Total number of saved samples: 22505
+
+Current path: data/lmd_matched/A/A/O
+
+Current path: data/lmd_matched/A/A/O/TRAAOPV128F92F7CE9
+
+Preprocessing file data/lmd_matched/A/A/O/TRAAOPV128F92F7CE9/eec4d57062749f9c2682f6326c189f80.mid
+Song skipped (3/8 time signature)
+Total number of seen files: 118
+Number of unique files:  0%|          | 119/45129 [01:24<6:57:07,  1.80it/s]  0%|          | 120/45129 [01:24<5:23:15,  2.32it/s]  0%|          | 121/45129 [01:25<4:19:25,  2.89it/s]  0%|          | 122/45129 [01:25<3:29:42,  3.58it/s]  0%|          | 123/45129 [01:25<2:52:50,  4.34it/s]  0%|          | 124/45129 [01:25<2:35:03,  4.84it/s]  0%|          | 125/45129 [01:25<2:12:37,  5.66it/s]  0%|          | 126/45129 [01:25<1:57:00,  6.41it/s]  0%|          | 127/45129 [01:25<1:53:01,  6.64it/s]  0%|          | 128/45129 [01:25<1:43:37,  7.24it/s]  0%|          | 130/45129 [01:26<1:51:18,  6.74it/s]  0%|          | 131/45129 [01:27<4:43:22,  2.65it/s]  0%|          | 132/45129 [01:28<6:28:01,  1.93it/s]  0%|          | 133/45129 [01:28<6:37:13,  1.89it/s]  0%|          | 134/45129 [01:29<7:10:50,  1.74it/s]  0%|          | 135/45129 [01:30<7:28:07,  1.67it/s]  0%|          | 136/45129 [01:30<6:40:05,  1.87it/s]  0%|          | 137/45129 [01:30<5:42:38,  2.19it/s]  0%|          | 139/45129 [01:31<4:43:00,  2.65it/s]  0%|          | 140/45129 [01:31<3:57:30,  3.16it/s]  0%|          | 141/45129 [01:31<3:19:27,  3.76it/s] 118
+Total number of non filtered songs: 76
+Total number of saved samples: 22505
+
+Preprocessing file data/lmd_matched/A/A/O/TRAAOPV128F92F7CE9/66432d9023e93145097a6e8392636c7f.mid
+Song skipped (3/8 time signature)
+Total number of seen files: 119
+Number of unique files: 119
+Total number of non filtered songs: 76
+Total number of saved samples: 22505
+
+Preprocessing file data/lmd_matched/A/A/O/TRAAOPV128F92F7CE9/6723a65b641d110464e25413bb9094e4.mid
+Song skipped (3/8 time signature)
+Total number of seen files: 120
+Number of unique files: 120
+Total number of non filtered songs: 76
+Total number of saved samples: 22505
+
+Preprocessing file data/lmd_matched/A/A/O/TRAAOPV128F92F7CE9/9b840ffe3a7daac4ebdb978276a97603.mid
+Song skipped (3/8 time signature)
+Total number of seen files: 121
+Number of unique files: 121
+Total number of non filtered songs: 76
+Total number of saved samples: 22505
+
+Preprocessing file data/lmd_matched/A/A/O/TRAAOPV128F92F7CE9/b0f5ba935bcc8f78bb66a17074cd8eeb.mid
+Song skipped (6/8 time signature)
+Total number of seen files: 122
+Number of unique files: 122
+Total number of non filtered songs: 76
+Total number of saved samples: 22505
+
+Preprocessing file data/lmd_matched/A/A/O/TRAAOPV128F92F7CE9/c41f5366781232b3b3d74d73e6baa737.mid
+Song skipped (3/8 time signature)
+Total number of seen files: 123
+Number of unique files: 123
+Total number of non filtered songs: 76
+Total number of saved samples: 22505
+
+Preprocessing file data/lmd_matched/A/A/O/TRAAOPV128F92F7CE9/bfe0f03d8ef3ed256c6dff98f6abe33d.mid
+Song skipped (3/8 time signature)
+Total number of seen files: 124
+Number of unique files: 124
+Total number of non filtered songs: 76
+Total number of saved samples: 22505
+
+Preprocessing file data/lmd_matched/A/A/O/TRAAOPV128F92F7CE9/02264fee9c66cda1a2b783a2fa85fdad.mid
+Song skipped (3/8 time signature)
+Total number of seen files: 125
+Number of unique files: 125
+Total number of non filtered songs: 76
+Total number of saved samples: 22505
+
+Preprocessing file data/lmd_matched/A/A/O/TRAAOPV128F92F7CE9/4c67b066cbfb5b30bb046111e3ea6957.mid
+Song skipped (3/8 time signature)
+Total number of seen files: 126
+Number of unique files: 126
+Total number of non filtered songs: 76
+Total number of saved samples: 22505
+
+Preprocessing file data/lmd_matched/A/A/O/TRAAOPV128F92F7CE9/5e4ba07ed939b155e396f0c546434ffd.mid
+Song skipped (3/8 time signature)
+Total number of seen files: 127
+Number of unique files: 127
+Total number of non filtered songs: 76
+Total number of saved samples: 22505
+
+Preprocessing file data/lmd_matched/A/A/O/TRAAOPV128F92F7CE9/d83c7c3b191c26fee8e8316c6a51d782.mid
+Song skipped (3/8 time signature)
+Total number of seen files: 128
+Number of unique files: 128
+Total number of non filtered songs: 76
+Total number of saved samples: 22505
+
+Current path: data/lmd_matched/A/A/P
+
+Current path: data/lmd_matched/A/A/P/TRAAPHH128F145D947
+
+Preprocessing file data/lmd_matched/A/A/P/TRAAPHH128F145D947/7d8981b527b210211ff4913984918ff5.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 129
+Number of unique files: 129
+Total number of non filtered songs: 76
+Total number of saved samples: 22505
+
+Current path: data/lmd_matched/A/A/P/TRAAPPQ128F14961F5
+
+Preprocessing file data/lmd_matched/A/A/P/TRAAPPQ128F14961F5/fdabd9ad4a9ef0f666b2cae27d8c4775.mid
+Processing combination 1 of 1
+File preprocessing finished. Saved samples: 57
+
+Total number of seen files: 130
+Number of unique files: 130
+Total number of non filtered songs: 77
+Total number of saved samples: 22562
+
+Preprocessing file data/lmd_matched/A/A/P/TRAAPPQ128F14961F5/d39a20f33af4fb6b307529db8cf0cc3f.mid
+Processing combination 1 of 6
+Processing combination 2 of 6
+Processing combination 3 of 6
+Processing combination 4 of 6
+Processing combination 5 of 6
+Processing combination 6 of 6
+File preprocessing finished. Saved samples: 155
+
+Total number of seen files: 131
+Number of unique files: 131
+Total number of non filtered songs: 78
+Total number of saved samples: 22717
+
+Current path: data/lmd_matched/A/A/P/TRAAPVV128F425D64C
+
+Preprocessing file data/lmd_matched/A/A/P/TRAAPVV128F425D64C/31606a70dfb9315ec7e16313e16403cf.mid
+Processing combination 1 of 3
+Processing combination 2 of 3
+Processing combination 3 of 3
+File preprocessing finished. Saved samples: 162
+
+Total number of seen files: 132
+Number of unique files: 132
+Total number of non filtered songs: 79
+Total number of saved samples: 22879
+
+Preprocessing file data/lmd_matched/A/A/P/TRAAPVV128F425D64C/78fb161c44bd5e04ca7cc15a18d285e7.mid
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples: 56
+
+Total number of seen files: 133
+Number of unique files: 133
+Total number of non filtered songs: 80
+Total number of saved samples: 22935
+
+Preprocessing file data/lmd_matched/A/A/P/TRAAPVV128F425D64C/e6ac50a57f6bb57d041f8408da20dca7.mid
+Processing combination 1 of 3
+Processing combination 2 of 3
+Processing combination 3 of 3
+File preprocessing finished. Saved samples: 155
+
+Total number of seen files: 134
+Number of unique files: 134
+Total number of non filtered songs: 81
+Total number of saved samples: 23090
+
+Preprocessing file data/lmd_matched/A/A/P/TRAAPVV128F425D64C/cc9949cee26fb58691f16b568e310ee7.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 16
+
+Total number of seen files: 135
+Number of unique files: 135
+Total number of non filtered songs: 82
+Total number of saved samples: 23106
+
+Preprocessing file data/lmd_matched/A/A/P/TRAAPVV128F425D64C/0372dae2232c1a9dada5e7d1a64214c7.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 136
+Number of unique files: 136
+Total number of non filtered songs: 82
+Total number of saved samples: 23106
+
+Preprocessing file data/lmd_matched/A/A/P/TRAAPVV128F425D64C/3bdd2d228e8f074117c4d5b6b56c6dd5.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 137
+Number of unique files: 137
+Total number of non filtered songs: 82
+Total number of saved samples: 23106
+
+Current path: data/lmd_matched/A/A/Q
+
+Current path: data/lmd_matched/A/A/Q/TRAAQZY128F9364CC3
+
+Preprocessing file data/lmd_matched/A/A/Q/TRAAQZY128F9364CC3/c89216d3ab49d948d04f5dc8c37e01d4.mid
+Song skipped (2/4 time signature)
+Total number of seen files: 138
+Number of unique files: 138
+Total number of non filtered songs: 82
+Total number of saved samples: 23106
+
+Preprocessing file data/lmd_matched/A/A/Q/TRAAQZY128F9364CC3/0c76c95341f183aef13ede4cbc48e789.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 169
+
+Total number of seen files: 139
+Number of unique files: 139
+Total number of non filtered songs: 83
+Total number of saved samples: 23275
+
+Preprocessing file data/lmd_matched/A/A/Q/TRAAQZY128F9364CC3/f2c6cb9c15be1f2dcc55e612743d55d2.mid
+Song skipped (2/4 time signature)
+Total number of seen files: 140
+Number of unique files: 140
+Total number of non filtered songs: 83
+Total number of saved samples: 23275
+
+Current path: data/lmd_matched/A/A/R
+
+Current path: data/lmd_matched/A/A/R/TRAARCW12903CEB779
+
+Preprocessing file data/lmd_matched/A/A/R/TRAARCW12903CEB779/11abc85947426364526304940e4bd3d1.mid
+Processing combination 1 of 1
+File preprocessing finished. Saved samples: 35
+
+Total number of seen files: 141
+Number of unique files: 141
+Total number of non filtered songs: 84
+Total number of saved samples: 23310
+
+Preprocessing file data/lmd_matched/A/A/R/TRAARCW12903CEB779/f9b1f4b243c7070cd15bb697c8b0ca03.mid
+Song skipped (2/4 time signature)
+Total number of seen files: 142
+Number of unique files: 142
+Total number of non filtered songs: 84
+Total number of saved samples: 23310
+
+Current path: data/lmd_matched/A/A/S
+
+Current path: data/lmd_matched/A/A/S/TRAASFP128F42980BD
+
+Preprocessing file data/lmd_matched/A/A/S/TRAASFP128F42980BD/1e8ed6ab0ffbe1296abf1c80428db151.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination  0%|          | 143/45129 [01:32<4:14:39,  2.94it/s]  0%|          | 144/45129 [01:32<4:05:06,  3.06it/s]  0%|          | 145/45129 [01:32<3:30:08,  3.57it/s]  0%|          | 147/45129 [01:33<3:51:25,  3.24it/s]  0%|          | 148/45129 [01:33<3:44:01,  3.35it/s]  0%|          | 149/45129 [01:34<3:18:21,  3.78it/s]  0%|          | 150/45129 [01:34<3:34:12,  3.50it/s]  0%|          | 151/45129 [01:35<6:46:31,  1.84it/s]  0%|          | 152/45129 [01:35<6:08:48,  2.03it/s]  0%|          | 153/45129 [01:36<7:41:47,  1.62it/s]  0%|          | 154/45129 [01:37<7:35:41,  1.64it/s]  0%|          | 155/45129 [01:37<6:41:46,  1.87it/s]  0%|          | 156/45129 [01:37<5:10:04,  2.42it/s]  0%|          | 157/45129 [01:38<5:23:43,  2.32it/s]  0%|          | 158/45129 [01:38<5:16:05,  2.37it/s]  0%|          | 159/45129 [01:39<5:11:41,  2.40it/s]  0%|          | 160/45129 [01:39<4:20:44,  2.87it/s]  0%|          | 161/45129 [01:40<6:44:58,  1.85it/s]  0%|          | 162/45129 [01:41<6:53:33,  1.81it/s] 4 of 4
+File preprocessing finished. Saved samples: 282
+
+Total number of seen files: 143
+Number of unique files: 143
+Total number of non filtered songs: 85
+Total number of saved samples: 23592
+
+Current path: data/lmd_matched/A/A/S/TRAASKR128F92DF3D1
+
+Preprocessing file data/lmd_matched/A/A/S/TRAASKR128F92DF3D1/b6f66bed0fd9d5362e1d8e12d6c4b191.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 144
+Number of unique files: 144
+Total number of non filtered songs: 85
+Total number of saved samples: 23592
+
+Current path: data/lmd_matched/A/A/S/TRAASKZ128F9308820
+
+Preprocessing file data/lmd_matched/A/A/S/TRAASKZ128F9308820/886270e42b69e0983dfd9a591e66f214.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 145
+Number of unique files: 145
+Total number of non filtered songs: 85
+Total number of saved samples: 23592
+
+Current path: data/lmd_matched/A/A/S/TRAASMT12903CC238B
+
+Preprocessing file data/lmd_matched/A/A/S/TRAASMT12903CC238B/913503a9957064c04d5cc72e351bf485.mid
+Song skipped (Invalid song format)
+Total number of seen files: 146
+Number of unique files: 146
+Total number of non filtered songs: 85
+Total number of saved samples: 23592
+
+Preprocessing file data/lmd_matched/A/A/S/TRAASMT12903CC238B/a670dce262544c5bcf91c264ed9a62aa.mid
+Processing combination 1 of 8
+Processing combination 2 of 8
+Processing combination 3 of 8
+Processing combination 4 of 8
+Processing combination 5 of 8
+Processing combination 6 of 8
+Processing combination 7 of 8
+Processing combination 8 of 8
+File preprocessing finished. Saved samples: 304
+
+Total number of seen files: 147
+Number of unique files: 147
+Total number of non filtered songs: 86
+Total number of saved samples: 23896
+
+Preprocessing file data/lmd_matched/A/A/S/TRAASMT12903CC238B/c6e614564d48b7ac48d8e6db38954623.mid
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples: 38
+
+Total number of seen files: 148
+Number of unique files: 148
+Total number of non filtered songs: 87
+Total number of saved samples: 23934
+
+Preprocessing file data/lmd_matched/A/A/S/TRAASMT12903CC238B/4ba337cfd18e6d460ba041813c1c0b0d.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 149
+Number of unique files: 149
+Total number of non filtered songs: 87
+Total number of saved samples: 23934
+
+Preprocessing file data/lmd_matched/A/A/S/TRAASMT12903CC238B/d61ba0c95abccaefc66874b751b67dc2.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 106
+
+Total number of seen files: 150
+Number of unique files: 150
+Total number of non filtered songs: 88
+Total number of saved samples: 24040
+
+Current path: data/lmd_matched/A/A/S/TRAASNR12903CB443D
+
+Preprocessing file data/lmd_matched/A/A/S/TRAASNR12903CB443D/74c404b0a08e86e6915b43789ff130ba.mid
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples: 61
+
+Total number of seen files: 151
+Number of unique files: 151
+Total number of non filtered songs: 89
+Total number of saved samples: 24101
+
+Preprocessing file data/lmd_matched/A/A/S/TRAASNR12903CB443D/97def5c535d69374db8c6d48fa232638.mid
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples: 252
+
+Total number of seen files: 152
+Number of unique files: 152
+Total number of non filtered songs: 90
+Total number of saved samples: 24353
+
+Preprocessing file data/lmd_matched/A/A/S/TRAASNR12903CB443D/0b1bbcd10661796724737a48de9038cc.mid
+Processing combination 1 of 5
+Processing combination 2 of 5
+Processing combination 3 of 5
+Processing combination 4 of 5
+Processing combination 5 of 5
+File preprocessing finished. Saved samples: 256
+
+Total number of seen files: 153
+Number of unique files: 153
+Total number of non filtered songs: 91
+Total number of saved samples: 24609
+
+Preprocessing file data/lmd_matched/A/A/S/TRAASNR12903CB443D/8cb2cba80709c2c5b7b9456df83b48b2.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 504
+
+Total number of seen files: 154
+Number of unique files: 154
+Total number of non filtered songs: 92
+Total number of saved samples: 25113
+
+Preprocessing file data/lmd_matched/A/A/S/TRAASNR12903CB443D/bd02acc6f6e389573222e075671c898e.mid
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples: 252
+
+Total number of seen files: 155
+Number of unique files: 155
+Total number of non filtered songs: 93
+Total number of saved samples: 25365
+
+Preprocessing file data/lmd_matched/A/A/S/TRAASNR12903CB443D/e156c84bac8fafc07ce8aba4c3f54cfa.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 156
+Number of unique files: 156
+Total number of non filtered songs: 93
+Total number of saved samples: 25365
+
+Current path: data/lmd_matched/A/A/T
+
+Current path: data/lmd_matched/A/A/T/TRAATZB12903CC59D8
+
+Preprocessing file data/lmd_matched/A/A/T/TRAATZB12903CC59D8/a6fe43ca69306375a554554454f37156.mid
+Processing combination 1 of 6
+Processing combination 2 of 6
+Processing combination 3 of 6
+Processing combination 4 of 6
+Processing combination 5 of 6
+Processing combination 6 of 6
+File preprocessing finished. Saved samples: 58
+
+Total number of seen files: 157
+Number of unique files: 157
+Total number of non filtered songs: 94
+Total number of saved samples: 25423
+
+Preprocessing file data/lmd_matched/A/A/T/TRAATZB12903CC59D8/1cddb3b2dcf902030ef1bde2d355d921.mid
+Processing combination 1 of 3
+Processing combination 2 of 3
+Processing combination 3 of 3
+File preprocessing finished. Saved samples: 52
+
+Total number of seen files: 158
+Number of unique files: 158
+Total number of non filtered songs: 95
+Total number of saved samples: 25475
+
+Preprocessing file data/lmd_matched/A/A/T/TRAATZB12903CC59D8/e1f5be076dccd39900556b53f7426cd0.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 44
+
+Total number of seen files: 159
+Number of unique files: 159
+Total number of non filtered songs: 96
+Total number of saved samples: 25519
+
+Preprocessing file data/lmd_matched/A/A/T/TRAATZB12903CC59D8/82f9e3d666cd12deb17dc0caa83bd510.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 160
+Number of unique files: 160
+Total number of non filtered songs: 96
+Total number of saved samples: 25519
+
+Preprocessing file data/lmd_matched/A/A/T/TRAATZB12903CC59D8/3d398eb589df93b4f6450d91b225a9db.mid
+Processing combination 1 of 18
+Processing combination 2 of 18
+Processing combination 3 of 18
+Processing combination 4 of 18
+Processing combination 5 of 18
+Processing combination 6 of 18
+Processing combination 7 of 18
+Processing combination 8 of 18
+Processing combination 9 of 18
+Processing combination 10 of 18
+Processing combination 11 of 18
+Processing combination 12 of 18
+Processing combination 13 of 18
+Processing combination 14 of 18
+Processing combination 15 of 18
+Processing combination 16 of 18
+Processing combination 17 of 18
+Processing combination 18 of 18
+File preprocessing finished. Saved samples: 124
+
+Total number of seen files: 161
+Number of unique files: 161
+Total number of non filtered songs: 97
+Total number of saved samples: 25643
+
+Preprocessing file data/lmd_matched/A/A/T/TRAATZB12903CC59D8/84054a24d835a9cd8de02fb5b9105823.mid
+Processing combination 1 of 8
+Processing combination 2 of 8
+Processing combination 3 of 8
+Processing combination 4 of 8
+Processing combination 5 of 8
+Processing combination 6 of 8
+Processing combination 7 of 8
+Processing combination 8 of 8
+File preprocessing finished. Saved samples: 0
+
+Total number of seen files: 162
+Number of unique files: 162
+Total number of non filtered songs: 97
+Total number of saved samples: 25643
+
+Current path: data/lmd_matched/A/A/V
+
+Current path: data/lmd_matched/A/A/V/TRAAVUT128F92F74F7
+
+Preprocessing file data/lmd_matched/A/A/V/TRAAVUT128F92F74F7/b87f648f6ceb55154e1d627cf8eb9a60.mid  0%|          | 163/45129 [01:41<6:52:52,  1.82it/s]  0%|          | 164/45129 [01:41<6:23:17,  1.96it/s]  0%|          | 165/45129 [01:42<6:31:47,  1.91it/s]  0%|          | 166/45129 [01:42<6:12:49,  2.01it/s]  0%|          | 167/45129 [01:43<6:14:32,  2.00it/s]  0%|          | 168/45129 [01:44<7:04:20,  1.77it/s]  0%|          | 169/45129 [01:46<14:18:49,  1.15s/it]  0%|          | 170/45129 [01:47<13:37:49,  1.09s/it]  0%|          | 171/45129 [01:48<12:21:48,  1.01it/s]  0%|          | 172/45129 [01:49<12:32:29,  1.00s/it]  0%|          | 173/45129 [01:58<41:37:35,  3.33s/it]  0%|          | 174/45129 [02:01<40:24:05,  3.24s/it]
+Processing combination 1 of 5
+Processing combination 2 of 5
+Processing combination 3 of 5
+Processing combination 4 of 5
+Processing combination 5 of 5
+File preprocessing finished. Saved samples: 279
+
+Total number of seen files: 163
+Number of unique files: 163
+Total number of non filtered songs: 98
+Total number of saved samples: 25922
+
+Preprocessing file data/lmd_matched/A/A/V/TRAAVUT128F92F74F7/a408639a0ffb84019562cec63fafe8f0.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 92
+
+Total number of seen files: 164
+Number of unique files: 164
+Total number of non filtered songs: 99
+Total number of saved samples: 26014
+
+Preprocessing file data/lmd_matched/A/A/V/TRAAVUT128F92F74F7/9615c0c20d8cd2a5c2f03464fd265d0b.mid
+Processing combination 1 of 6
+Processing combination 2 of 6
+Processing combination 3 of 6
+Processing combination 4 of 6
+Processing combination 5 of 6
+Processing combination 6 of 6
+File preprocessing finished. Saved samples: 167
+
+Total number of seen files: 165
+Number of unique files: 165
+Total number of non filtered songs: 100
+Total number of saved samples: 26181
+
+Preprocessing file data/lmd_matched/A/A/V/TRAAVUT128F92F74F7/f31ef1c31d8ff75850a48513a5475b1c.mid
+Processing combination 1 of 6
+Processing combination 2 of 6
+Processing combination 3 of 6
+Processing combination 4 of 6
+Processing combination 5 of 6
+Processing combination 6 of 6
+File preprocessing finished. Saved samples: 167
+
+Total number of seen files: 166
+Number of unique files: 166
+Total number of non filtered songs: 101
+Total number of saved samples: 26348
+
+Preprocessing file data/lmd_matched/A/A/V/TRAAVUT128F92F74F7/1a9ac085056cc265e1d85eb8a942d361.mid
+Processing combination 1 of 5
+Processing combination 2 of 5
+Processing combination 3 of 5
+Processing combination 4 of 5
+Processing combination 5 of 5
+File preprocessing finished. Saved samples: 279
+
+Total number of seen files: 167
+Number of unique files: 167
+Total number of non filtered songs: 102
+Total number of saved samples: 26627
+
+Current path: data/lmd_matched/A/A/W
+
+Current path: data/lmd_matched/A/A/W/TRAAWSJ128F933D7EF
+
+Preprocessing file data/lmd_matched/A/A/W/TRAAWSJ128F933D7EF/75d78fb4f2bfb38732a6eb806853679a.mid
+Processing combination 1 of 3
+Processing combination 2 of 3
+Processing combination 3 of 3
+File preprocessing finished. Saved samples: 213
+
+Total number of seen files: 168
+Number of unique files: 168
+Total number of non filtered songs: 103
+Total number of saved samples: 26840
+
+Preprocessing file data/lmd_matched/A/A/W/TRAAWSJ128F933D7EF/030b710cd8b057bb6cb028734f5cf280.mid
+Processing combination 1 of 3
+Processing combination 2 of 3
+Processing combination 3 of 3
+File preprocessing finished. Saved samples: 520
+
+Total number of seen files: 169
+Number of unique files: 169
+Total number of non filtered songs: 104
+Total number of saved samples: 27360
+
+Preprocessing file data/lmd_matched/A/A/W/TRAAWSJ128F933D7EF/631cf6ed541821ebd7ad21d75ddc0389.mid
+Processing combination 1 of 8
+Processing combination 2 of 8
+Processing combination 3 of 8
+Processing combination 4 of 8
+Processing combination 5 of 8
+Processing combination 6 of 8
+Processing combination 7 of 8
+Processing combination 8 of 8
+File preprocessing finished. Saved samples: 306
+
+Total number of seen files: 170
+Number of unique files: 170
+Total number of non filtered songs: 105
+Total number of saved samples: 27666
+
+Preprocessing file data/lmd_matched/A/A/W/TRAAWSJ128F933D7EF/5ef7440569ede27694124e3b3cefd169.mid
+Processing combination 1 of 3
+Processing combination 2 of 3
+Processing combination 3 of 3
+File preprocessing finished. Saved samples: 213
+
+Total number of seen files: 171
+Number of unique files: 171
+Total number of non filtered songs: 106
+Total number of saved samples: 27879
+
+Preprocessing file data/lmd_matched/A/A/W/TRAAWSJ128F933D7EF/3556a5eb0a8ef6171a907614d03a8a80.mid
+Processing combination 1 of 6
+Processing combination 2 of 6
+Processing combination 3 of 6
+Processing combination 4 of 6
+Processing combination 5 of 6
+Processing combination 6 of 6
+File preprocessing finished. Saved samples: 282
+
+Total number of seen files: 172
+Number of unique files: 172
+Total number of non filtered songs: 107
+Total number of saved samples: 28161
+
+Preprocessing file data/lmd_matched/A/A/W/TRAAWSJ128F933D7EF/fc41fc6b99548930bbc22070d96042d4.mid
+Processing combination 1 of 84
+Processing combination 2 of 84
+Processing combination 3 of 84
+Processing combination 4 of 84
+Processing combination 5 of 84
+Processing combination 6 of 84
+Processing combination 7 of 84
+Processing combination 8 of 84
+Processing combination 9 of 84
+Processing combination 10 of 84
+Processing combination 11 of 84
+Processing combination 12 of 84
+Processing combination 13 of 84
+Processing combination 14 of 84
+Processing combination 15 of 84
+Processing combination 16 of 84
+Processing combination 17 of 84
+Processing combination 18 of 84
+Processing combination 19 of 84
+Processing combination 20 of 84
+Processing combination 21 of 84
+Processing combination 22 of 84
+Processing combination 23 of 84
+Processing combination 24 of 84
+Processing combination 25 of 84
+Processing combination 26 of 84
+Processing combination 27 of 84
+Processing combination 28 of 84
+Processing combination 29 of 84
+Processing combination 30 of 84
+Processing combination 31 of 84
+Processing combination 32 of 84
+Processing combination 33 of 84
+Processing combination 34 of 84
+Processing combination 35 of 84
+Processing combination 36 of 84
+Processing combination 37 of 84
+Processing combination 38 of 84
+Processing combination 39 of 84
+Processing combination 40 of 84
+Processing combination 41 of 84
+Processing combination 42 of 84
+Processing combination 43 of 84
+Processing combination 44 of 84
+Processing combination 45 of 84
+Processing combination 46 of 84
+Processing combination 47 of 84
+Processing combination 48 of 84
+Processing combination 49 of 84
+Processing combination 50 of 84
+Processing combination 51 of 84
+Processing combination 52 of 84
+Processing combination 53 of 84
+Processing combination 54 of 84
+Processing combination 55 of 84
+Processing combination 56 of 84
+Processing combination 57 of 84
+Processing combination 58 of 84
+Processing combination 59 of 84
+Processing combination 60 of 84
+Processing combination 61 of 84
+Processing combination 62 of 84
+Processing combination 63 of 84
+Processing combination 64 of 84
+Processing combination 65 of 84
+Processing combination 66 of 84
+Processing combination 67 of 84
+Processing combination 68 of 84
+Processing combination 69 of 84
+Processing combination 70 of 84
+Processing combination 71 of 84
+Processing combination 72 of 84
+Processing combination 73 of 84
+Processing combination 74 of 84
+Processing combination 75 of 84
+Processing combination 76 of 84
+Processing combination 77 of 84
+Processing combination 78 of 84
+Processing combination 79 of 84
+Processing combination 80 of 84
+Processing combination 81 of 84
+Processing combination 82 of 84
+Processing combination 83 of 84
+Processing combination 84 of 84
+File preprocessing finished. Saved samples: 1887
+
+Total number of seen files: 173
+Number of unique files: 173
+Total number of non filtered songs: 108
+Total number of saved samples: 30048
+
+Preprocessing file data/lmd_matched/A/A/W/TRAAWSJ128F933D7EF/b555badc79291a4c6cbe0ccfa2095c94.mid
+Processing combination 1 of 3
+Processing combination 2 of 3
+Processing combination 3 of 3
+File preprocessing finished. Saved samples: 527
+
+Total number of seen files: 174
+Number of unique files: 174
+Total number of non filtered songs: 109
+Total number of saved samples: 30575
+
+Current path: data/lmd_matched/A/A/X
+
+Current path: data/lmd_matched/A/A/X/TRAAXWM128F428A0F1
+
+Preprocessing file data/lmd_matched/A/A/X/TRAAXWM128F428A0F1/679a5a8295d83097e3c62fc43d364175.mid
+Processing combination 1 of 1
+File preprocessing finished. Saved samples: 22
+
+Total number of seen files: 175
+Number of unique files: 175
+Total number of non filtered songs: 110
+Total number of saved samples: 30597
+
+Current path: data/lmd_matched/A/A/Y
+
+Current path: data/lmd_matched/A/A/Y/TRAAYGH128F92ECD16
+
+Preprocessing file data/lmd_matched/A/A/Y/TRAAYGH128F92ECD16/90bd7bdc8111ac53cd843f13c8c2602a.mid  0%|          | 176/45129 [02:02<25:02:20,  2.01s/it]  0%|          | 177/45129 [02:02<19:42:02,  1.58s/it]  0%|          | 178/45129 [02:03<16:30:48,  1.32s/it]  0%|          | 179/45129 [02:04<16:50:45,  1.35s/it]  0%|          | 180/45129 [02:06<19:27:39,  1.56s/it]  0%|          | 181/45129 [02:09<23:00:16,  1.84s/it]  0%|          | 182/45129 [02:13<32:00:38,  2.56s/it]  0%|          | 183/45129 [02:15<29:20:00,  2.35s/it]  0%|          | 184/45129 [02:17<27:19:54,  2.19s/it]  0%|          | 185/45129 [02:19<25:39:49,  2.06s/it]  0%|          | 186/45129 [02:20<24:07:58,  1.93s/it]  0%|          | 187/45129 [02:21<20:20:29,  1.63s/it]  0%|          | 188/45129 [02:21<14:43:32,  1.18s/it]  0%|          | 189/45129 [02:21<10:47:06,  1.16it/s]  0%|          | 190/45129 [02:23<12:08:49,  1.03it/s]  0%|          | 191/45129 [02:28<29:55:39,  2.40s/it]
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 277
+
+Total number of seen files: 176
+Number of unique files: 176
+Total number of non filtered songs: 111
+Total number of saved samples: 30874
+
+Preprocessing file data/lmd_matched/A/A/Y/TRAAYGH128F92ECD16/b18efc4e06ca6f63b5074493102f8e29.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 177
+Number of unique files: 177
+Total number of non filtered songs: 111
+Total number of saved samples: 30874
+
+Preprocessing file data/lmd_matched/A/A/Y/TRAAYGH128F92ECD16/ac816d20754e742c66ea42b937fa7805.mid
+Processing combination 1 of 3
+Processing combination 2 of 3
+Processing combination 3 of 3
+File preprocessing finished. Saved samples: 205
+
+Total number of seen files: 178
+Number of unique files: 178
+Total number of non filtered songs: 112
+Total number of saved samples: 31079
+
+Preprocessing file data/lmd_matched/A/A/Y/TRAAYGH128F92ECD16/3346642dd3941a11aaccdf1b24ae10aa.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 290
+
+Total number of seen files: 179
+Number of unique files: 179
+Total number of non filtered songs: 113
+Total number of saved samples: 31369
+
+Preprocessing file data/lmd_matched/A/A/Y/TRAAYGH128F92ECD16/57c87f278ff71fc6d3b02fe8d23abd8a.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 290
+
+Total number of seen files: 180
+Number of unique files: 180
+Total number of non filtered songs: 114
+Total number of saved samples: 31659
+
+Preprocessing file data/lmd_matched/A/A/Y/TRAAYGH128F92ECD16/d87822f453795ba11d02cb74ef5c1b67.mid
+Processing combination 1 of 3
+Processing combination 2 of 3
+Processing combination 3 of 3
+File preprocessing finished. Saved samples: 205
+
+Total number of seen files: 181
+Number of unique files: 181
+Total number of non filtered songs: 115
+Total number of saved samples: 31864
+
+Preprocessing file data/lmd_matched/A/A/Y/TRAAYGH128F92ECD16/88a00399977a146d6dadb5a399f4ecfa.mid
+Processing combination 1 of 5
+Processing combination 2 of 5
+Processing combination 3 of 5
+Processing combination 4 of 5
+Processing combination 5 of 5
+File preprocessing finished. Saved samples: 362
+
+Total number of seen files: 182
+Number of unique files: 182
+Total number of non filtered songs: 116
+Total number of saved samples: 32226
+
+Preprocessing file data/lmd_matched/A/A/Y/TRAAYGH128F92ECD16/aadaee295e5deaf8757b845a696dcb83.mid
+Processing combination 1 of 3
+Processing combination 2 of 3
+Processing combination 3 of 3
+File preprocessing finished. Saved samples: 205
+
+Total number of seen files: 183
+Number of unique files: 183
+Total number of non filtered songs: 117
+Total number of saved samples: 32431
+
+Current path: data/lmd_matched/A/A/Y/TRAAYGT128F4262DDF
+
+Preprocessing file data/lmd_matched/A/A/Y/TRAAYGT128F4262DDF/c184f68d2f6acc027c0be6d48117e540.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 253
+
+Total number of seen files: 184
+Number of unique files: 184
+Total number of non filtered songs: 118
+Total number of saved samples: 32684
+
+Preprocessing file data/lmd_matched/A/A/Y/TRAAYGT128F4262DDF/d7341a80357ac8361acdb8841a0ad7f2.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 253
+
+Total number of seen files: 185
+Number of unique files: 185
+Total number of non filtered songs: 119
+Total number of saved samples: 32937
+
+Preprocessing file data/lmd_matched/A/A/Y/TRAAYGT128F4262DDF/809c57e1c2169d1ea4d307c9f64b5ad2.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 253
+
+Total number of seen files: 186
+Number of unique files: 186
+Total number of non filtered songs: 120
+Total number of saved samples: 33190
+
+Preprocessing file data/lmd_matched/A/A/Y/TRAAYGT128F4262DDF/12d3ef7046783f1fba07da859511fb41.mid
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples: 180
+
+Total number of seen files: 187
+Number of unique files: 187
+Total number of non filtered songs: 121
+Total number of saved samples: 33370
+
+Preprocessing file data/lmd_matched/A/A/Y/TRAAYGT128F4262DDF/58991ae31249fb25a1dc09ca70f90c87.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 11
+
+Total number of seen files: 188
+Number of unique files: 188
+Total number of non filtered songs: 122
+Total number of saved samples: 33381
+
+Current path: data/lmd_matched/A/A/Z
+
+Current path: data/lmd_matched/A/A/Z/TRAAZJU12903C980B6
+
+Preprocessing file data/lmd_matched/A/A/Z/TRAAZJU12903C980B6/e8a3dad4dfce12c89cec4bec8626a1b2.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 189
+Number of unique files: 189
+Total number of non filtered songs: 122
+Total number of saved samples: 33381
+
+Current path: data/lmd_matched/A/A/Z/TRAAZVF128F145BFED
+
+Preprocessing file data/lmd_matched/A/A/Z/TRAAZVF128F145BFED/95a8421e7f6c99aaac3304f3a5d3f8fd.mid
+Processing combination 1 of 6
+Processing combination 2 of 6
+Processing combination 3 of 6
+Processing combination 4 of 6
+Processing combination 5 of 6
+Processing combination 6 of 6
+File preprocessing finished. Saved samples: 264
+
+Total number of seen files: 190
+Number of unique files: 190
+Total number of non filtered songs: 123
+Total number of saved samples: 33645
+
+Preprocessing file data/lmd_matched/A/A/Z/TRAAZVF128F145BFED/091b81393cf69d05a2c3755062460498.mid
+Processing combination 1 of 60
+Processing combination 2 of 60
+Processing combination 3 of 60
+Processing combination 4 of 60
+Processing combination 5 of 60
+Processing combination 6 of 60
+Processing combination 7 of 60
+Processing combination 8 of 60
+Processing combination 9 of 60
+Processing combination 10 of 60
+Processing combination 11 of 60
+Processing combination 12 of 60
+Processing combination 13 of 60
+Processing combination 14 of 60
+Processing combination 15 of 60
+Processing combination 16 of 60
+Processing combination 17 of 60
+Processing combination 18 of 60
+Processing combination 19 of 60
+Processing combination 20 of 60
+Processing combination 21 of 60
+Processing combination 22 of 60
+Processing combination 23 of 60
+Processing combination 24 of 60
+Processing combination 25 of 60
+Processing combination 26 of 60
+Processing combination 27 of 60
+Processing combination 28 of 60
+Processing combination 29 of 60
+Processing combination 30 of 60
+Processing combination 31 of 60
+Processing combination 32 of 60
+Processing combination 33 of 60
+Processing combination 34 of 60
+Processing combination 35 of 60
+Processing combination 36 of 60
+Processing combination 37 of 60
+Processing combination 38 of 60
+Processing combination 39 of 60
+Processing combination 40 of 60
+Processing combination 41 of 60
+Processing combination 42 of 60
+Processing combination 43 of 60
+Processing combination 44 of 60
+Processing combination 45 of 60
+Processing combination 46 of 60
+Processing combination 47 of 60
+Processing combination 48 of 60
+Processing combination 49 of 60
+Processing combination 50 of 60
+Processing combination 51 of 60
+Processing combination 52 of 60
+Processing combination 53 of 60
+Processing combination 54 of 60
+Processing combination 55 of 60
+Processing combination 56 of 60
+Processing combination 57 of 60
+Processing combination 58 of 60
+Processing combination 59 of 60
+Processing combination 60 of 60
+File preprocessing finished. Saved samples: 855
+
+Total number of seen files: 191
+Number of unique files: 191
+Total number of non filtered songs: 124
+Total number of saved samples: 34500
+
+Current path: data/lmd_matched/A/A/Z/TRAAZVG128F425A9BD
+
+Preprocessing file data/lmd_matched/A/A/Z/TRAAZVG128F425A9BD/632225ed5681dcb64a41cf6089f32147.mid  0%|          | 192/45129 [02:29<22:06:50,  1.77s/it]  0%|          | 193/45129 [02:29<17:11:28,  1.38s/it]  0%|          | 194/45129 [02:30<16:15:08,  1.30s/it]  0%|          | 195/45129 [02:30<12:01:55,  1.04it/s]  0%|          | 196/45129 [02:31<9:12:19,  1.36it/s]   0%|          | 198/45129 [02:32<9:19:16,  1.34it/s]  0%|          | 199/45129 [02:33<9:00:36,  1.39it/s]  0%|          | 200/45129 [02:33<7:34:17,  1.65it/s]  0%|          | 201/45129 [02:34<7:53:39,  1.58it/s]  0%|          | 202/45129 [02:34<7:50:46,  1.59it/s]  0%|          | 203/45129 [02:43<35:30:56,  2.85s/it]  0%|          | 204/45129 [02:43<25:54:50,  2.08s/it]  0%|          | 205/45129 [02:43<18:53:54,  1.51s/it]  0%|          | 206/45129 [02:44<17:35:33,  1.41s/it]  0%|          | 207/45129 [02:44<13:06:43,  1.05s/it]  0%|          | 208/45129 [02:45<9:46:05,  1.28it/s] 
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 192
+Number of unique files: 192
+Total number of non filtered songs: 124
+Total number of saved samples: 34500
+
+Preprocessing file data/lmd_matched/A/A/Z/TRAAZVG128F425A9BD/a60be1872bb125e74e05dd2a412f44e8.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 193
+Number of unique files: 193
+Total number of non filtered songs: 124
+Total number of saved samples: 34500
+
+Current path: data/lmd_matched/A/B
+
+Current path: data/lmd_matched/A/B/A
+
+Current path: data/lmd_matched/A/B/A/TRABAFJ128F42AF24E
+
+Preprocessing file data/lmd_matched/A/B/A/TRABAFJ128F42AF24E/9f23c96d46ded0be0705e17c8b52f52b.mid
+Processing combination 1 of 5
+Processing combination 2 of 5
+Processing combination 3 of 5
+Processing combination 4 of 5
+Processing combination 5 of 5
+File preprocessing finished. Saved samples: 179
+
+Total number of seen files: 194
+Number of unique files: 194
+Total number of non filtered songs: 125
+Total number of saved samples: 34679
+
+Current path: data/lmd_matched/A/B/A/TRABAHZ128F933BD45
+
+Preprocessing file data/lmd_matched/A/B/A/TRABAHZ128F933BD45/f066496b0557c037ffc5754541414f4c.mid
+Song skipped (5/4 time signature)
+Total number of seen files: 195
+Number of unique files: 195
+Total number of non filtered songs: 125
+Total number of saved samples: 34679
+
+Preprocessing file data/lmd_matched/A/B/A/TRABAHZ128F933BD45/ac7eae2e058cfbb6ece8a5bbadd6a161.mid
+Song skipped (5/4 time signature)
+Total number of seen files: 196
+Number of unique files: 196
+Total number of non filtered songs: 125
+Total number of saved samples: 34679
+
+Current path: data/lmd_matched/A/B/A/TRABAYJ128F92E34EC
+
+Preprocessing file data/lmd_matched/A/B/A/TRABAYJ128F92E34EC/3056c10a32eae29dc187cb8c742ecbb7.mid
+Song skipped (Invalid song format)
+Total number of seen files: 197
+Number of unique files: 197
+Total number of non filtered songs: 125
+Total number of saved samples: 34679
+
+Preprocessing file data/lmd_matched/A/B/A/TRABAYJ128F92E34EC/edf706152a35a7298f90684430915b47.mid
+Processing combination 1 of 3
+Processing combination 2 of 3
+Processing combination 3 of 3
+File preprocessing finished. Saved samples: 281
+
+Total number of seen files: 198
+Number of unique files: 198
+Total number of non filtered songs: 126
+Total number of saved samples: 34960
+
+Preprocessing file data/lmd_matched/A/B/A/TRABAYJ128F92E34EC/da3500d41e5eb86a1f46698b01dc3d1e.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 179
+
+Total number of seen files: 199
+Number of unique files: 199
+Total number of non filtered songs: 127
+Total number of saved samples: 35139
+
+Current path: data/lmd_matched/A/B/B
+
+Current path: data/lmd_matched/A/B/B/TRABBFC128F428DFC5
+
+Preprocessing file data/lmd_matched/A/B/B/TRABBFC128F428DFC5/5ddbfe0dfef34c6bb483f50edcb0f5c2.mid
+Song skipped (2/4 time signature)
+Total number of seen files: 200
+Number of unique files: 200
+Total number of non filtered songs: 127
+Total number of saved samples: 35139
+
+Preprocessing file data/lmd_matched/A/B/B/TRABBFC128F428DFC5/86b52cb03939ebcdc478e69a9c9e67f6.mid
+Processing combination 1 of 5
+Processing combination 2 of 5
+Processing combination 3 of 5
+Processing combination 4 of 5
+Processing combination 5 of 5
+File preprocessing finished. Saved samples: 223
+
+Total number of seen files: 201
+Number of unique files: 201
+Total number of non filtered songs: 128
+Total number of saved samples: 35362
+
+Preprocessing file data/lmd_matched/A/B/B/TRABBFC128F428DFC5/91aa879360ae13c6c7983970dd6eeb95.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 195
+
+Total number of seen files: 202
+Number of unique files: 202
+Total number of non filtered songs: 129
+Total number of saved samples: 35557
+
+Preprocessing file data/lmd_matched/A/B/B/TRABBFC128F428DFC5/978bf0a75e7868e3bf825bb2d6dae6aa.mid
+Processing combination 1 of 70
+Processing combination 2 of 70
+Processing combination 3 of 70
+Processing combination 4 of 70
+Processing combination 5 of 70
+Processing combination 6 of 70
+Processing combination 7 of 70
+Processing combination 8 of 70
+Processing combination 9 of 70
+Processing combination 10 of 70
+Processing combination 11 of 70
+Processing combination 12 of 70
+Processing combination 13 of 70
+Processing combination 14 of 70
+Processing combination 15 of 70
+Processing combination 16 of 70
+Processing combination 17 of 70
+Processing combination 18 of 70
+Processing combination 19 of 70
+Processing combination 20 of 70
+Processing combination 21 of 70
+Processing combination 22 of 70
+Processing combination 23 of 70
+Processing combination 24 of 70
+Processing combination 25 of 70
+Processing combination 26 of 70
+Processing combination 27 of 70
+Processing combination 28 of 70
+Processing combination 29 of 70
+Processing combination 30 of 70
+Processing combination 31 of 70
+Processing combination 32 of 70
+Processing combination 33 of 70
+Processing combination 34 of 70
+Processing combination 35 of 70
+Processing combination 36 of 70
+Processing combination 37 of 70
+Processing combination 38 of 70
+Processing combination 39 of 70
+Processing combination 40 of 70
+Processing combination 41 of 70
+Processing combination 42 of 70
+Processing combination 43 of 70
+Processing combination 44 of 70
+Processing combination 45 of 70
+Processing combination 46 of 70
+Processing combination 47 of 70
+Processing combination 48 of 70
+Processing combination 49 of 70
+Processing combination 50 of 70
+Processing combination 51 of 70
+Processing combination 52 of 70
+Processing combination 53 of 70
+Processing combination 54 of 70
+Processing combination 55 of 70
+Processing combination 56 of 70
+Processing combination 57 of 70
+Processing combination 58 of 70
+Processing combination 59 of 70
+Processing combination 60 of 70
+Processing combination 61 of 70
+Processing combination 62 of 70
+Processing combination 63 of 70
+Processing combination 64 of 70
+Processing combination 65 of 70
+Processing combination 66 of 70
+Processing combination 67 of 70
+Processing combination 68 of 70
+Processing combination 69 of 70
+Processing combination 70 of 70
+File preprocessing finished. Saved samples: 2523
+
+Total number of seen files: 203
+Number of unique files: 203
+Total number of non filtered songs: 130
+Total number of saved samples: 38080
+
+Current path: data/lmd_matched/A/B/B/TRABBNH128F93392A1
+
+Preprocessing file data/lmd_matched/A/B/B/TRABBNH128F93392A1/7fc6da9410019baa50ff50f0cbcbad6a.mid
+Song skipped (6/8 time signature)
+Total number of seen files: 204
+Number of unique files: 204
+Total number of non filtered songs: 130
+Total number of saved samples: 38080
+
+Preprocessing file data/lmd_matched/A/B/B/TRABBNH128F93392A1/9e93e6a2f4c25f7fa60c85dca81fe831.mid
+Song skipped (6/8 time signature)
+Total number of seen files: 205
+Number of unique files: 205
+Total number of non filtered songs: 130
+Total number of saved samples: 38080
+
+Preprocessing file data/lmd_matched/A/B/B/TRABBNH128F93392A1/99ab460a8a96bbcecca7f15e982cc94b.mid
+Processing combination 1 of 6
+Processing combination 2 of 6
+Processing combination 3 of 6
+Processing combination 4 of 6
+Processing combination 5 of 6
+Processing combination 6 of 6
+File preprocessing finished. Saved samples: 248
+
+Total number of seen files: 206
+Number of unique files: 206
+Total number of non filtered songs: 131
+Total number of saved samples: 38328
+
+Preprocessing file data/lmd_matched/A/B/B/TRABBNH128F93392A1/6a3b7769dd8e430c17b5d0096dd0b0e1.mid
+Song skipped (6/8 time signature)
+Total number of seen files: 207
+Number of unique files: 207
+Total number of non filtered songs: 131
+Total number of saved samples: 38328
+
+Preprocessing file data/lmd_matched/A/B/B/TRABBNH128F93392A1/ffca224a4bda3aac5d5d72e90d08bac9.mid
+Song skipped (6/8 time signature)
+Total number of seen files: 208
+Number of unique files: 208
+Total number of non filtered songs: 131
+Total number of saved samples: 38328
+
+Preprocessing file data/lmd_matched/A/B/B/TRABBNH128F93392A1/31b7ff5590adb09ebf9fda25f5acbf44.mid  0%|          | 209/45129 [02:45<7:32:30,  1.65it/s]  0%|          | 210/45129 [02:45<5:50:22,  2.14it/s]  0%|          | 211/45129 [02:45<4:45:49,  2.62it/s]  0%|          | 212/45129 [02:45<3:57:19,  3.15it/s]  0%|          | 214/45129 [02:46<3:21:08,  3.72it/s]  0%|          | 215/45129 [02:46<3:08:30,  3.97it/s]  0%|          | 216/45129 [02:46<2:49:58,  4.40it/s]  0%|          | 217/45129 [02:46<2:45:41,  4.52it/s]  0%|          | 218/45129 [02:48<6:22:29,  1.96it/s]  0%|          | 219/45129 [02:48<5:17:44,  2.36it/s]  0%|          | 220/45129 [02:48<4:11:06,  2.98it/s]  0%|          | 221/45129 [02:48<3:38:27,  3.43it/s]  0%|          | 223/45129 [02:48<2:16:15,  5.49it/s]  0%|          | 225/45129 [02:48<1:37:47,  7.65it/s]  1%|          | 228/45129 [02:48<1:09:10, 10.82it/s]  1%|          | 230/45129 [02:49<1:08:41, 10.89it/s]  1%|          | 232/45129 [02:49<1:01:52, 12.09it/s]  1%|          | 234/45129 [02:50<3:15:56,  3.82it/s]
+Song skipped (6/8 time signature)
+Total number of seen files: 209
+Number of unique files: 209
+Total number of non filtered songs: 131
+Total number of saved samples: 38328
+
+Preprocessing file data/lmd_matched/A/B/B/TRABBNH128F93392A1/b66cea86a1719b4ca78650a9ac7e61b7.mid
+Song skipped (6/4 time signature)
+Total number of seen files: 210
+Number of unique files: 210
+Total number of non filtered songs: 131
+Total number of saved samples: 38328
+
+Preprocessing file data/lmd_matched/A/B/B/TRABBNH128F93392A1/2cc298768ae1392dea8ad1a751d7de13.mid
+Song skipped (6/8 time signature)
+Total number of seen files: 211
+Number of unique files: 211
+Total number of non filtered songs: 131
+Total number of saved samples: 38328
+
+Preprocessing file data/lmd_matched/A/B/B/TRABBNH128F93392A1/275833bbe414a6bd9f6de29718bcd4bc.mid
+Song skipped (6/8 time signature)
+Total number of seen files: 212
+Number of unique files: 212
+Total number of non filtered songs: 131
+Total number of saved samples: 38328
+
+Preprocessing file data/lmd_matched/A/B/B/TRABBNH128F93392A1/62f4d8788ba05f3c49ebfa6fc9164621.mid
+Song skipped (Invalid song format)
+Total number of seen files: 213
+Number of unique files: 213
+Total number of non filtered songs: 131
+Total number of saved samples: 38328
+
+Preprocessing file data/lmd_matched/A/B/B/TRABBNH128F93392A1/5bd8056ea40ae973758c85881e979d04.mid
+Processing combination 1 of 3
+Processing combination 2 of 3
+Processing combination 3 of 3
+File preprocessing finished. Saved samples: 27
+
+Total number of seen files: 214
+Number of unique files: 214
+Total number of non filtered songs: 132
+Total number of saved samples: 38355
+
+Preprocessing file data/lmd_matched/A/B/B/TRABBNH128F93392A1/c76c7e09f6577f3d3453f32df3befdd8.mid
+Song skipped (6/8 time signature)
+Total number of seen files: 215
+Number of unique files: 215
+Total number of non filtered songs: 132
+Total number of saved samples: 38355
+
+Preprocessing file data/lmd_matched/A/B/B/TRABBNH128F93392A1/e2812ec41a07bd0705cf16a9627d92a3.mid
+Song skipped (6/8 time signature)
+Total number of seen files: 216
+Number of unique files: 216
+Total number of non filtered songs: 132
+Total number of saved samples: 38355
+
+Preprocessing file data/lmd_matched/A/B/B/TRABBNH128F93392A1/01b5b401a98fa77f45b25063c7cdaeb3.mid
+Song skipped (6/8 time signature)
+Total number of seen files: 217
+Number of unique files: 217
+Total number of non filtered songs: 132
+Total number of saved samples: 38355
+
+Preprocessing file data/lmd_matched/A/B/B/TRABBNH128F93392A1/5334df5212908182f4031f702262b0c5.mid
+Processing combination 1 of 6
+Processing combination 2 of 6
+Processing combination 3 of 6
+Processing combination 4 of 6
+Processing combination 5 of 6
+Processing combination 6 of 6
+File preprocessing finished. Saved samples: 248
+
+Total number of seen files: 218
+Number of unique files: 218
+Total number of non filtered songs: 133
+Total number of saved samples: 38603
+
+Preprocessing file data/lmd_matched/A/B/B/TRABBNH128F93392A1/35e5206ec434301569306e1184941c65.mid
+Song skipped (6/8 time signature)
+Total number of seen files: 219
+Number of unique files: 219
+Total number of non filtered songs: 133
+Total number of saved samples: 38603
+
+Current path: data/lmd_matched/A/B/B/TRABBNN128F931E094
+
+Preprocessing file data/lmd_matched/A/B/B/TRABBNN128F931E094/3412283bb40d2ceebd11b4639d2157cb.mid
+Song skipped (6/4 time signature)
+Total number of seen files: 220
+Number of unique files: 220
+Total number of non filtered songs: 133
+Total number of saved samples: 38603
+
+Preprocessing file data/lmd_matched/A/B/B/TRABBNN128F931E094/7c486e9e1125a41a02c6e62585a36e16.mid
+Song skipped (6/4 time signature)
+Total number of seen files: 221
+Number of unique files: 221
+Total number of non filtered songs: 133
+Total number of saved samples: 38603
+
+Current path: data/lmd_matched/A/B/C
+
+Current path: data/lmd_matched/A/B/C/TRABCJP128F4228913
+
+Preprocessing file data/lmd_matched/A/B/C/TRABCJP128F4228913/d6de10fd4782b24ce5f41fa52a7144c3.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 222
+Number of unique files: 222
+Total number of non filtered songs: 133
+Total number of saved samples: 38603
+
+Preprocessing file data/lmd_matched/A/B/C/TRABCJP128F4228913/2ddc9763c09bb28164ecac5bc7e78436.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 223
+Number of unique files: 223
+Total number of non filtered songs: 133
+Total number of saved samples: 38603
+
+Preprocessing file data/lmd_matched/A/B/C/TRABCJP128F4228913/6914318c1bce0ec0c7d39cae5fbdcdcf.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 224
+Number of unique files: 224
+Total number of non filtered songs: 133
+Total number of saved samples: 38603
+
+Preprocessing file data/lmd_matched/A/B/C/TRABCJP128F4228913/cec3f011d89033221cf9a236e18637b1.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 225
+Number of unique files: 225
+Total number of non filtered songs: 133
+Total number of saved samples: 38603
+
+Preprocessing file data/lmd_matched/A/B/C/TRABCJP128F4228913/d42ccfc16e318bdeaf54bddd29199bbc.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 226
+Number of unique files: 226
+Total number of non filtered songs: 133
+Total number of saved samples: 38603
+
+Preprocessing file data/lmd_matched/A/B/C/TRABCJP128F4228913/051c96b5209e18cc4e263efe58df16e8.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 227
+Number of unique files: 227
+Total number of non filtered songs: 133
+Total number of saved samples: 38603
+
+Preprocessing file data/lmd_matched/A/B/C/TRABCJP128F4228913/3f9262b078278487cb16611be2839a5f.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 228
+Number of unique files: 228
+Total number of non filtered songs: 133
+Total number of saved samples: 38603
+
+Preprocessing file data/lmd_matched/A/B/C/TRABCJP128F4228913/0eefdb0c1f53b4f3b8c942ced53fdebd.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 229
+Number of unique files: 229
+Total number of non filtered songs: 133
+Total number of saved samples: 38603
+
+Preprocessing file data/lmd_matched/A/B/C/TRABCJP128F4228913/da3a4fd1778031e591ce627de9e8ae88.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 230
+Number of unique files: 230
+Total number of non filtered songs: 133
+Total number of saved samples: 38603
+
+Preprocessing file data/lmd_matched/A/B/C/TRABCJP128F4228913/202faf6c173462c9c800c0d3995c7852.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 231
+Number of unique files: 231
+Total number of non filtered songs: 133
+Total number of saved samples: 38603
+
+Preprocessing file data/lmd_matched/A/B/C/TRABCJP128F4228913/94712dad39d956a74de48b04f3dac846.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 232
+Number of unique files: 232
+Total number of non filtered songs: 133
+Total number of saved samples: 38603
+
+Current path: data/lmd_matched/A/B/E
+
+Current path: data/lmd_matched/A/B/E/TRABEIK128F1456D56
+
+Preprocessing file data/lmd_matched/A/B/E/TRABEIK128F1456D56/963f64dd7134630efa174e32c9cb8ca1.mid
+Processing combination 1 of 3
+Processing combination 2 of 3
+Processing combination 3 of 3
+File preprocessing finished. Saved samples: 120
+
+Total number of seen files: 233
+Number of unique files: 233
+Total number of non filtered songs: 134
+Total number of saved samples: 38723
+
+Current path: data/lmd_matched/A/B/G
+
+Current path: data/lmd_matched/A/B/G/TRABGCD128F42884EB
+
+Preprocessing file data/lmd_matched/A/B/G/TRABGCD128F42884EB/89be0ac97755ad4c5d682d5129586b89.mid
+Processing combination 1 of 6
+Processing combination 2 of 6
+Processing combination 3 of 6
+Processing combination 4 of 6
+Processing combination 5 of 6
+Processing combination 6 of 6
+File preprocessing finished. Saved samples: 165
+
+Total number of seen files: 234
+Number of unique files:  1%|          | 236/45129 [02:51<4:40:07,  2.67it/s]  1%|          | 237/45129 [02:51<4:03:57,  3.07it/s]  1%|          | 238/45129 [02:53<7:30:25,  1.66it/s]  1%|          | 239/45129 [02:55<11:05:24,  1.12it/s]  1%|          | 240/45129 [02:57<13:49:49,  1.11s/it]  1%|          | 241/45129 [02:59<16:27:28,  1.32s/it]  1%|          | 242/45129 [03:01<18:43:51,  1.50s/it]  1%|          | 243/45129 [03:01<14:42:27,  1.18s/it]  1%|          | 245/45129 [03:02<10:16:58,  1.21it/s]  1%|          | 246/45129 [03:02<9:44:56,  1.28it/s]   1%|          | 247/45129 [03:03<9:58:46,  1.25it/s]  1%|          | 248/45129 [03:04<9:30:10,  1.31it/s]  1%|          | 249/45129 [03:04<8:37:56,  1.44it/s]  1%|          | 250/45129 [03:05<8:55:31,  1.40it/s]  1%|          | 251/45129 [03:07<12:59:30,  1.04s/it] 234
+Total number of non filtered songs: 135
+Total number of saved samples: 38888
+
+Current path: data/lmd_matched/A/B/G/TRABGMB128F92E8CF7
+
+Preprocessing file data/lmd_matched/A/B/G/TRABGMB128F92E8CF7/141bd32c03e7243b4fc2d3d1ccc64852.mid
+Processing combination 1 of 5
+Processing combination 2 of 5
+Processing combination 3 of 5
+Processing combination 4 of 5
+Processing combination 5 of 5
+File preprocessing finished. Saved samples: 329
+
+Total number of seen files: 235
+Number of unique files: 235
+Total number of non filtered songs: 136
+Total number of saved samples: 39217
+
+Current path: data/lmd_matched/A/B/G/TRABGRH12903CB2ACA
+
+Preprocessing file data/lmd_matched/A/B/G/TRABGRH12903CB2ACA/bb89cb10224f97d121bdcb3753fdf04a.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 236
+Number of unique files: 236
+Total number of non filtered songs: 136
+Total number of saved samples: 39217
+
+Preprocessing file data/lmd_matched/A/B/G/TRABGRH12903CB2ACA/fae909afc8e29eafbfacb067e6350645.mid
+Song skipped (3/4 time signature)
+Total number of seen files: 237
+Number of unique files: 237
+Total number of non filtered songs: 136
+Total number of saved samples: 39217
+
+Current path: data/lmd_matched/A/B/H
+
+Current path: data/lmd_matched/A/B/H/TRABHTY12903CCE195
+
+Preprocessing file data/lmd_matched/A/B/H/TRABHTY12903CCE195/a25f9b0d2120c92ca18e2ae992f55e4c.mid
+Processing combination 1 of 6
+Processing combination 2 of 6
+Processing combination 3 of 6
+Processing combination 4 of 6
+Processing combination 5 of 6
+Processing combination 6 of 6
+File preprocessing finished. Saved samples: 482
+
+Total number of seen files: 238
+Number of unique files: 238
+Total number of non filtered songs: 137
+Total number of saved samples: 39699
+
+Preprocessing file data/lmd_matched/A/B/H/TRABHTY12903CCE195/e24368327ff0677878fd3555de6116c2.mid
+Processing combination 1 of 7
+Processing combination 2 of 7
+Processing combination 3 of 7
+Processing combination 4 of 7
+Processing combination 5 of 7
+Processing combination 6 of 7
+Processing combination 7 of 7
+File preprocessing finished. Saved samples: 486
+
+Total number of seen files: 239
+Number of unique files: 239
+Total number of non filtered songs: 138
+Total number of saved samples: 40185
+
+Preprocessing file data/lmd_matched/A/B/H/TRABHTY12903CCE195/0599e2bbb65b4256a74cfa07e1e742b4.mid
+Processing combination 1 of 6
+Processing combination 2 of 6
+Processing combination 3 of 6
+Processing combination 4 of 6
+Processing combination 5 of 6
+Processing combination 6 of 6
+File preprocessing finished. Saved samples: 482
+
+Total number of seen files: 240
+Number of unique files: 240
+Total number of non filtered songs: 139
+Total number of saved samples: 40667
+
+Preprocessing file data/lmd_matched/A/B/H/TRABHTY12903CCE195/ab9e8a6feaa8478c5d07d1321609b18e.mid
+Processing combination 1 of 6
+Processing combination 2 of 6
+Processing combination 3 of 6
+Processing combination 4 of 6
+Processing combination 5 of 6
+Processing combination 6 of 6
+File preprocessing finished. Saved samples: 480
+
+Total number of seen files: 241
+Number of unique files: 241
+Total number of non filtered songs: 140
+Total number of saved samples: 41147
+
+Preprocessing file data/lmd_matched/A/B/H/TRABHTY12903CCE195/44c58b177cf91bcb8793365bf7498685.mid
+Processing combination 1 of 6
+Processing combination 2 of 6
+Processing combination 3 of 6
+Processing combination 4 of 6
+Processing combination 5 of 6
+Processing combination 6 of 6
+File preprocessing finished. Saved samples: 482
+
+Total number of seen files: 242
+Number of unique files: 242
+Total number of non filtered songs: 141
+Total number of saved samples: 41629
+
+Current path: data/lmd_matched/A/B/I
+
+Current path: data/lmd_matched/A/B/I/TRABITZ12903CA9B5A
+
+Preprocessing file data/lmd_matched/A/B/I/TRABITZ12903CA9B5A/0100c73ba81dff1f5a793105f26091e8.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 243
+Number of unique files: 243
+Total number of non filtered songs: 141
+Total number of saved samples: 41629
+
+Current path: data/lmd_matched/A/B/I/TRABIYX128F4286244
+
+Preprocessing file data/lmd_matched/A/B/I/TRABIYX128F4286244/41610e6959c2a616f2aa0bfdcfd93335.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 245
+Number of unique files: 244
+Total number of non filtered songs: 141
+Total number of saved samples: 41629
+
+Current path: data/lmd_matched/A/B/J
+
+Current path: data/lmd_matched/A/B/J/TRABJCV128F4290D34
+
+Preprocessing file data/lmd_matched/A/B/J/TRABJCV128F4290D34/937a9bfa7b685f3268c2dc52ef3636bb.mid
+Processing combination 1 of 10
+Processing combination 2 of 10
+Processing combination 3 of 10
+Processing combination 4 of 10
+Processing combination 5 of 10
+Processing combination 6 of 10
+Processing combination 7 of 10
+Processing combination 8 of 10
+Processing combination 9 of 10
+Processing combination 10 of 10
+File preprocessing finished. Saved samples: 2
+
+Total number of seen files: 246
+Number of unique files: 245
+Total number of non filtered songs: 142
+Total number of saved samples: 41631
+
+Current path: data/lmd_matched/A/B/K
+
+Current path: data/lmd_matched/A/B/K/TRABKUJ128F4292445
+
+Preprocessing file data/lmd_matched/A/B/K/TRABKUJ128F4292445/ad718be7bdd06c041b5b6eb4ce997489.mid
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples: 121
+
+Total number of seen files: 247
+Number of unique files: 246
+Total number of non filtered songs: 143
+Total number of saved samples: 41752
+
+Current path: data/lmd_matched/A/B/L
+
+Current path: data/lmd_matched/A/B/L/TRABLGN128F933D417
+
+Preprocessing file data/lmd_matched/A/B/L/TRABLGN128F933D417/e36f4303f8b2e0b4755cc6f12fabc122.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 195
+
+Total number of seen files: 248
+Number of unique files: 247
+Total number of non filtered songs: 144
+Total number of saved samples: 41947
+
+Current path: data/lmd_matched/A/B/L/TRABLNQ128F930E053
+
+Preprocessing file data/lmd_matched/A/B/L/TRABLNQ128F930E053/8927673bba995d9f4dd9c8bdb22ee2a9.mid
+Processing combination 1 of 6
+Processing combination 2 of 6
+Processing combination 3 of 6
+Processing combination 4 of 6
+Processing combination 5 of 6
+Processing combination 6 of 6
+File preprocessing finished. Saved samples: 121
+
+Total number of seen files: 249
+Number of unique files: 248
+Total number of non filtered songs: 145
+Total number of saved samples: 42068
+
+Preprocessing file data/lmd_matched/A/B/L/TRABLNQ128F930E053/7a01972e58fa7bdcd643e525ffc75277.mid
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples: 170
+
+Total number of seen files: 250
+Number of unique files: 249
+Total number of non filtered songs: 146
+Total number of saved samples: 42238
+
+Preprocessing file data/lmd_matched/A/B/L/TRABLNQ128F930E053/db9f92f42488e0878b59fc4c1997369e.mid
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples: 170
+
+Total number of seen files: 251
+Number of unique files: 250
+Total number of non filtered songs: 147
+Total number of saved samples: 42408
+
+Preprocessing file data/lmd_matched/A/B/L/TRABLNQ128F930E053/94d07fee85503a151c4182e5b8d524dc.mid
+Processing combination 1 of 9
+Processing combination 2 of 9
+Processing combination 3 of 9
+Processing combination 4 of 9
+Processing combination 5 of 9
+Processing combination 6 of 9
+Processing combination 7 of 9
+Processing combination 8 of 9
+Processing combination 9 of 9
+File preprocessing finished. Saved samples: 420
+
+Total number of seen files: 252
+Number of unique files: 251
+Total number of non filtered songs: 148
+Total number of saved samples: 42828
+
+Preprocessing file data/lmd_matched/A/B/L/TRABLNQ128F930E053/2dc179329eace7978f7d66396c78a1e5.mid
+Processing combination 1 of 9
+Processing combination 2 of 9
+Processing combination 3 of 9
+Processing combination 4 of 9
+Processing combination 5 of 9
+Processing combination 6 of 9
+Processing combination 7 of 9
+Processing combination 8 of 9
+Processing combination 9 of   1%|          | 252/45129 [03:09<16:28:06,  1.32s/it]  1%|          | 253/45129 [03:10<15:27:47,  1.24s/it]  1%|          | 254/45129 [03:11<14:45:39,  1.18s/it]  1%|          | 255/45129 [03:13<16:41:19,  1.34s/it]  1%|          | 256/45129 [03:14<14:17:21,  1.15s/it]  1%|          | 257/45129 [03:15<16:00:40,  1.28s/it]  1%|          | 258/45129 [03:16<12:40:37,  1.02s/it]  1%|          | 259/45129 [03:17<14:30:46,  1.16s/it]  1%|          | 260/45129 [03:19<18:01:04,  1.45s/it]  1%|          | 261/45129 [03:21<20:43:11,  1.66s/it]  1%|          | 262/45129 [03:23<21:51:45,  1.75s/it]  1%|          | 263/45129 [03:25<21:19:11,  1.71s/it]  1%|          | 264/45129 [03:27<21:43:30,  1.74s/it]  1%|          | 265/45129 [03:27<17:05:51,  1.37s/it]  1%|          | 266/45129 [03:27<12:51:19,  1.03s/it]  1%|          | 267/45129 [03:28<10:01:34,  1.24it/s]  1%|          | 268/45129 [03:28<7:46:23,  1.60it/s]   1%|          | 269/45129 [03:28<6:23:01,  1.95it/s]9
+File preprocessing finished. Saved samples: 420
+
+Total number of seen files: 253
+Number of unique files: 252
+Total number of non filtered songs: 149
+Total number of saved samples: 43248
+
+Current path: data/lmd_matched/A/B/L/TRABLTP128F930DC6D
+
+Preprocessing file data/lmd_matched/A/B/L/TRABLTP128F930DC6D/7ad58fc00786d37bbdf605b5ac407c6c.mid
+Processing combination 1 of 7
+Processing combination 2 of 7
+Processing combination 3 of 7
+Processing combination 4 of 7
+Processing combination 5 of 7
+Processing combination 6 of 7
+Processing combination 7 of 7
+File preprocessing finished. Saved samples: 213
+
+Total number of seen files: 254
+Number of unique files: 253
+Total number of non filtered songs: 150
+Total number of saved samples: 43461
+
+Preprocessing file data/lmd_matched/A/B/L/TRABLTP128F930DC6D/f9e26a7ff24609a5b3cfba6d325d3d85.mid
+Processing combination 1 of 7
+Processing combination 2 of 7
+Processing combination 3 of 7
+Processing combination 4 of 7
+Processing combination 5 of 7
+Processing combination 6 of 7
+Processing combination 7 of 7
+File preprocessing finished. Saved samples: 214
+
+Total number of seen files: 255
+Number of unique files: 254
+Total number of non filtered songs: 151
+Total number of saved samples: 43675
+
+Current path: data/lmd_matched/A/B/M
+
+Current path: data/lmd_matched/A/B/M/TRABMFI128F1476F9F
+
+Preprocessing file data/lmd_matched/A/B/M/TRABMFI128F1476F9F/f7eba204c8ae2a38d51971439a5018bf.mid
+Processing combination 1 of 6
+Processing combination 2 of 6
+Processing combination 3 of 6
+Processing combination 4 of 6
+Processing combination 5 of 6
+Processing combination 6 of 6
+File preprocessing finished. Saved samples: 299
+
+Total number of seen files: 256
+Number of unique files: 255
+Total number of non filtered songs: 152
+Total number of saved samples: 43974
+
+Current path: data/lmd_matched/A/B/M/TRABMIC128F9314139
+
+Preprocessing file data/lmd_matched/A/B/M/TRABMIC128F9314139/dc54dfe1ee8500bb247c626405b457b4.mid
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples: 138
+
+Total number of seen files: 257
+Number of unique files: 256
+Total number of non filtered songs: 153
+Total number of saved samples: 44112
+
+Current path: data/lmd_matched/A/B/M/TRABMSM12903CB9625
+
+Preprocessing file data/lmd_matched/A/B/M/TRABMSM12903CB9625/2e05386a6a0416349088ca16fad32589.mid
+Processing combination 1 of 5
+Processing combination 2 of 5
+Processing combination 3 of 5
+Processing combination 4 of 5
+Processing combination 5 of 5
+File preprocessing finished. Saved samples: 207
+
+Total number of seen files: 258
+Number of unique files: 257
+Total number of non filtered songs: 154
+Total number of saved samples: 44319
+
+Preprocessing file data/lmd_matched/A/B/M/TRABMSM12903CB9625/8913e006b9f06929e1fe0a4271567a7a.mid
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples: 48
+
+Total number of seen files: 259
+Number of unique files: 258
+Total number of non filtered songs: 155
+Total number of saved samples: 44367
+
+Preprocessing file data/lmd_matched/A/B/M/TRABMSM12903CB9625/183ff15f45a3de92e3b0ae2d13f6bce2.mid
+Processing combination 1 of 8
+Processing combination 2 of 8
+Processing combination 3 of 8
+Processing combination 4 of 8
+Processing combination 5 of 8
+Processing combination 6 of 8
+Processing combination 7 of 8
+Processing combination 8 of 8
+File preprocessing finished. Saved samples: 173
+
+Total number of seen files: 260
+Number of unique files: 259
+Total number of non filtered songs: 156
+Total number of saved samples: 44540
+
+Preprocessing file data/lmd_matched/A/B/M/TRABMSM12903CB9625/0f3c29271f1bfd7f7f7c9fa4019b85f1.mid
+Processing combination 1 of 8
+Processing combination 2 of 8
+Processing combination 3 of 8
+Processing combination 4 of 8
+Processing combination 5 of 8
+Processing combination 6 of 8
+Processing combination 7 of 8
+Processing combination 8 of 8
+File preprocessing finished. Saved samples: 173
+
+Total number of seen files: 261
+Number of unique files: 260
+Total number of non filtered songs: 157
+Total number of saved samples: 44713
+
+Preprocessing file data/lmd_matched/A/B/M/TRABMSM12903CB9625/2d95c29f9772b6011f7ece249c271809.mid
+Processing combination 1 of 8
+Processing combination 2 of 8
+Processing combination 3 of 8
+Processing combination 4 of 8
+Processing combination 5 of 8
+Processing combination 6 of 8
+Processing combination 7 of 8
+Processing combination 8 of 8
+File preprocessing finished. Saved samples: 173
+
+Total number of seen files: 262
+Number of unique files: 261
+Total number of non filtered songs: 158
+Total number of saved samples: 44886
+
+Preprocessing file data/lmd_matched/A/B/M/TRABMSM12903CB9625/137a3649cb77cd7f5e0d8b6f3621d98d.mid
+Processing combination 1 of 8
+Processing combination 2 of 8
+Processing combination 3 of 8
+Processing combination 4 of 8
+Processing combination 5 of 8
+Processing combination 6 of 8
+Processing combination 7 of 8
+Processing combination 8 of 8
+File preprocessing finished. Saved samples: 173
+
+Total number of seen files: 263
+Number of unique files: 262
+Total number of non filtered songs: 159
+Total number of saved samples: 45059
+
+Preprocessing file data/lmd_matched/A/B/M/TRABMSM12903CB9625/6ea520321f06b004837cd5b1fbebb9da.mid
+Processing combination 1 of 8
+Processing combination 2 of 8
+Processing combination 3 of 8
+Processing combination 4 of 8
+Processing combination 5 of 8
+Processing combination 6 of 8
+Processing combination 7 of 8
+Processing combination 8 of 8
+File preprocessing finished. Saved samples: 173
+
+Total number of seen files: 264
+Number of unique files: 263
+Total number of non filtered songs: 160
+Total number of saved samples: 45232
+
+Current path: data/lmd_matched/A/B/N
+
+Current path: data/lmd_matched/A/B/N/TRABNZK128F42AB221
+
+Preprocessing file data/lmd_matched/A/B/N/TRABNZK128F42AB221/21e9660127ff5467ac01a5128baf1926.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 271
+
+Total number of seen files: 265
+Number of unique files: 264
+Total number of non filtered songs: 161
+Total number of saved samples: 45503
+
+Current path: data/lmd_matched/A/B/P
+
+Current path: data/lmd_matched/A/B/P/TRABPDX128F421FAAE
+
+Preprocessing file data/lmd_matched/A/B/P/TRABPDX128F421FAAE/83f43510f1148cde3626daac618a9796.mid
+Processing combination 1 of 8
+Processing combination 2 of 8
+Processing combination 3 of 8
+Processing combination 4 of 8
+Processing combination 5 of 8
+Processing combination 6 of 8
+Processing combination 7 of 8
+Processing combination 8 of 8
+File preprocessing finished. Saved samples: 28
+
+Total number of seen files: 266
+Number of unique files: 265
+Total number of non filtered songs: 162
+Total number of saved samples: 45531
+
+Current path: data/lmd_matched/A/B/P/TRABPKX128F14938FE
+
+Current path: data/lmd_matched/A/B/Q
+
+Current path: data/lmd_matched/A/B/Q/TRABQDP128F42921F8
+
+Preprocessing file data/lmd_matched/A/B/Q/TRABQDP128F42921F8/076ea643b6152ccc686a9355f01b0068.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 269
+Number of unique files: 266
+Total number of non filtered songs: 162
+Total number of saved samples: 45531
+
+Preprocessing file data/lmd_matched/A/B/Q/TRABQDP128F42921F8/03cfe9c5bcba85382e3baa8754e2953e.mid
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples: 59
+
+Total number of seen files: 270
+Number of unique files: 267
+Total number of non filtered songs: 163
+Total number of saved samples: 45590
+
+Preprocessing file data/lmd_matched/A/B/Q/TRABQDP128F42921F8/3a21dcdcf35a6209d10f77e7af68eb61.mid
+Song skipped (2/4 time signature)
+Total number of seen files: 271
+Number of unique files: 268
+Total number of non filtered songs: 163
+Total number of saved samples: 45590
+
+Preprocessing file data/lmd_matched/A/B/Q/TRABQDP128F42921F8/57cc06429401c8ee88350b7ea65412b5.mid
+Song skipped (2/4 time signature)
+Total number of seen files: 272
+Number of unique files: 269
+Total number of non filtered songs: 163
+Total number of saved samples: 45590
+
+Preprocessing file data/lmd_matched/A/B/Q/TRABQDP128F42921F8/5f2e676016c34d7c4568a9b552316721.mid  1%|          | 270/45129 [03:28<5:07:01,  2.44it/s]  1%|          | 271/45129 [03:29<4:29:56,  2.77it/s]  1%|          | 272/45129 [03:29<4:28:37,  2.78it/s]  1%|          | 273/45129 [03:29<4:29:14,  2.78it/s]  1%|          | 274/45129 [03:30<4:02:22,  3.08it/s]  1%|          | 276/45129 [03:30<3:07:14,  3.99it/s]  1%|          | 277/45129 [03:30<2:59:12,  4.17it/s]  1%|          | 278/45129 [03:30<2:57:58,  4.20it/s]  1%|          | 279/45129 [03:31<2:50:06,  4.39it/s]  1%|          | 281/45129 [03:31<2:23:10,  5.22it/s]  1%|          | 282/45129 [03:32<6:20:33,  1.96it/s]  1%|          | 283/45129 [03:34<8:33:28,  1.46it/s]  1%|          | 284/45129 [03:35<10:30:31,  1.19it/s]  1%|          | 285/45129 [03:35<8:33:01,  1.46it/s]   1%|          | 286/45129 [03:36<10:12:33,  1.22it/s]  1%|          | 287/45129 [03:38<12:02:01,  1.04it/s]  1%|          | 288/45129 [03:38<9:14:08,  1.35it/s]   1%|          | 289/45129 [03:38<7:12:04,  1.73it/s]  1%|          | 290/45129 [03:38<5:59:33,  2.08it/s]  1%|          | 291/45129 [03:39<8:00:55,  1.55it/s]
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples: 28
+
+Total number of seen files: 273
+Number of unique files: 270
+Total number of non filtered songs: 164
+Total number of saved samples: 45618
+
+Preprocessing file data/lmd_matched/A/B/Q/TRABQDP128F42921F8/78a123e40f61ed753fbbb8ccce2d99d7.mid
+Song skipped (2/4 time signature)
+Total number of seen files: 274
+Number of unique files: 271
+Total number of non filtered songs: 164
+Total number of saved samples: 45618
+
+Preprocessing file data/lmd_matched/A/B/Q/TRABQDP128F42921F8/c56988f597f2c28e1c4409f555ae12d3.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 132
+
+Total number of seen files: 275
+Number of unique files: 272
+Total number of non filtered songs: 165
+Total number of saved samples: 45750
+
+Preprocessing file data/lmd_matched/A/B/Q/TRABQDP128F42921F8/d93c82764d7d5986cb032f223a7cefe3.mid
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples: 80
+
+Total number of seen files: 276
+Number of unique files: 273
+Total number of non filtered songs: 166
+Total number of saved samples: 45830
+
+Preprocessing file data/lmd_matched/A/B/Q/TRABQDP128F42921F8/b623e5a16b054783d761c9210ce759e9.mid
+Song skipped (2/4 time signature)
+Total number of seen files: 277
+Number of unique files: 274
+Total number of non filtered songs: 166
+Total number of saved samples: 45830
+
+Preprocessing file data/lmd_matched/A/B/Q/TRABQDP128F42921F8/de7115a474c86b2a37e3b855e32497b5.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 278
+Number of unique files: 275
+Total number of non filtered songs: 166
+Total number of saved samples: 45830
+
+Preprocessing file data/lmd_matched/A/B/Q/TRABQDP128F42921F8/5d41553bad144f3882aead5d0e322b6a.mid
+Song skipped (2/4 time signature)
+Total number of seen files: 279
+Number of unique files: 276
+Total number of non filtered songs: 166
+Total number of saved samples: 45830
+
+Preprocessing file data/lmd_matched/A/B/Q/TRABQDP128F42921F8/5c247d54f74daecd0cd3d1b4e0aefd2b.mid
+Song skipped (2/4 time signature)
+Total number of seen files: 280
+Number of unique files: 277
+Total number of non filtered songs: 166
+Total number of saved samples: 45830
+
+Preprocessing file data/lmd_matched/A/B/Q/TRABQDP128F42921F8/669b134a6269bf122e5af4dcc77bff7f.mid
+Song skipped (2/4 time signature)
+Total number of seen files: 281
+Number of unique files: 278
+Total number of non filtered songs: 166
+Total number of saved samples: 45830
+
+Preprocessing file data/lmd_matched/A/B/Q/TRABQDP128F42921F8/6e794a0ee176bde9036e2051968e8dde.mid
+Song skipped (2/4 time signature)
+Total number of seen files: 282
+Number of unique files: 279
+Total number of non filtered songs: 166
+Total number of saved samples: 45830
+
+Current path: data/lmd_matched/A/B/Q/TRABQDW128F92F27C4
+
+Preprocessing file data/lmd_matched/A/B/Q/TRABQDW128F92F27C4/af687d9052eb9b7a810c9b96183f8d78.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 283
+Number of unique files: 280
+Total number of non filtered songs: 166
+Total number of saved samples: 45830
+
+Current path: data/lmd_matched/A/B/Q/TRABQEP128F427F957
+
+Preprocessing file data/lmd_matched/A/B/Q/TRABQEP128F427F957/cbca4c2752c2b96613c65284ca2b9200.mid
+Song skipped (2/4 time signature)
+Total number of seen files: 284
+Number of unique files: 281
+Total number of non filtered songs: 166
+Total number of saved samples: 45830
+
+Current path: data/lmd_matched/A/B/Q/TRABQUM12903C9A618
+
+Preprocessing file data/lmd_matched/A/B/Q/TRABQUM12903C9A618/18c64e0d22d6555e9add99dbc7416d69.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 332
+
+Total number of seen files: 285
+Number of unique files: 282
+Total number of non filtered songs: 167
+Total number of saved samples: 46162
+
+Preprocessing file data/lmd_matched/A/B/Q/TRABQUM12903C9A618/f45fe9f0c0619c37cb1bd98b7fd66f9e.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 318
+
+Total number of seen files: 286
+Number of unique files: 283
+Total number of non filtered songs: 168
+Total number of saved samples: 46480
+
+Preprocessing file data/lmd_matched/A/B/Q/TRABQUM12903C9A618/1121cff47e8cdd74b7200f3d399a7c96.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 332
+
+Total number of seen files: 287
+Number of unique files: 284
+Total number of non filtered songs: 169
+Total number of saved samples: 46812
+
+Current path: data/lmd_matched/A/B/R
+
+Current path: data/lmd_matched/A/B/R/TRABRMZ128F4261DED
+
+Preprocessing file data/lmd_matched/A/B/R/TRABRMZ128F4261DED/20bdf9007624a9d5ee9e917d0de356c9.mid
+Processing combination 1 of 3
+Processing combination 2 of 3
+Processing combination 3 of 3
+File preprocessing finished. Saved samples: 58
+
+Total number of seen files: 288
+Number of unique files: 285
+Total number of non filtered songs: 170
+Total number of saved samples: 46870
+
+Current path: data/lmd_matched/A/B/R/TRABRUJ128F42ADE0D
+
+Preprocessing file data/lmd_matched/A/B/R/TRABRUJ128F42ADE0D/025fb4d42ff236cb25881dde5c380c1a.mid
+Processing combination 1 of 6
+Processing combination 2 of 6
+Processing combination 3 of 6
+Processing combination 4 of 6
+Processing combination 5 of 6
+Processing combination 6 of 6
+File preprocessing finished. Saved samples: 337
+
+Total number of seen files: 289
+Number of unique files: 286
+Total number of non filtered songs: 171
+Total number of saved samples: 47207
+
+Preprocessing file data/lmd_matched/A/B/R/TRABRUJ128F42ADE0D/1e830ed0190e6f18a487557c577401dc.mid
+Processing combination 1 of 6
+Processing combination 2 of 6
+Processing combination 3 of 6
+Processing combination 4 of 6
+Processing combination 5 of 6
+Processing combination 6 of 6
+File preprocessing finished. Saved samples: 337
+
+Total number of seen files: 290
+Number of unique files: 287
+Total number of non filtered songs: 172
+Total number of saved samples: 47544
+
+Current path: data/lmd_matched/A/B/S
+
+Current path: data/lmd_matched/A/B/S/TRABSFZ128E07936F7
+
+Preprocessing file data/lmd_matched/A/B/S/TRABSFZ128E07936F7/5231954a5717a410d2a7738d83864a43.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 291
+Number of unique files: 288
+Total number of non filtered songs: 172
+Total number of saved samples: 47544
+
+Preprocessing file data/lmd_matched/A/B/S/TRABSFZ128E07936F7/f7ac9e0765f5234b68c10d2b79366734.mid
+Song skipped (6/4 time signature)
+Total number of seen files: 292
+Number of unique files: 289
+Total number of non filtered songs: 172
+Total number of saved samples: 47544
+
+Current path: data/lmd_matched/A/B/T
+
+Current path: data/lmd_matched/A/B/T/TRABTWX128F42B8619
+
+Preprocessing file data/lmd_matched/A/B/T/TRABTWX128F42B8619/7065a08391ee86cbbd393ba94b732739.mid
+Song skipped (6/8 time signature)
+Total number of seen files: 293
+Number of unique files: 290
+Total number of non filtered songs: 172
+Total number of saved samples: 47544
+
+Current path: data/lmd_matched/A/B/U
+
+Current path: data/lmd_matched/A/B/U/TRABUCZ128F424163A
+
+Preprocessing file data/lmd_matched/A/B/U/TRABUCZ128F424163A/4b809c095597c4533cf4d8b3126b49ee.mid
+Processing combination 1 of 8
+Processing combination 2 of 8
+Processing combination 3 of 8
+Processing combination 4 of 8
+Processing combination 5 of 8
+Processing combination 6 of 8
+Processing combination 7 of 8
+Processing combination 8 of 8
+File preprocessing finished. Saved samples: 378
+
+Total number of seen files: 294
+Number of unique files: 291
+Total number of non filtered songs: 173
+Total number of saved samples: 47922
+
+Current path: data/lmd_matched/A/B/U/TRABUSZ128F4257BAB
+
+Preprocessing file data/lmd_matched/A/B/U/TRABUSZ128F4257BAB/73da8ddd716fbfe501f53e2733c218f5.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)  1%|          | 292/45129 [03:39<6:08:03,  2.03it/s]  1%|          | 293/45129 [03:40<5:26:39,  2.29it/s]  1%|          | 294/45129 [03:40<4:57:15,  2.51it/s]  1%|          | 295/45129 [03:40<4:07:24,  3.02it/s]  1%|          | 296/45129 [03:44<16:48:05,  1.35s/it]  1%|          | 297/45129 [03:45<16:11:38,  1.30s/it]  1%|          | 298/45129 [03:46<14:46:37,  1.19s/it]  1%|          | 300/45129 [03:47<9:50:41,  1.26it/s]   1%|          | 301/45129 [03:47<9:49:24,  1.27it/s]  1%|          | 302/45129 [03:48<9:48:24,  1.27it/s]  1%|          | 303/45129 [03:49<9:05:36,  1.37it/s]  1%|          | 304/45129 [03:49<8:19:19,  1.50it/s]  1%|          | 305/45129 [03:50<8:07:37,  1.53it/s]  1%|          | 306/45129 [03:51<10:58:39,  1.13it/s]  1%|          | 307/45129 [03:53<13:18:06,  1.07s/it]  1%|          | 308/45129 [03:57<25:57:57,  2.09s/it]  1%|          | 309/45129 [03:58<20:53:25,  1.68s/it]  1%|          | 310/45129 [03:59<18:27:28,  1.48s/it]  1%|          | 311/45129 [04:00<16:36:13,  1.33s/it]  1%|          | 312/45129 [04:01<15:09:44,  1.22s/it]
+Total number of seen files: 295
+Number of unique files: 292
+Total number of non filtered songs: 173
+Total number of saved samples: 47922
+
+Preprocessing file data/lmd_matched/A/B/U/TRABUSZ128F4257BAB/64dd7e07512a809133d27afcd7e7c031.mid
+Processing combination 1 of 1
+File preprocessing finished. Saved samples: 41
+
+Total number of seen files: 296
+Number of unique files: 293
+Total number of non filtered songs: 174
+Total number of saved samples: 47963
+
+Preprocessing file data/lmd_matched/A/B/U/TRABUSZ128F4257BAB/0350e57757e2e2bd2d6aadf14ee9065d.mid
+Processing combination 1 of 1
+File preprocessing finished. Saved samples: 41
+
+Total number of seen files: 297
+Number of unique files: 294
+Total number of non filtered songs: 175
+Total number of saved samples: 48004
+
+Preprocessing file data/lmd_matched/A/B/U/TRABUSZ128F4257BAB/c353032f06dcbae3cc36bd6b70a7aa6c.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 298
+Number of unique files: 295
+Total number of non filtered songs: 175
+Total number of saved samples: 48004
+
+Current path: data/lmd_matched/A/B/U/TRABUXE12903D16619
+
+Preprocessing file data/lmd_matched/A/B/U/TRABUXE12903D16619/e5839ee3d9faa5f48d565de970558d7a.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 523
+
+Total number of seen files: 299
+Number of unique files: 296
+Total number of non filtered songs: 176
+Total number of saved samples: 48527
+
+Current path: data/lmd_matched/A/B/V
+
+Current path: data/lmd_matched/A/B/V/TRABVAW12903CDE0A2
+
+Preprocessing file data/lmd_matched/A/B/V/TRABVAW12903CDE0A2/9b07200a964dc4ecaac26a5526b8e682.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 232
+
+Total number of seen files: 300
+Number of unique files: 297
+Total number of non filtered songs: 177
+Total number of saved samples: 48759
+
+Preprocessing file data/lmd_matched/A/B/V/TRABVAW12903CDE0A2/db71007aed73b96a8a0a03e19464cc7c.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 232
+
+Total number of seen files: 301
+Number of unique files: 298
+Total number of non filtered songs: 178
+Total number of saved samples: 48991
+
+Preprocessing file data/lmd_matched/A/B/V/TRABVAW12903CDE0A2/28dc32a29b7e6034e98de2e063921038.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 302
+Number of unique files: 299
+Total number of non filtered songs: 178
+Total number of saved samples: 48991
+
+Current path: data/lmd_matched/A/B/V/TRABVQY128F9329431
+
+Preprocessing file data/lmd_matched/A/B/V/TRABVQY128F9329431/a1aca1d4ec5eec5f6fe62a3222f21721.mid
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples: 111
+
+Total number of seen files: 303
+Number of unique files: 300
+Total number of non filtered songs: 179
+Total number of saved samples: 49102
+
+Preprocessing file data/lmd_matched/A/B/V/TRABVQY128F9329431/03ff7bf79f940ec1cc5e09cac37ee2ba.mid
+Processing combination 1 of 6
+Processing combination 2 of 6
+Processing combination 3 of 6
+Processing combination 4 of 6
+Processing combination 5 of 6
+Processing combination 6 of 6
+File preprocessing finished. Saved samples: 222
+
+Total number of seen files: 304
+Number of unique files: 301
+Total number of non filtered songs: 180
+Total number of saved samples: 49324
+
+Preprocessing file data/lmd_matched/A/B/V/TRABVQY128F9329431/1dde4c5b1f23d4c0cc9231f6c0650718.mid
+Processing combination 1 of 6
+Processing combination 2 of 6
+Processing combination 3 of 6
+Processing combination 4 of 6
+Processing combination 5 of 6
+Processing combination 6 of 6
+File preprocessing finished. Saved samples: 222
+
+Total number of seen files: 305
+Number of unique files: 302
+Total number of non filtered songs: 181
+Total number of saved samples: 49546
+
+Preprocessing file data/lmd_matched/A/B/V/TRABVQY128F9329431/90ec306bcf3443ea3489c7438831eae1.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 118
+
+Total number of seen files: 306
+Number of unique files: 303
+Total number of non filtered songs: 182
+Total number of saved samples: 49664
+
+Preprocessing file data/lmd_matched/A/B/V/TRABVQY128F9329431/c7a9c9564608fd099e1a49e48e2b39cd.mid
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples: 111
+
+Total number of seen files: 307
+Number of unique files: 304
+Total number of non filtered songs: 183
+Total number of saved samples: 49775
+
+Preprocessing file data/lmd_matched/A/B/V/TRABVQY128F9329431/0de3625110edea75d1110c9943569949.mid
+Processing combination 1 of 3
+Processing combination 2 of 3
+Processing combination 3 of 3
+File preprocessing finished. Saved samples: 115
+
+Total number of seen files: 308
+Number of unique files: 305
+Total number of non filtered songs: 184
+Total number of saved samples: 49890
+
+Preprocessing file data/lmd_matched/A/B/V/TRABVQY128F9329431/f5e0509b144e28d350c5ae83843d1843.mid
+Processing combination 1 of 6
+Processing combination 2 of 6
+Processing combination 3 of 6
+Processing combination 4 of 6
+Processing combination 5 of 6
+Processing combination 6 of 6
+File preprocessing finished. Saved samples: 222
+
+Total number of seen files: 309
+Number of unique files: 306
+Total number of non filtered songs: 185
+Total number of saved samples: 50112
+
+Current path: data/lmd_matched/A/B/V/TRABVVK12903CF09C8
+
+Preprocessing file data/lmd_matched/A/B/V/TRABVVK12903CF09C8/2eb9c151271bd4db228314806424efc5.mid
+Processing combination 1 of 3
+Processing combination 2 of 3
+Processing combination 3 of 3
+File preprocessing finished. Saved samples: 165
+
+Total number of seen files: 310
+Number of unique files: 307
+Total number of non filtered songs: 186
+Total number of saved samples: 50277
+
+Preprocessing file data/lmd_matched/A/B/V/TRABVVK12903CF09C8/eac8ba0ac4c7540ac17a39ad99d90ca8.mid
+Processing combination 1 of 6
+Processing combination 2 of 6
+Processing combination 3 of 6
+Processing combination 4 of 6
+Processing combination 5 of 6
+Processing combination 6 of 6
+File preprocessing finished. Saved samples: 388
+
+Total number of seen files: 311
+Number of unique files: 308
+Total number of non filtered songs: 187
+Total number of saved samples: 50665
+
+Preprocessing file data/lmd_matched/A/B/V/TRABVVK12903CF09C8/41fb99775d6bc39cddc34203cbe310c4.mid
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples: 99
+
+Total number of seen files: 312
+Number of unique files: 309
+Total number of non filtered songs: 188
+Total number of saved samples: 50764
+
+Preprocessing file data/lmd_matched/A/B/V/TRABVVK12903CF09C8/7bf59fbc8472f3ad88f683b3e2daa0e9.mid
+Processing combination 1 of 3
+Processing combination 2 of 3
+Processing combination 3 of 3
+File preprocessing finished. Saved samples: 165
+
+Total number of seen files: 313
+Number of unique files: 310
+Total number of non filtered songs: 189
+Total number of saved samples: 50929
+
+Preprocessing file data/lmd_matched/A/B/V/TRABVVK12903CF09C8/cd76dde9b032defba29f4147dfd2e16d.mid
+Processing combination 1 of 3
+Processing combination 2 of 3
+Processing combination 3 of 3
+File preprocessing finished. Saved samples: 165
+
+Total number of seen files: 314
+Number of unique files: 311
+Total number of non filtered songs: 190
+Total number of saved samples: 51094
+
+Preprocessing file data/lmd_matched/A/B/V/TRABVVK12903CF09C8/6fddb5daa2a0d3e4e8e6df99cba43dea.mid
+Processing combination 1 of 3
+Processing combination 2 of 3
+Processing combination 3 of 3
+File preprocessing finished. Saved samples: 165
+
+Total number of seen files: 315
+Number of unique files: 312
+Total number of non filtered songs: 191
+Total number of saved samples: 51259
+
+Current path: data/lmd_matched/A/B/V/TRABVVN12903CB6445
+
+Preprocessing file data/lmd_matched/A/B/V/TRABVVN12903CB6445/d809d7337042605a186eef7a81fa49f6.mid  1%|          | 313/45129 [04:02<12:49:01,  1.03s/it]  1%|          | 314/45129 [04:02<10:48:57,  1.15it/s]  1%|          | 315/45129 [04:04<15:33:22,  1.25s/it]  1%|          | 317/45129 [04:06<12:45:31,  1.02s/it]  1%|          | 319/45129 [04:07<10:56:30,  1.14it/s]  1%|          | 320/45129 [04:08<9:32:28,  1.30it/s]   1%|          | 321/45129 [04:08<7:55:34,  1.57it/s]  1%|          | 322/45129 [04:08<6:46:52,  1.84it/s]  1%|          | 323/45129 [04:08<6:14:21,  1.99it/s]  1%|          | 324/45129 [04:09<6:25:33,  1.94it/s]  1%|          | 325/45129 [04:09<6:00:12,  2.07it/s]  1%|          | 326/45129 [04:10<5:29:45,  2.26it/s]  1%|          | 327/45129 [04:10<5:05:35,  2.44it/s]  1%|          | 328/45129 [04:10<4:38:44,  2.68it/s]  1%|          | 329/45129 [04:11<4:27:25,  2.79it/s]  1%|          | 330/45129 [04:11<4:29:55,  2.77it/s]  1%|          | 331/45129 [04:11<4:21:32,  2.85it/s]
+Processing combination 1 of 8
+Processing combination 2 of 8
+Processing combination 3 of 8
+Processing combination 4 of 8
+Processing combination 5 of 8
+Processing combination 6 of 8
+Processing combination 7 of 8
+Processing combination 8 of 8
+File preprocessing finished. Saved samples: 97
+
+Total number of seen files: 316
+Number of unique files: 313
+Total number of non filtered songs: 192
+Total number of saved samples: 51356
+
+Preprocessing file data/lmd_matched/A/B/V/TRABVVN12903CB6445/1dbcd2e2ba968cbd1f9cab03a81f2adb.mid
+Processing combination 1 of 9
+Processing combination 2 of 9
+Processing combination 3 of 9
+Processing combination 4 of 9
+Processing combination 5 of 9
+Processing combination 6 of 9
+Processing combination 7 of 9
+Processing combination 8 of 9
+Processing combination 9 of 9
+File preprocessing finished. Saved samples: 97
+
+Total number of seen files: 317
+Number of unique files: 314
+Total number of non filtered songs: 193
+Total number of saved samples: 51453
+
+Current path: data/lmd_matched/A/B/W
+
+Current path: data/lmd_matched/A/B/W/TRABWCG12903CF85F4
+
+Preprocessing file data/lmd_matched/A/B/W/TRABWCG12903CF85F4/0e3824b7b56ace4d7e5dc3d5fb0f362b.mid
+Processing combination 1 of 3
+Processing combination 2 of 3
+Processing combination 3 of 3
+File preprocessing finished. Saved samples: 288
+
+Total number of seen files: 318
+Number of unique files: 315
+Total number of non filtered songs: 194
+Total number of saved samples: 51741
+
+Current path: data/lmd_matched/A/B/X
+
+Current path: data/lmd_matched/A/B/X/TRABXWL128F930C085
+
+Preprocessing file data/lmd_matched/A/B/X/TRABXWL128F930C085/4a3f9d8726f5c51606638d586332621d.mid
+Song skipped (12/8 time signature)
+Total number of seen files: 319
+Number of unique files: 316
+Total number of non filtered songs: 194
+Total number of saved samples: 51741
+
+Current path: data/lmd_matched/A/B/Y
+
+Current path: data/lmd_matched/A/B/Y/TRABYJG128F424D12B
+
+Preprocessing file data/lmd_matched/A/B/Y/TRABYJG128F424D12B/cb48043a712479f53d02de6c59ea7ffb.mid
+Processing combination 1 of 5
+Processing combination 2 of 5
+Processing combination 3 of 5
+Processing combination 4 of 5
+Processing combination 5 of 5
+File preprocessing finished. Saved samples: 390
+
+Total number of seen files: 320
+Number of unique files: 317
+Total number of non filtered songs: 195
+Total number of saved samples: 52131
+
+Preprocessing file data/lmd_matched/A/B/Y/TRABYJG128F424D12B/2cdb25a9abc795d12679c3f6abc2b212.mid
+Song skipped (Invalid song format)
+Total number of seen files: 321
+Number of unique files: 318
+Total number of non filtered songs: 195
+Total number of saved samples: 52131
+
+Current path: data/lmd_matched/A/B/Y/TRABYQX128F427CF08
+
+Preprocessing file data/lmd_matched/A/B/Y/TRABYQX128F427CF08/74ea00a472b957b7ea92196e4bd2c659.mid
+Processing combination 1 of 6
+Processing combination 2 of 6
+Processing combination 3 of 6
+Processing combination 4 of 6
+Processing combination 5 of 6
+Processing combination 6 of 6
+File preprocessing finished. Saved samples: 315
+
+Total number of seen files: 322
+Number of unique files: 319
+Total number of non filtered songs: 196
+Total number of saved samples: 52446
+
+Current path: data/lmd_matched/A/B/Y/TRABYWC128F9307C66
+
+Preprocessing file data/lmd_matched/A/B/Y/TRABYWC128F9307C66/f030fac137195a1a7fcd681712c36c40.mid
+Processing combination 1 of 6
+Processing combination 2 of 6
+Processing combination 3 of 6
+Processing combination 4 of 6
+Processing combination 5 of 6
+Processing combination 6 of 6
+File preprocessing finished. Saved samples: 20
+
+Total number of seen files: 323
+Number of unique files: 320
+Total number of non filtered songs: 197
+Total number of saved samples: 52466
+
+Current path: data/lmd_matched/A/B/Z
+
+Current path: data/lmd_matched/A/B/Z/TRABZDG128F931803F
+
+Preprocessing file data/lmd_matched/A/B/Z/TRABZDG128F931803F/d6371159fa42356ebd38380f7f0feec2.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 324
+Number of unique files: 321
+Total number of non filtered songs: 197
+Total number of saved samples: 52466
+
+Current path: data/lmd_matched/A/B/Z/TRABZSL128F932A529
+
+Preprocessing file data/lmd_matched/A/B/Z/TRABZSL128F932A529/d35966f947b2230089846cd6d5bff8a5.mid
+Song skipped (2/4 time signature)
+Total number of seen files: 325
+Number of unique files: 322
+Total number of non filtered songs: 197
+Total number of saved samples: 52466
+
+Current path: data/lmd_matched/A/B/Z/TRABZYK12903D000B2
+
+Preprocessing file data/lmd_matched/A/B/Z/TRABZYK12903D000B2/5367f4a6a774be47a47b9b8c40a5605b.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 326
+Number of unique files: 323
+Total number of non filtered songs: 197
+Total number of saved samples: 52466
+
+Current path: data/lmd_matched/A/B/Z/TRABZZD128F9334C0B
+
+Preprocessing file data/lmd_matched/A/B/Z/TRABZZD128F9334C0B/2e2eda193b7c512821ae4a1eecc9df78.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 125
+
+Total number of seen files: 327
+Number of unique files: 324
+Total number of non filtered songs: 198
+Total number of saved samples: 52591
+
+Preprocessing file data/lmd_matched/A/B/Z/TRABZZD128F9334C0B/ac4296525d610ed67b1c751ccbd8e771.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 125
+
+Total number of seen files: 328
+Number of unique files: 325
+Total number of non filtered songs: 199
+Total number of saved samples: 52716
+
+Current path: data/lmd_matched/A/C
+
+Current path: data/lmd_matched/A/C/B
+
+Current path: data/lmd_matched/A/C/B/TRACBNP128F4278243
+
+Preprocessing file data/lmd_matched/A/C/B/TRACBNP128F4278243/fab8aaae01a77a7d099b03c1cb77b42e.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 116
+
+Total number of seen files: 329
+Number of unique files: 326
+Total number of non filtered songs: 200
+Total number of saved samples: 52832
+
+Preprocessing file data/lmd_matched/A/C/B/TRACBNP128F4278243/29e67e2d8c6b7ebc62c010988f711411.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 116
+
+Total number of seen files: 330
+Number of unique files: 327
+Total number of non filtered songs: 201
+Total number of saved samples: 52948
+
+Preprocessing file data/lmd_matched/A/C/B/TRACBNP128F4278243/c553200019fbef94cbe5cf8efce247fc.mid
+Processing combination 1 of 3
+Processing combination 2 of 3
+Processing combination 3 of 3
+File preprocessing finished. Saved samples: 116
+
+Total number of seen files: 331
+Number of unique files: 328
+Total number of non filtered songs: 202
+Total number of saved samples: 53064
+
+Preprocessing file data/lmd_matched/A/C/B/TRACBNP128F4278243/62450a93473b0b0d417420081945652b.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 116
+
+Total number of seen files: 332
+Number of unique files: 329
+Total number of non filtered songs: 203
+Total number of saved samples: 53180
+
+Preprocessing file data/lmd_matched/A/C/B/TRACBNP128F4278243/d9dbd92a291dbee2df48f436f6b0bd3c.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 116
+
+Total number of seen files: 333
+Number of unique files: 330
+Total number of non filtered songs: 204
+Total number of saved samples: 53296
+
+Preprocessing file data/lmd_matched/A/C/B/TRACBNP128F4278243/bf39b3a7d9f98a1252a27054c003b1a2.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 116
+
+Total number of seen files: 334
+Number of unique files: 331
+Total number of non filtered songs: 205
+Total number of saved samples: 53412
+
+Preprocessing file data/lmd_matched/A/C/B/TRACBNP128F4278243/92284692b8154387a5b85e119dcc000b.mid  1%|          | 332/45129 [04:11<3:32:02,  3.52it/s]  1%|          | 333/45129 [04:12<3:41:39,  3.37it/s]  1%|          | 334/45129 [04:12<3:45:23,  3.31it/s]  1%|          | 335/45129 [04:13<4:15:56,  2.92it/s]  1%|          | 336/45129 [04:13<3:37:31,  3.43it/s]  1%|          | 337/45129 [04:13<3:39:37,  3.40it/s]  1%|          | 338/45129 [04:13<3:25:14,  3.64it/s]  1%|          | 339/45129 [04:13<3:01:12,  4.12it/s]  1%|          | 340/45129 [04:14<3:18:54,  3.75it/s]  1%|          | 341/45129 [04:14<3:30:39,  3.54it/s]  1%|          | 342/45129 [04:15<4:36:53,  2.70it/s]  1%|          | 343/45129 [04:15<4:04:33,  3.05it/s]  1%|          | 344/45129 [04:15<3:52:03,  3.22it/s]  1%|          | 345/45129 [04:15<3:20:39,  3.72it/s]  1%|          | 346/45129 [04:16<4:10:49,  2.98it/s]  1%|          | 347/45129 [04:16<3:40:00,  3.39it/s]  1%|          | 348/45129 [04:16<3:11:10,  3.90it/s]  1%|          | 349/45129 [04:16<2:51:00,  4.36it/s]  1%|          | 351/45129 [04:17<2:01:03,  6.16it/s]  1%|          | 352/45129 [04:17<1:50:04,  6.78it/s]  1%|          | 353/45129 [04:17<1:47:40,  6.93it/s]  1%|          | 355/45129 [04:17<1:22:15,  9.07it/s]
+Song skipped (12/8 time signature)
+Total number of seen files: 335
+Number of unique files: 332
+Total number of non filtered songs: 205
+Total number of saved samples: 53412
+
+Preprocessing file data/lmd_matched/A/C/B/TRACBNP128F4278243/c4cccd46261056bd04ae47371884e2d6.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 116
+
+Total number of seen files: 336
+Number of unique files: 333
+Total number of non filtered songs: 206
+Total number of saved samples: 53528
+
+Preprocessing file data/lmd_matched/A/C/B/TRACBNP128F4278243/fae65778166c7f5b66db80cee56e519c.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 116
+
+Total number of seen files: 337
+Number of unique files: 334
+Total number of non filtered songs: 207
+Total number of saved samples: 53644
+
+Current path: data/lmd_matched/A/C/C
+
+Current path: data/lmd_matched/A/C/C/TRACCYA128F424AD33
+
+Preprocessing file data/lmd_matched/A/C/C/TRACCYA128F424AD33/1dc5fe0fc7dbe850b98ac7ef69c5bc33.mid
+Song skipped (6/8 time signature)
+Total number of seen files: 338
+Number of unique files: 335
+Total number of non filtered songs: 207
+Total number of saved samples: 53644
+
+Preprocessing file data/lmd_matched/A/C/C/TRACCYA128F424AD33/57f7f1b2595f872ffcd9bd6338b2aef2.mid
+Song skipped (6/8 time signature)
+Total number of seen files: 339
+Number of unique files: 336
+Total number of non filtered songs: 207
+Total number of saved samples: 53644
+
+Preprocessing file data/lmd_matched/A/C/C/TRACCYA128F424AD33/297258552dc260dec7dee85815742da3.mid
+Song skipped (12/8 time signature)
+Total number of seen files: 340
+Number of unique files: 337
+Total number of non filtered songs: 207
+Total number of saved samples: 53644
+
+Preprocessing file data/lmd_matched/A/C/C/TRACCYA128F424AD33/6239e4e1e2de19432bed54f88ec9367a.mid
+Processing combination 1 of 8
+Processing combination 2 of 8
+Processing combination 3 of 8
+Processing combination 4 of 8
+Processing combination 5 of 8
+Processing combination 6 of 8
+Processing combination 7 of 8
+Processing combination 8 of 8
+File preprocessing finished. Saved samples: 71
+
+Total number of seen files: 341
+Number of unique files: 338
+Total number of non filtered songs: 208
+Total number of saved samples: 53715
+
+Preprocessing file data/lmd_matched/A/C/C/TRACCYA128F424AD33/f642b3ef853cb549878d3ed96e71527e.mid
+Song skipped (6/8 time signature)
+Total number of seen files: 342
+Number of unique files: 339
+Total number of non filtered songs: 208
+Total number of saved samples: 53715
+
+Preprocessing file data/lmd_matched/A/C/C/TRACCYA128F424AD33/c70050ec4ac1c088cde6f55cd9d6d726.mid
+Song skipped (6/8 time signature)
+Total number of seen files: 343
+Number of unique files: 340
+Total number of non filtered songs: 208
+Total number of saved samples: 53715
+
+Preprocessing file data/lmd_matched/A/C/C/TRACCYA128F424AD33/dcfb52b6167bdfd822a93d7d0cf2610f.mid
+Song skipped (6/8 time signature)
+Total number of seen files: 344
+Number of unique files: 341
+Total number of non filtered songs: 208
+Total number of saved samples: 53715
+
+Preprocessing file data/lmd_matched/A/C/C/TRACCYA128F424AD33/15846a1c24933574cb501b432715ba03.mid
+Processing combination 1 of 5
+Processing combination 2 of 5
+Processing combination 3 of 5
+Processing combination 4 of 5
+Processing combination 5 of 5
+File preprocessing finished. Saved samples: 86
+
+Total number of seen files: 345
+Number of unique files: 342
+Total number of non filtered songs: 209
+Total number of saved samples: 53801
+
+Preprocessing file data/lmd_matched/A/C/C/TRACCYA128F424AD33/30e04628ffc575cb04d2977d4f49e8c5.mid
+Song skipped (6/8 time signature)
+Total number of seen files: 346
+Number of unique files: 343
+Total number of non filtered songs: 209
+Total number of saved samples: 53801
+
+Preprocessing file data/lmd_matched/A/C/C/TRACCYA128F424AD33/73c15519909e8296b1995e3dada7ab8d.mid
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples: 94
+
+Total number of seen files: 347
+Number of unique files: 344
+Total number of non filtered songs: 210
+Total number of saved samples: 53895
+
+Preprocessing file data/lmd_matched/A/C/C/TRACCYA128F424AD33/90e0129784df12c801c8ac7cd529d7e9.mid
+Song skipped (6/8 time signature)
+Total number of seen files: 348
+Number of unique files: 345
+Total number of non filtered songs: 210
+Total number of saved samples: 53895
+
+Preprocessing file data/lmd_matched/A/C/C/TRACCYA128F424AD33/bcebd287174a00cd6645934831f34fde.mid
+Processing combination 1 of 5
+Processing combination 2 of 5
+Processing combination 3 of 5
+Processing combination 4 of 5
+Processing combination 5 of 5
+File preprocessing finished. Saved samples: 86
+
+Total number of seen files: 349
+Number of unique files: 346
+Total number of non filtered songs: 211
+Total number of saved samples: 53981
+
+Preprocessing file data/lmd_matched/A/C/C/TRACCYA128F424AD33/501534358cfd2668825ea047c03c5c86.mid
+Song skipped (6/8 time signature)
+Total number of seen files: 350
+Number of unique files: 347
+Total number of non filtered songs: 211
+Total number of saved samples: 53981
+
+Preprocessing file data/lmd_matched/A/C/C/TRACCYA128F424AD33/548448c46fda0c1974750a336d9ad4c3.mid
+Song skipped (6/8 time signature)
+Total number of seen files: 351
+Number of unique files: 348
+Total number of non filtered songs: 211
+Total number of saved samples: 53981
+
+Current path: data/lmd_matched/A/C/D
+
+Current path: data/lmd_matched/A/C/D/TRACDHB12903CDF8F6
+
+Preprocessing file data/lmd_matched/A/C/D/TRACDHB12903CDF8F6/d5d063749eb300431d7caec2b039dccc.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 352
+Number of unique files: 349
+Total number of non filtered songs: 211
+Total number of saved samples: 53981
+
+Preprocessing file data/lmd_matched/A/C/D/TRACDHB12903CDF8F6/83a50075bffb075a9cbc1047d1d3096e.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 353
+Number of unique files: 350
+Total number of non filtered songs: 211
+Total number of saved samples: 53981
+
+Current path: data/lmd_matched/A/C/D/TRACDLP12903CBE918
+
+Preprocessing file data/lmd_matched/A/C/D/TRACDLP12903CBE918/eeeea7ca7185792d5a0a4a9ef85d7838.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 354
+Number of unique files: 351
+Total number of non filtered songs: 211
+Total number of saved samples: 53981
+
+Current path: data/lmd_matched/A/C/D/TRACDWG128F428B068
+
+Preprocessing file data/lmd_matched/A/C/D/TRACDWG128F428B068/6c1e4bc1e31093cda52fffde367901af.mid
+Song skipped (Invalid song format)
+Total number of seen files: 355
+Number of unique files: 352
+Total number of non filtered songs: 211
+Total number of saved samples: 53981
+
+Preprocessing file data/lmd_matched/A/C/D/TRACDWG128F428B068/a2ea13cce0745a1e959066a8d850067a.mid
+Song skipped (Invalid song format)
+Total number of seen files: 356
+Number of unique files: 353
+Total number of non filtered songs: 211
+Total number of saved samples: 53981
+
+Preprocessing file data/lmd_matched/A/C/D/TRACDWG128F428B068/def8d49fcb546e0f7d0dcd1c1f76d1dd.mid
+Processing combination 1 of 3
+Processing combination 2 of 3
+Processing combination 3 of 3
+File preprocessing finished. Saved samples: 40
+
+Total number of seen files: 357
+Number of unique files: 354
+Total number of non filtered songs: 212
+Total number of saved samples: 54021
+
+Current path: data/lmd_matched/A/C/E
+
+Current path: data/lmd_matched/A/C/E/TRACEDW128EF353CA4
+
+Preprocessing file data/lmd_matched/A/C/E/TRACEDW128EF353CA4/a06f896bf7c56308363b73173664568b.mid
+Song skipped (3/4 time signature)
+Total number of seen files: 358
+Number of unique files: 355
+Total number of non filtered songs: 212
+Total number of saved samples: 54021
+
+Current path: data/lmd_matched/A/C/E/TRACETV12903CDD0F6
+
+Preprocessing file data/lmd_matched/A/C/E/TRACETV12903CDD0F6/a8d716ba05f828d4e9ec918fd6b4b732.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 359
+  1%|          | 357/45129 [04:18<2:31:24,  4.93it/s]  1%|          | 358/45129 [04:18<2:18:18,  5.40it/s]  1%|          | 359/45129 [04:18<2:22:18,  5.24it/s]  1%|          | 360/45129 [04:18<2:10:14,  5.73it/s]  1%|          | 363/45129 [04:19<2:06:09,  5.91it/s]  1%|          | 364/45129 [04:19<3:32:40,  3.51it/s]  1%|          | 367/45129 [04:20<3:54:23,  3.18it/s]  1%|          | 368/45129 [04:21<3:48:58,  3.26it/s]  1%|          | 370/45129 [04:21<4:00:51,  3.10it/s]  1%|          | 371/45129 [04:22<5:02:49,  2.46it/s]  1%|          | 372/45129 [04:23<7:08:14,  1.74it/s]  1%|          | 373/45129 [04:24<6:58:54,  1.78it/s]  1%|          | 374/45129 [04:24<5:59:43,  2.07it/s]Number of unique files: 356
+Total number of non filtered songs: 212
+Total number of saved samples: 54021
+
+Preprocessing file data/lmd_matched/A/C/E/TRACETV12903CDD0F6/1c54a4d8d87389ebd6066801b04e7b4b.mid
+Processing combination 1 of 3
+Processing combination 2 of 3
+Processing combination 3 of 3
+File preprocessing finished. Saved samples: 277
+
+Total number of seen files: 360
+Number of unique files: 357
+Total number of non filtered songs: 213
+Total number of saved samples: 54298
+
+Current path: data/lmd_matched/A/C/E/TRACEUX128F425CE5A
+
+Preprocessing file data/lmd_matched/A/C/E/TRACEUX128F425CE5A/0488153f61e41f4fae5f2b46fd6c5b4e.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 361
+Number of unique files: 358
+Total number of non filtered songs: 213
+Total number of saved samples: 54298
+
+Current path: data/lmd_matched/A/C/F
+
+Current path: data/lmd_matched/A/C/F/TRACFHZ128F4227BA4
+
+Preprocessing file data/lmd_matched/A/C/F/TRACFHZ128F4227BA4/2dcdbe3c849d4c31c9e5e9794a492014.mid
+Song skipped (3/4 time signature)
+Total number of seen files: 362
+Number of unique files: 359
+Total number of non filtered songs: 213
+Total number of saved samples: 54298
+
+Preprocessing file data/lmd_matched/A/C/F/TRACFHZ128F4227BA4/f9e76845b428ea637166f6de6bdb3d61.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 363
+Number of unique files: 360
+Total number of non filtered songs: 213
+Total number of saved samples: 54298
+
+Preprocessing file data/lmd_matched/A/C/F/TRACFHZ128F4227BA4/8f80a6f33186f92d00a1220399113df7.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 364
+Number of unique files: 361
+Total number of non filtered songs: 213
+Total number of saved samples: 54298
+
+Preprocessing file data/lmd_matched/A/C/F/TRACFHZ128F4227BA4/ec88ee1703906b5a2640c81b277c7d9d.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 365
+Number of unique files: 362
+Total number of non filtered songs: 213
+Total number of saved samples: 54298
+
+Preprocessing file data/lmd_matched/A/C/F/TRACFHZ128F4227BA4/75c82e085f204d2bb5218844a81ebacb.mid
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples: 53
+
+Total number of seen files: 366
+Number of unique files: 363
+Total number of non filtered songs: 214
+Total number of saved samples: 54351
+
+Preprocessing file data/lmd_matched/A/C/F/TRACFHZ128F4227BA4/9a1143588f7a32c66566452f125b4d20.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 367
+Number of unique files: 364
+Total number of non filtered songs: 214
+Total number of saved samples: 54351
+
+Preprocessing file data/lmd_matched/A/C/F/TRACFHZ128F4227BA4/23b88c611c9e66cdb2bd31a1aeb99975.mid
+Processing combination 1 of 1
+File preprocessing finished. Saved samples: 4
+
+Total number of seen files: 368
+Number of unique files: 365
+Total number of non filtered songs: 215
+Total number of saved samples: 54355
+
+Preprocessing file data/lmd_matched/A/C/F/TRACFHZ128F4227BA4/2c136e76c20aed82168d039fef8ad6bf.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 369
+Number of unique files: 366
+Total number of non filtered songs: 215
+Total number of saved samples: 54355
+
+Preprocessing file data/lmd_matched/A/C/F/TRACFHZ128F4227BA4/a046fd95f3ddbfbe0ea600a01bc6209d.mid
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples: 44
+
+Total number of seen files: 370
+Number of unique files: 367
+Total number of non filtered songs: 216
+Total number of saved samples: 54399
+
+Preprocessing file data/lmd_matched/A/C/F/TRACFHZ128F4227BA4/21d2123e7692d2bdfde6bf4bcba692db.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 371
+Number of unique files: 368
+Total number of non filtered songs: 216
+Total number of saved samples: 54399
+
+Preprocessing file data/lmd_matched/A/C/F/TRACFHZ128F4227BA4/1d53a79c499b420b3395ed866a9a20bf.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 372
+Number of unique files: 369
+Total number of non filtered songs: 216
+Total number of saved samples: 54399
+
+Current path: data/lmd_matched/A/C/F/TRACFSA12903CC089B
+
+Preprocessing file data/lmd_matched/A/C/F/TRACFSA12903CC089B/7b3be01c008f3acd9906739120097480.mid
+Processing combination 1 of 1
+File preprocessing finished. Saved samples: 79
+
+Total number of seen files: 373
+Number of unique files: 370
+Total number of non filtered songs: 217
+Total number of saved samples: 54478
+
+Current path: data/lmd_matched/A/C/H
+
+Current path: data/lmd_matched/A/C/H/TRACHCK128F425AD97
+
+Preprocessing file data/lmd_matched/A/C/H/TRACHCK128F425AD97/55cfd1975950882a4c563db5d656a36d.mid
+Processing combination 1 of 12
+Processing combination 2 of 12
+Processing combination 3 of 12
+Processing combination 4 of 12
+Processing combination 5 of 12
+Processing combination 6 of 12
+Processing combination 7 of 12
+Processing combination 8 of 12
+Processing combination 9 of 12
+Processing combination 10 of 12
+Processing combination 11 of 12
+Processing combination 12 of 12
+File preprocessing finished. Saved samples: 237
+
+Total number of seen files: 374
+Number of unique files: 371
+Total number of non filtered songs: 218
+Total number of saved samples: 54715
+
+Preprocessing file data/lmd_matched/A/C/H/TRACHCK128F425AD97/6fb6570c134ffc906142e8de0a47230b.mid
+Processing combination 1 of 24
+Processing combination 2 of 24
+Processing combination 3 of 24
+Processing combination 4 of 24
+Processing combination 5 of 24
+Processing combination 6 of 24
+Processing combination 7 of 24
+Processing combination 8 of 24
+Processing combination 9 of 24
+Processing combination 10 of 24
+Processing combination 11 of 24
+Processing combination 12 of 24
+Processing combination 13 of 24
+Processing combination 14 of 24
+Processing combination 15 of 24
+Processing combination 16 of 24
+Processing combination 17 of 24
+Processing combination 18 of 24
+Processing combination 19 of 24
+Processing combination 20 of 24
+Processing combination 21 of 24
+Processing combination 22 of 24
+Processing combination 23 of 24
+Processing combination 24 of 24
+File preprocessing finished. Saved samples: 34
+
+Total number of seen files: 375
+Number of unique files: 372
+Total number of non filtered songs: 219
+Total number of saved samples: 54749
+
+Preprocessing file data/lmd_matched/A/C/H/TRACHCK128F425AD97/3a4025cae8e457802551a38471be6856.mid
+Processing combination 1 of 6
+Processing combination 2 of 6
+Processing combination 3 of 6
+Processing combination 4 of 6
+Processing combination 5 of 6
+Processing combination 6 of 6
+File preprocessing finished. Saved samples: 63
+
+Total number of seen files: 376
+Number of unique files: 373
+Total number of non filtered songs: 220
+Total number of saved samples: 54812
+
+Preprocessing file data/lmd_matched/A/C/H/TRACHCK128F425AD97/d6af118bc09117e1b10e7428ee415f1c.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 377
+Number of unique files: 374
+Total number of non filtered songs: 220
+Total number of saved samples: 54812
+
+Preprocessing file data/lmd_matched/A/C/H/TRACHCK128F425AD97/2eba4c99c18d99e8908ff613e774b838.mid
+Processing combination 1 of 24
+Processing combination 2 of 24
+Processing combination 3 of 24
+Processing combination 4 of 24
+Processing combination 5 of 24
+Processing combination 6 of 24
+Processing combination 7 of 24
+Processing combination 8 of 24
+Processing combination 9 of 24
+Processing combination 10 of 24
+Processing combination 11 of 24
+Processing combination 12 of 24
+Processing combination 13 of 24
+Processing combination 14 of 24
+Processing combination 15 of 24
+Processing combination 16 of 24
+Processing combination 17 of 24
+Processing combination 18 of 24
+Processing combination 19 of 24
+Processing combination 20 of 24
+Processing combination 21 of 24
+Processing combination 22 of 24
+Processing combination 23 of 24
+Processing combination 24 of 24
+File preprocessing finished. Saved samples:  1%|          | 375/45129 [04:25<8:07:40,  1.53it/s]  1%|          | 376/45129 [04:26<7:30:18,  1.66it/s]  1%|          | 377/45129 [04:26<5:50:23,  2.13it/s]  1%|          | 378/45129 [04:26<5:48:12,  2.14it/s]  1%|          | 379/45129 [04:26<4:38:17,  2.68it/s]  1%|          | 380/45129 [04:27<4:33:12,  2.73it/s]  1%|          | 382/45129 [04:28<5:06:24,  2.43it/s]  1%|          | 384/45129 [04:28<4:44:39,  2.62it/s]  1%|          | 385/45129 [04:29<5:22:39,  2.31it/s]  1%|          | 386/45129 [04:29<4:27:01,  2.79it/s]  1%|          | 387/45129 [04:29<4:02:06,  3.08it/s]  1%|          | 388/45129 [04:29<3:35:40,  3.46it/s]  1%|          | 389/45129 [04:30<3:43:34,  3.34it/s]  1%|          | 390/45129 [04:30<3:41:28,  3.37it/s]  1%|          | 391/45129 [04:31<6:19:49,  1.96it/s]  1%|          | 392/45129 [04:31<5:39:16,  2.20it/s]  1%|          | 393/45129 [04:32<5:54:33,  2.10it/s]  1%|          | 394/45129 [04:33<6:26:20,  1.93it/s]  1%|          | 395/45129 [04:33<6:25:20,  1.93it/s] 34
+
+Total number of seen files: 378
+Number of unique files: 375
+Total number of non filtered songs: 221
+Total number of saved samples: 54846
+
+Current path: data/lmd_matched/A/C/H/TRACHRV128F4214FB6
+
+Preprocessing file data/lmd_matched/A/C/H/TRACHRV128F4214FB6/020ae8f827b69c9e6f953284f75542c6.mid
+Processing combination 1 of 2
+Processing combination 2 of 2
+File preprocessing finished. Saved samples: 152
+
+Total number of seen files: 379
+Number of unique files: 376
+Total number of non filtered songs: 222
+Total number of saved samples: 54998
+
+Preprocessing file data/lmd_matched/A/C/H/TRACHRV128F4214FB6/5dd4427d17c9f72d41231ac40337f30b.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 380
+Number of unique files: 377
+Total number of non filtered songs: 222
+Total number of saved samples: 54998
+
+Current path: data/lmd_matched/A/C/I
+
+Current path: data/lmd_matched/A/C/I/TRACIQM128E079691F
+
+Preprocessing file data/lmd_matched/A/C/I/TRACIQM128E079691F/6996eb4f69ebcc30e4f2adae220ed2dc.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 222
+
+Total number of seen files: 381
+Number of unique files: 378
+Total number of non filtered songs: 223
+Total number of saved samples: 55220
+
+Current path: data/lmd_matched/A/C/I/TRACIRX12903CB5FF1
+
+Preprocessing file data/lmd_matched/A/C/I/TRACIRX12903CB5FF1/81d301b1d3f080093096fe8cc7114c5d.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 382
+Number of unique files: 379
+Total number of non filtered songs: 223
+Total number of saved samples: 55220
+
+Current path: data/lmd_matched/A/C/J
+
+Current path: data/lmd_matched/A/C/J/TRACJSK128F92EDF79
+
+Preprocessing file data/lmd_matched/A/C/J/TRACJSK128F92EDF79/1e4bdfffd4b8aab9c821001a24a5a5d9.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 383
+Number of unique files: 380
+Total number of non filtered songs: 223
+Total number of saved samples: 55220
+
+Preprocessing file data/lmd_matched/A/C/J/TRACJSK128F92EDF79/3a28e1996897723fbcb9495ff4e8a72f.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 384
+Number of unique files: 381
+Total number of non filtered songs: 223
+Total number of saved samples: 55220
+
+Preprocessing file data/lmd_matched/A/C/J/TRACJSK128F92EDF79/90f421c7e80389bd91a3542d35f3959e.mid
+Processing combination 1 of 8
+Processing combination 2 of 8
+Processing combination 3 of 8
+Processing combination 4 of 8
+Processing combination 5 of 8
+Processing combination 6 of 8
+Processing combination 7 of 8
+Processing combination 8 of 8
+File preprocessing finished. Saved samples: 180
+
+Total number of seen files: 385
+Number of unique files: 382
+Total number of non filtered songs: 224
+Total number of saved samples: 55400
+
+Preprocessing file data/lmd_matched/A/C/J/TRACJSK128F92EDF79/d5cf58a5603fcd236231e2f4b063605a.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 386
+Number of unique files: 383
+Total number of non filtered songs: 224
+Total number of saved samples: 55400
+
+Current path: data/lmd_matched/A/C/J/TRACJWL128F92FB60E
+
+Preprocessing file data/lmd_matched/A/C/J/TRACJWL128F92FB60E/f06251373c71541ff02a7bf6375b4d88.mid
+Processing combination 1 of 8
+Processing combination 2 of 8
+Processing combination 3 of 8
+Processing combination 4 of 8
+Processing combination 5 of 8
+Processing combination 6 of 8
+Processing combination 7 of 8
+Processing combination 8 of 8
+File preprocessing finished. Saved samples: 288
+
+Total number of seen files: 387
+Number of unique files: 384
+Total number of non filtered songs: 225
+Total number of saved samples: 55688
+
+Preprocessing file data/lmd_matched/A/C/J/TRACJWL128F92FB60E/31a3a52f9d682d9621d8cae6303aad72.mid
+Processing combination 1 of 8
+Processing combination 2 of 8
+Processing combination 3 of 8
+Processing combination 4 of 8
+Processing combination 5 of 8
+Processing combination 6 of 8
+Processing combination 7 of 8
+Processing combination 8 of 8
+File preprocessing finished. Saved samples: 288
+
+Total number of seen files: 388
+Number of unique files: 385
+Total number of non filtered songs: 226
+Total number of saved samples: 55976
+
+Preprocessing file data/lmd_matched/A/C/J/TRACJWL128F92FB60E/b242fbf1d8837bac7570e84c0813aeff.mid
+Song skipped (2/4 time signature)
+Total number of seen files: 389
+Number of unique files: 386
+Total number of non filtered songs: 226
+Total number of saved samples: 55976
+
+Current path: data/lmd_matched/A/C/J/TRACJYX128F1453469
+
+Preprocessing file data/lmd_matched/A/C/J/TRACJYX128F1453469/a48b7872f146d074345e5202e463c369.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 390
+Number of unique files: 387
+Total number of non filtered songs: 226
+Total number of saved samples: 55976
+
+Preprocessing file data/lmd_matched/A/C/J/TRACJYX128F1453469/5ad0f2d306586aea2de1f1652e0b1652.mid
+Song skipped (does not contain drum or guitar or bass or strings tracks)
+Total number of seen files: 391
+Number of unique files: 388
+Total number of non filtered songs: 226
+Total number of saved samples: 55976
+
+Current path: data/lmd_matched/A/C/K
+
+Current path: data/lmd_matched/A/C/K/TRACKAP128F425B741
+
+Preprocessing file data/lmd_matched/A/C/K/TRACKAP128F425B741/202e8bf3824576d0a3925a4bda048b65.mid
+Song skipped (12/8 time signature)
+Total number of seen files: 392
+Number of unique files: 389
+Total number of non filtered songs: 226
+Total number of saved samples: 55976
+
+Preprocessing file data/lmd_matched/A/C/K/TRACKAP128F425B741/5d75b6e38a570be3a95ea11c7b2bdfe7.mid
+Song skipped (12/8 time signature)
+Total number of seen files: 393
+Number of unique files: 390
+Total number of non filtered songs: 226
+Total number of saved samples: 55976
+
+Current path: data/lmd_matched/A/C/L
+
+Current path: data/lmd_matched/A/C/L/TRACLRS12903CE9386
+
+Preprocessing file data/lmd_matched/A/C/L/TRACLRS12903CE9386/c45a2682a34c088f1d631c717c60d97e.mid
+Processing combination 1 of 5
+Processing combination 2 of 5
+Processing combination 3 of 5
+Processing combination 4 of 5
+Processing combination 5 of 5
+File preprocessing finished. Saved samples: 234
+
+Total number of seen files: 394
+Number of unique files: 391
+Total number of non filtered songs: 227
+Total number of saved samples: 56210
+
+Preprocessing file data/lmd_matched/A/C/L/TRACLRS12903CE9386/d4e1bcd7e8f2e320694c6eeff1fa5f6c.mid
+Processing combination 1 of 4
+Processing combination 2 of 4
+Processing combination 3 of 4
+Processing combination 4 of 4
+File preprocessing finished. Saved samples: 79
+
+Total number of seen files: 395
+Number of unique files: 392
+Total number of non filtered songs: 228
+Total number of saved samples: 56289
+
+Preprocessing file data/lmd_matched/A/C/L/TRACLRS12903CE9386/6359142321a23930cdb22795e6f72f4f.mid
+Processing combination 1 of 6
+Processing combination 2 of 6
+Processing combination 3 of 6
+Processing combination 4 of 6
+Processing combination 5 of 6
+Processing combination 6 of 6
+File preprocessing finished. Saved samples: 137
+
+Total number of seen files: 396
+Number of unique files: 393
+Total number of non filtered songs: 229
+Total number of saved samples: 56426
+
+Preprocessing file data/lmd_matched/A/C/L/TRACLRS12903CE9386/5e4ba475350a6383620a7228a2f7b609.mid
+Processing combination 1 of 5
+Processing combination 2 of 5
+Processing combination 3 of 5
+Processing combination 4 of 5
+Processing combination 5 of 5
+File preprocessing finished. Saved samples: 234
+
+Total number of seen files: 397
+Number of unique files: 394
+Total number of non filtered songs: 230
+Total number of saved samples: 56660
+
+Preprocessing file data/lmd_matched/A/C/L/TRACLRS12903CE9386/ada9016ccec2dca3d96477d613cac225.mid
+Processing combination 1 of 6
+Processing combination 2 of 6
+Processing combination 3 of 6
+Processing combination 4 of 6
+Processing combination 5 of 6
+Processing combination 6 of 6
+File preprocessing finished. Saved samples: 137
+
+Total number of seen files: 398
+Number of unique files: 395
+Total number of non filtered songs:  1%|          | 396/45129 [04:34<6:43:42,  1.85it/s]  1%|          | 397/45129 [04:34<6:17:59,  1.97it/s]  1%|          | 398/45129 [04:35<6:35:18,  1.89it/s]  1%|          | 399/45129 [04:35<6:33:57,  1.89it/s]
