@@ -7,6 +7,7 @@ from tqdm.auto import tqdm
 import numpy as np
 import torch
 import random
+import sys
 
 
 class MIDIPreprocessor():
@@ -314,7 +315,11 @@ def preprocess_dataset(dataset_dir, dest_dir, num_files=45129, early_exit=None):
 
 if __name__ == "__main__":
 
-    dataset_dir = './data/lmd_matched/'
-    dest_dir = './data/preprocessed_1bar'
+    if len(sys.argv) > 1:
+        dataset_dir = sys.argv[1]
+        dest_dir = sys.argv[2]
+    else:
+        dataset_dir = 'data/lmd_matched/'
+        dest_dir = '/data/cosenza/preprocessed_1bar'
 
     preprocess_dataset(dataset_dir, dest_dir)
