@@ -33,9 +33,9 @@ DUR_PAD = 98
 MAX_DUR = 96
 
 # Number of time steps per quarter note
-# (To get bar resolution -> RESOLUTION*4)
+# To get bar resolution -> RESOLUTION*4
 RESOLUTION = 8
-NUM_BARS = 2
+NUM_BARS = 16
 
 
 def preprocess_file(filepath, dest_dir, num_samples):
@@ -206,6 +206,13 @@ def preprocess_file(filepath, dest_dir, num_samples):
 
                 if 1 in np.diff(np.where(bars_acts == 0)[1]):
                     continue
+
+                # Skip sequence if it contains one bar of complete silence
+                # (in terms of note activations)
+                silences = np.logical_not(np.any(bars_acts, axis=0))
+                if np.any(silences):
+                    continue
+
             else:
                 # In the case of just 1 bar, skip it if all tracks are silenced
                 bar_acts = np.any(seq_acts, axis=1)
@@ -260,7 +267,8 @@ def preprocess_dataset(dataset_dir, dest_dir, num_files=45129, early_exit=None):
     # Visit recursively the directories inside the dataset directory
     for dirpath, dirs, files in os.walk(dataset_dir):
 
-        # Sort alphabetically the directories
+        # Sort alphabetically the found directories
+        # (to help guess the remaining time)
         dirs.sort()
 
         print("Current path:", dirpath)
@@ -310,6 +318,7 @@ def preprocess_dataset(dataset_dir, dest_dir, num_files=45129, early_exit=None):
     minutes, seconds = divmod(rem, 60)
     print("Preprocessing completed in (h:m:s): {:0>2}:{:0>2}:{:05.2f}"
               .format(int(hours),int(minutes),seconds))
+
 
 
 if __name__ == "__main__":
