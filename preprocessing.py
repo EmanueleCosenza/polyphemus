@@ -34,7 +34,7 @@ MAX_DUR = 96
 
 # Number of time steps per quarter note
 # To get bar resolution -> RESOLUTION*4
-RESOLUTION = 8
+RESOLUTION = 24
 NUM_BARS = 16
 
 
@@ -328,6 +328,6 @@ if __name__ == "__main__":
         dest_dir = sys.argv[2]
     else:
         dataset_dir = 'data/lmd_matched/'
-        dest_dir = '/data/cosenza/preprocessed_1bar'
+        dest_dir = '/data/cosenza/datasets/preprocessed_2bars24'
 
     preprocess_dataset(dataset_dir, dest_dir)
