@@ -35,7 +35,34 @@ def get_track_edges(acts, edge_type_ind=0):
         track_edges.extend(inv_edges)
 
     return np.array(track_edges, dtype='long')
-    
+
+
+def get_track_edges_torch(acts, edge_type_ind=0):
+
+    a_t = acts.t()
+    inds = torch.stack(torch.where(a_t == 1)).t()
+
+    # Create node labels
+    labels = torch.zeros(acts.size())
+    acts_inds = torch.where(acts == 1)
+    num_nodes = len(acts_inds[0])
+    labels[acts_inds] = torch.arange(num_nodes, dtype=torch.float)
+    labels = labels.t()
+
+    track_edges = []
+
+    for track in range(a_t.size(1)):
+        tr_inds = list(inds[inds[:, 1] == track])
+        e_inds = [(tr_inds[i],
+                tr_inds[i+1]) for i in range(len(tr_inds)-1)]
+        edges = [(labels[tuple(e[0])], labels[tuple(e[1])],
+                  edge_type_ind+track, e[1][0]-e[0][0]) for e in e_inds]
+        inv_edges = [(e[1], e[0], *e[2:]) for e in edges]
+        track_edges.extend(edges)
+        track_edges.extend(inv_edges)
+
+    return torch.tensor(track_edges, dtype=torch.long)
+
 
 def get_onset_edges(acts, edge_type_ind=4):
 
@@ -67,38 +94,102 @@ def get_onset_edges(acts, edge_type_ind=4):
     return np.array(onset_edges, dtype='long')
 
 
+def get_onset_edges_torch(acts, edge_type_ind=4):
+
+    a_t = acts.t()
+    inds = torch.stack(torch.where(a_t == 1)).t()
+    ts_acts = torch.any(a_t, dim=1)
+    ts_inds = torch.where(ts_acts)[0]
+
+    # Create node labels
+    labels = torch.zeros(acts.shape)
+    acts_inds = torch.where(acts == 1)
+    num_nodes = len(acts_inds[0])
+    labels[acts_inds] = torch.arange(num_nodes, dtype=torch.float)
+    labels = labels.t()
+
+    onset_edges = []
+
+    for i in ts_inds:
+        ts_acts_inds = list(inds[inds[:,0] == i])
+        if len(ts_acts_inds) < 2:
+            continue
+        e_inds = list(itertools.combinations(ts_acts_inds, 2))
+        edges = [(labels[tuple(e[0])], labels[tuple(e[1])],
+                  edge_type_ind, 0) for e in e_inds]
+        inv_edges = [(e[1], e[0], *e[2:]) for e in edges]
+        onset_edges.extend(edges)
+        onset_edges.extend(inv_edges)
+
+    return torch.tensor(onset_edges, dtype=torch.long)
+
+
 def get_next_edges(acts, edge_type_ind=5):
 
-        a_t = acts.transpose()
-        inds = np.stack(np.where(a_t == 1)).transpose()
-        ts_acts = np.any(a_t, axis=1)
-        ts_inds = np.where(ts_acts)[0]
+    a_t = acts.transpose()
+    inds = np.stack(np.where(a_t == 1)).transpose()
+    ts_acts = np.any(a_t, axis=1)
+    ts_inds = np.where(ts_acts)[0]
 
-        # Create node labels
-        labels = np.zeros(acts.shape)
-        acts_inds = np.where(acts == 1)
-        num_nodes = len(acts_inds[0])
-        labels[acts_inds] = np.arange(num_nodes)
-        labels = labels.transpose()
+    # Create node labels
+    labels = np.zeros(acts.shape)
+    acts_inds = np.where(acts == 1)
+    num_nodes = len(acts_inds[0])
+    labels[acts_inds] = np.arange(num_nodes)
+    labels = labels.transpose()
 
-        next_edges = []
+    next_edges = []
 
-        for i in range(len(ts_inds)-1):
+    for i in range(len(ts_inds)-1):
 
-            ind_s = ts_inds[i]
-            ind_e = ts_inds[i+1]
-            s = inds[inds[:,0] == ind_s]
-            e = inds[inds[:,0] == ind_e]
+        ind_s = ts_inds[i]
+        ind_e = ts_inds[i+1]
+        s = inds[inds[:,0] == ind_s]
+        e = inds[inds[:,0] == ind_e]
 
-            e_inds = [t for t in list(itertools.product(s, e)) if t[0][1] != t[1][1]]
-            edges = [(labels[tuple(e[0])], labels[tuple(e[1])],
-                      edge_type_ind, ind_e-ind_s) for e in e_inds]
-            inv_edges = [(e[1], e[0], *e[2:]) for e in edges]
-            
-            next_edges.extend(edges)
-            next_edges.extend(inv_edges)
-            
-        return np.array(next_edges, dtype='long')
+        e_inds = [t for t in list(itertools.product(s, e)) if t[0][1] != t[1][1]]
+        edges = [(labels[tuple(e[0])], labels[tuple(e[1])],
+                  edge_type_ind, ind_e-ind_s) for e in e_inds]
+        inv_edges = [(e[1], e[0], *e[2:]) for e in edges]
+
+        next_edges.extend(edges)
+        next_edges.extend(inv_edges)
+
+    return np.array(next_edges, dtype='long')
+    
+
+def get_next_edges_torch(acts, edge_type_ind=5):
+
+    a_t = acts.t()
+    inds = torch.stack(torch.where(a_t == 1)).t()
+    ts_acts = torch.any(a_t, dim=1)
+    ts_inds = torch.where(ts_acts)[0]
+
+    # Create node labels
+    labels = torch.zeros(acts.shape)
+    acts_inds = torch.where(acts == 1)
+    num_nodes = len(acts_inds[0])
+    labels[acts_inds] = torch.arange(num_nodes, dtype=torch.float)
+    labels = labels.t()
+
+    next_edges = []
+
+    for i in range(len(ts_inds)-1):
+
+        ind_s = ts_inds[i]
+        ind_e = ts_inds[i+1]
+        s = inds[inds[:,0] == ind_s]
+        e = inds[inds[:,0] == ind_e]
+
+        e_inds = [t for t in list(itertools.product(s, e)) if t[0][1] != t[1][1]]
+        edges = [(labels[tuple(e[0])], labels[tuple(e[1])],
+                  edge_type_ind, ind_e-ind_s) for e in e_inds]
+        inv_edges = [(e[1], e[0], *e[2:]) for e in edges]
+
+        next_edges.extend(edges)
+        next_edges.extend(inv_edges)
+
+    return torch.tensor(next_edges, dtype=torch.long)
     
 
 def get_node_features(acts, num_nodes):
@@ -108,9 +199,18 @@ def get_node_features(acts, num_nodes):
     features[np.arange(num_nodes), np.stack(np.where(acts))[0]] = 1.
 
     return features
+
+
+def get_node_features_torch(acts, num_nodes):
+        
+    num_tracks = acts.size(0)
+    features = torch.zeros((num_nodes, num_tracks), dtype=torch.float)
+    features[torch.arange(num_nodes), torch.stack(torch.where(acts))[0]] = 1.
+
+    return features
     
 
-def graph_from_tensor(s):
+def graph_from_tensor(s, force_no_empty=True):
     
     bars = []
         
@@ -118,6 +218,10 @@ def graph_from_tensor(s):
     for i in range(s.shape[0]):
         
         bar = s[i]
+        
+        if force_no_empty:
+            if not np.any(bar):
+                bar[0][0] = 1
 
         # Number of nodes
         n = torch.sum(torch.Tensor(bar), dtype=torch.long)
@@ -174,7 +278,73 @@ def graph_from_tensor(s):
     
     return graph
     
+
+def graph_from_tensor_torch(s, force_no_empty=True):
     
+    bars = []
+        
+    # Iterate over bars and construct a graph for each bar
+    for i in range(s.size(0)):
+        
+        bar = s[i]
+        
+        if force_no_empty:
+            if not torch.any(bar):
+                bar[0][0] = 1
+
+        # Number of nodes
+        n = torch.sum(bar, dtype=torch.long)
+
+        # Get edges from boolean activations
+        # Todo: optimize and refactor
+        track_edges = get_track_edges_torch(bar)
+        onset_edges = get_onset_edges_torch(bar)
+        next_edges = get_next_edges_torch(bar)
+        edges = [track_edges, onset_edges, next_edges]
+
+        # Concatenate edge tensors (N x 4) (if any)
+        # First two columns -> source and dest nodes
+        # Third column -> edge_type, Fourth column -> timestep distance
+        no_edges = (len(track_edges) == 0 and 
+                    len(onset_edges) == 0 and len(next_edges) == 0)
+        if not no_edges:
+            edge_list = torch.cat([x for x in edges
+                                      if torch.numel(x) > 0])
+
+        # Adapt tensor to torch_geometric's Data
+        # No edges: add fictitious self-edge
+        edge_index = (torch.LongTensor([[0], [0]]) if no_edges else
+                               edge_list[:, :2].t().contiguous())
+        attrs = (torch.Tensor([[0, 0]]) if no_edges else
+                                       edge_list[:, 2:])
+
+        # One hot timestep distance concatenated to edge type
+        edge_attrs = torch.zeros(attrs.size(0), 1+s.shape[-1])
+        edge_attrs[:, 0] = attrs[:, 0]
+        edge_attrs[torch.arange(edge_attrs.size(0)), attrs.long()[:, 1]+1] = 1
+
+        node_features = get_node_features_torch(bar, n)
+        is_drum = node_features[:, 0].bool()
+
+        bars.append(Data(edge_index=edge_index, edge_attrs=edge_attrs,
+                         num_nodes=n, node_features=node_features,
+                         is_drum=is_drum).to(s.device))
+
+
+    # Merge the graphs corresponding to different bars into a single big graph
+    graph, _, inc_dict = collate(
+        Data,
+        data_list=bars,
+        increment=True,
+        add_batch=True
+    )
+        
+    # Change bars assignment vector name (otherwise, Dataloader's collate
+    # would overwrite graphs.batch)
+    graph.bars = graph.batch
+    
+    return graph
+
 
 
 class MIDIDataset(Dataset):
