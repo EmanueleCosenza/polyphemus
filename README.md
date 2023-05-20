@@ -1,2 +1,4 @@
 # Polyphemus
-A graph-based deep music generator. Official repository of the paper "Graph-based Polyphonic Multitrack Music Generation".
+A graph-based deep MIDI music generator. Official repository of the paper "Graph-based Polyphonic Multitrack Music Generation".
+
+Code coming soon.
