@@ -4,7 +4,7 @@ layout: generation
 
 [Home]({{ site.baseurl }}{% link index.markdown %})
 
-This section contains samples generated from random latent codes. The 2-bar samples are looped and are obtained by concatenating the same audio sample to make the listening analysis easier.
+This section contains samples generated from random latent codes. The 2-bar samples are looped 4 times to make the listening analysis easier.
 
 
 ## 2-bars
