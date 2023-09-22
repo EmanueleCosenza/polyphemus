@@ -1,11 +1,14 @@
 import os
 import muspy
+import itertools
 from itertools import product
 import pypianoroll as pproll
 import time
-from tqdm.auto import tqdm
+import tqdm
 import sys
 import numpy as np
+import multiprocessing
+from functools import partial
 
 
 # Todo: to config file (or separate files)
@@ -23,14 +26,18 @@ MAX_DUR = 96
 # Number of time steps per quarter note
 # To get bar resolution -> RESOLUTION*4
 RESOLUTION = 8
-NUM_BARS = 16
+NUM_BARS = 2
+
+num_files = 612090
+dest_dir = "/data/cosenza/datasets/MMD/preprocessed_2bars_par"
 
 
-def preprocess_file(filepath, dest_dir, num_samples):
-
-    saved_samples = 0
+def preprocess_file(filepath):
 
     print("Preprocessing file " + filepath)
+    
+    filename = os.path.basename(filepath)
+    saved_samples = 0
 
     # Load the file both as a pypianoroll song and a muspy song
     # (Need to load both since muspy.to_pypianoroll() is expensive)
@@ -223,83 +230,28 @@ def preprocess_file(filepath, dest_dir, num_samples):
             non_perc[cond, 0] = np.clip(non_perc[cond, 0], a_min=0, a_max=127)
 
             # Save sample (seq_tensor and seq_acts) to file
-            curr_sample = str(num_samples + saved_samples)
-            sample_filepath = os.path.join(dest_dir, curr_sample)
+            sample_filepath = os.path.join(dest_dir, filename+str(saved_samples))
             np.savez(sample_filepath, seq_tensor=seq_tensor, seq_acts=seq_acts)
-
+            
             saved_samples += 1
-
-
-    print("File preprocessing finished. Saved samples:", saved_samples)
-    print()
-
-    return saved_samples
 
 
 
 # Total number of files (LMD): 116189
 # Number of unique files (LMD): 45129
-def preprocess_dataset(dataset_dir, dest_dir, num_files=612090, early_exit=None):
-
-    files_dict = {}
-    seen = 0
-    tot_samples = 0
-    not_filtered = 0
-    finished = False
+def preprocess_dataset(dataset_dir, dest_dir, workers=1, num_files=612090, early_exit=None):
 
     print("Starting preprocessing")
-
-    progress_bar = tqdm(range(early_exit)) if early_exit is not None else tqdm(range(num_files))
     start = time.time()
+    
+    with multiprocessing.Pool(workers) as pool:
 
-    # Visit recursively the directories inside the dataset directory
-    for dirpath, dirs, files in os.walk(dataset_dir):
+        walk = os.walk(dataset_dir)
+        fn_gen = itertools.chain.from_iterable((os.path.join(dirpath, file)
+                                                for file in files)
+                                               for dirpath, dirs, files in walk)
 
-        # Sort alphabetically the found directories
-        # (to help guess the remaining time)
-        dirs.sort()
-
-        print("Current path:", dirpath)
-        print()
-
-        for f in files:
-
-            seen += 1
-
-            if f in files_dict:
-                # Skip already seen file
-                files_dict[f] += 1
-                continue
-
-            # File never seen before, add to dictionary of files
-            # (from filename to # of occurrences)
-            files_dict[f] = 1
-
-            # Preprocess file
-            filepath = os.path.join(dirpath, f)
-            n_saved = preprocess_file(filepath, dest_dir, tot_samples)
-
-            tot_samples += n_saved
-            if n_saved > 0:
-                not_filtered += 1
-
-            progress_bar.update(1)
-
-            # Todo: also print # of processed (not filtered) files
-            #       and # of produced sequences (samples)
-            print("Total number of seen files:", seen)
-            print("Number of unique files:", len(files_dict))
-            print("Total number of non filtered songs:", not_filtered)
-            print("Total number of saved samples:", tot_samples)
-            print()
-
-            # Exit when a maximum number of files has been processed (if set)
-            if early_exit != None and len(files_dict) >= early_exit:
-                finished = True
-                break
-
-        if finished:
-            break
+        r = list(tqdm.tqdm(pool.imap(preprocess_file, fn_gen), total=num_files))
 
     end = time.time()
     hours, rem = divmod(end-start, 3600)
@@ -310,12 +262,11 @@ def preprocess_dataset(dataset_dir, dest_dir, num_files=612090, early_exit=None)
 
 
 if __name__ == "__main__":
+    
+    workers = 48
 
     if len(sys.argv) > 1:
         dataset_dir = sys.argv[1]
         dest_dir = sys.argv[2]
-    else:
-        dataset_dir = 'data/lmd_matched/'
-        dest_dir = '/data/cosenza/datasets/preprocessed_2bars24'
 
-    preprocess_dataset(dataset_dir, dest_dir)
+    preprocess_dataset(dataset_dir, dest_dir, workers=workers)

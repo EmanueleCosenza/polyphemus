@@ -351,8 +351,8 @@ class MIDIDataset(Dataset):
 
     def __init__(self, dir, n_bars=2):
         self.dir = dir
-        _, _, files = next(os.walk(self.dir))
-        self.len = len(files)
+        self.files = list(os.scandir(self.dir))
+        self.len = len(self.files)
         self.n_bars = n_bars
 
         
@@ -363,7 +363,7 @@ class MIDIDataset(Dataset):
     def __getitem__(self, idx):
 
         # Load tensors
-        sample_path = os.path.join(self.dir, str(idx) + ".npz")
+        sample_path = os.path.join(self.dir, self.files[idx].name)
         data = np.load(sample_path)
         seq_tensor = data["seq_tensor"]
         seq_acts = data["seq_acts"]

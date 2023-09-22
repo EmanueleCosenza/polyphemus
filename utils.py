@@ -89,7 +89,10 @@ def muspy_from_dense(dense, track_data, resolution):
                         dur = 4
                         continue
                     
-                    notes.append(muspy.Note(ts, pitch.item(), dur.item(), 64))
+                    
+                    dur = min(dur, dense.shape[1]-ts-1)
+                    
+                    notes.append(muspy.Note(ts, pitch.item(), dur, 64))
         
         if track_data[tr][0] == 'Drums':
             track = muspy.Track(name='Drums', is_drum=True, notes=copy.deepcopy(notes))
@@ -105,25 +108,28 @@ def muspy_from_dense(dense, track_data, resolution):
     return music
 
 
-def plot_pianoroll(music, save_dir=None, name=None, figsize=(10, 10), fformat="png"):
+def plot_pianoroll(music, save_dir=None, name=None, figsize=(10, 10),
+                   fformat="png", xticklabel='on', preset='full', **kwargs):
 
     fig, axs_ = plt.subplots(4, sharex=True, figsize=figsize)
     fig.subplots_adjust(hspace=0)
     axs = axs_.tolist()
-    muspy.show_pianoroll(music=music, yticklabel='off', grid_axis='off', axs=axs)
+    muspy.show_pianoroll(music=music, yticklabel='off',
+                         xticklabel=xticklabel, grid_axis='off',
+                         axs=axs, preset=preset, **kwargs)
     
     if save_dir:
         plt.savefig(os.path.join(save_dir, name+"."+fformat), format=fformat, dpi=200)
         
         
-def plot_struct(s, save_dir=None, name=None, figsize=(10, 10), fformat="svg"):
+def plot_struct(s, save_dir=None, name=None, figsize=(10, 10), fformat="svg", n_bars=2):
     
     plt.figure(figsize=figsize)
     plt.pcolormesh(s, edgecolors='k', linewidth=1)
     ax = plt.gca()
     #ax.set_aspect('equal')
     
-    plt.xticks(range(0, s.shape[1], 8), range(1, 9))
+    plt.xticks(range(0, s.shape[1], 8), range(1, n_bars*4+1))
     plt.yticks(range(0, 4), ['Drums', 'Bass', 'Guitar', 'Strings'])
     
     ax.invert_yaxis()
