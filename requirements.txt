@@ -1,0 +1,21 @@
+--find-links https://download.pytorch.org/whl/torch_stable.html
+--find-links https://data.pyg.org/whl/torch-1.7.0+cu101.html
+
+# PyTorch related
+torch==1.7.0+cu101
+torchvision==0.8.0
+
+torch-geometric==2.0.2
+torch-cluster==1.5.9
+torch-scatter==2.0.7
+torch-sparse==0.6.9
+torch-spline-conv==1.2.1
+
+# Music packages
+pretty-midi==0.2.9
+muspy==0.4.0
+pypianoroll==1.0.4
+
+# Various
+prettytable==2.4.0
+tqdm==4.62.3

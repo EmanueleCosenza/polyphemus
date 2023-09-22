@@ -254,7 +254,6 @@ def graph_from_tensor(s, force_no_empty=True):
         edge_attrs = torch.zeros(attrs.size(0), 1+s.shape[-1])
         edge_attrs[:, 0] = attrs[:, 0]
         edge_attrs[np.arange(edge_attrs.size(0)), attrs.long()[:, 1]+1] = 1
-        #edge_attrs = torch.Tensor(attrs.float())
 
         node_features = get_node_features(bar, n)
         is_drum = node_features[:, 0].bool()
@@ -420,6 +419,5 @@ class MIDIDataset(Dataset):
         graph.x_acts = seq_acts
         graph.src_mask = src_mask
         
-        # Todo: start with torch at mount
-        #return torch.Tensor(new_seq_tensor), torch.Tensor(seq_acts), graphs, src_mask
+        # Todo: Just use torch tensors
         return graph

@@ -63,7 +63,6 @@ def preprocess_file(filepath):
 
     for track in pproll_song.tracks:
         if track.is_drum:
-            #continue
             track.name = 'Drums'
             drum_tracks.append(track)
         elif 0 <= track.program <= 31:
@@ -91,7 +90,6 @@ def preprocess_file(filepath):
                                  program=48, name='Strings')
 
     combinations = list(product(drum_tracks, bass_tracks, guitar_tracks))
-    #combinations = list(product(bass_tracks, guitar_tracks))
 
     # Single instruments can have multiple tracks.
     # Consider all possible combinations of drum, bass, and guitar tracks
@@ -102,8 +100,6 @@ def preprocess_file(filepath):
         # Process combination (called 'subsong' from now on)
         drum_track, bass_track, guitar_track = combination
         tracks = [drum_track, bass_track, guitar_track, strings_track]
-        #bass_track, guitar_track = combination
-        #tracks = [bass_track, guitar_track, strings_track]
 
         pproll_subsong = pproll.Multitrack(
             tracks=tracks,
@@ -144,7 +140,7 @@ def preprocess_file(filepath):
             track_tensor[:, 0, 1] = DUR_SOS
 
             # Keeps track of how many notes have been stored in each timestep
-            # (int8 imposes that MAX_SIMU_NOTES < 256)
+            # (int8 imposes MAX_SIMU_NOTES < 256)
             notes_counter = np.ones(length, dtype=np.int8)
 
             # Todo: np.put_along_axis?
@@ -163,7 +159,7 @@ def preprocess_file(filepath):
                 track_tensor[t, notes_counter[t], 1] = dur-1
                 notes_counter[t] += 1
 
-            # Add end of sequence token
+            # Add EOS token
             track_tensor[np.arange(0, length), notes_counter, 0] = PITCH_EOS
             track_tensor[np.arange(0, length), notes_counter, 1] = DUR_EOS
 
@@ -215,17 +211,13 @@ def preprocess_file(filepath):
                     continue
 
             # Randomly transpose the pitches of the sequence (-5 to 6 semitones)
-            # Not considering pad, sos, eos tokens
+            # Not considering pad, sos, eos tokens,
             # Not transposing drums/percussions
             shift = np.random.choice(np.arange(-5, 7), 1)
             cond = (seq_tensor[1:, :, :, 0] != PITCH_PAD) &                     \
                    (seq_tensor[1:, :, :, 0] != PITCH_SOS) &                     \
                    (seq_tensor[1:, :, :, 0] != PITCH_EOS)
-            #cond = (seq_tensor[:, :, :, 0] != PITCH_PAD) &                     \
-            #       (seq_tensor[:, :, :, 0] != PITCH_SOS) &                     \
-            #       (seq_tensor[:, :, :, 0] != PITCH_EOS)
             non_perc = seq_tensor[1:, ...]
-            #non_perc = seq_tensor
             non_perc[cond, 0] += shift
             non_perc[cond, 0] = np.clip(non_perc[cond, 0], a_min=0, a_max=127)
 

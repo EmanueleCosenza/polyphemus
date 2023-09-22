@@ -146,16 +146,9 @@ class VAETrainer():
                     print("Training on batch {}/{} of epoch {}/{} complete."
                           .format(batch_idx+1, len(trainloader), epoch+1, epochs))
                     self._print_stats()
-                    #print("Tot_loss: {:.4f} acts_loss: {:.4f} "
-                          #.format(running_loss/self.print_every, acts_loss), end='')
-                    #print("pitches_loss: {:.4f} dur_loss: {:.4f} kld_loss: {:.4f}"
-                          #.format(pitches_loss, dur_loss, kld_loss))
                     print("\n----------------------------------------\n")
-                    
-                # ------------------------------------
-                # EVAL ON VL SET EVERY N GRADIENT UPDATES
-                # ------------------------------------
                 
+                # Eval on VL set every `n` gradient updates
                 if validloader is not None and (self.tot_batches + 1) % self.eval_every == 0:
                     
                     # Evaluate on val set
@@ -221,37 +214,6 @@ class VAETrainer():
         
         curr_step = (i - self.anneal_start) // inc_every
         self.beta = self.step_size * (curr_step + 1)
-    
-        
-    def _update_beta2(self):
-        
-        steps = self.tot_batches
-        
-        if steps < self.anneal_after:
-            self.beta = 0
-        else:
-            
-            # Compute steps in current cycle
-            curr_cycle = (steps - self.anneal_after) // self.anneal_steps
-            
-            if curr_cycle >= self.n_cycles:
-                self.beta = self.beta_max
-                return
-            
-            steps_in_cycle = steps - self.anneal_after - curr_cycle * self.anneal_steps
-            
-            # Decide stage in cycle (sigmoidal increase or beta set to zero)
-            if steps_in_cycle / self.anneal_steps < self.inc_to_zero_ratio:
-                
-                # Compute values to correctly shift and scale sigmoid
-                sig_zero = self.anneal_steps * self.inc_to_zero_ratio / 2
-                inc_steps = self.anneal_steps * self.inc_to_zero_ratio
-                scale = 1 / ((inc_steps / 2) / self.sig_scaled_point)
-                
-                self.beta = sigmoid(steps_in_cycle, m=self.beta_max, a=scale, z=sig_zero)
-                
-            else:
-                self.beta = 0
         
     
     def evaluate(self, loader):
@@ -308,16 +270,9 @@ class VAETrainer():
         
         # Shift outputs for transformer decoder loss and filter silences
         x_seq = x_seq[..., 1:, :]
-        #x_seq = x_seq[x_acts.bool()]
-        #print(x_seq.size())
-        #print(seq_rec.size())
                 
         # Compute the losses
         acts_loss = self.bce_unreduced(acts_rec.view(-1), x_acts.view(-1).float())
-        #weights = torch.zeros(acts_loss.size()).to(device)
-        #weights[x_acts.view(-1) == 1] = 0.9
-        #weights[x_acts.view(-1) == 0] = 0.1
-        #acts_loss = torch.mean(weights*acts_loss)
         acts_loss = torch.mean(acts_loss)
         
         pitches_loss = self.ce_p(seq_rec.reshape(-1, seq_rec.size(-1))[:, :131],
@@ -327,7 +282,6 @@ class VAETrainer():
         kld_loss = -0.5 * torch.sum(1 + log_var - mu.pow(2) - log_var.exp(), dim=1)
         kld_loss = torch.mean(kld_loss)
         rec_loss = pitches_loss + dur_loss + acts_loss
-        #rec_loss = acts_loss
         tot_loss = rec_loss + self.beta*kld_loss
         
         losses = {
@@ -350,9 +304,6 @@ class VAETrainer():
         
         # Shift outputs and filter silences
         x_seq = x_seq[..., 1:, :]
-        #x_seq = x_seq[x_acts.bool()]
-        #print(x_seq.size())
-        #print(seq_rec.size())
         
         notes_acc = self._note_accuracy(seq_rec, x_seq)
         pitches_acc = self._pitches_accuracy(seq_rec, x_seq)
@@ -388,14 +339,7 @@ class VAETrainer():
         pitches_rec = torch.argmax(pitches_rec, dim=-1)
         pitches_true = torch.argmax(x_seq[..., :131], dim=-1)
         
-        #print(torch.all(pitches_rec == 129))
-        #print(pitches_rec)
-        
         mask_p = (pitches_true != 130)
-        #mask = torch.logical_and(pitches_true != 128,
-         #                        pitches_true != 129)
-        #mask = torch.logical_and(mask,
-         #                        pitches_true != 130)
         
         preds_pitches = (pitches_rec == pitches_true)
         preds_pitches = torch.logical_and(preds_pitches, mask_p)
@@ -405,13 +349,7 @@ class VAETrainer():
         dur_rec = torch.argmax(dur_rec, dim=-1)
         dur_true = torch.argmax(x_seq[..., 131:], dim=-1)
         
-        #print(torch.all(dur_rec == 97))
-        
         mask_d = (dur_true != 98)
-        #mask = torch.logical_and(pitches_true != 128,
-         #                        pitches_true != 129)
-        #mask = torch.logical_and(mask,
-         #                        pitches_true != 130)
         
         preds_dur = (dur_rec == dur_true)
         preds_dur = torch.logical_and(preds_dur, mask_d)
@@ -448,9 +386,6 @@ class VAETrainer():
         acts_rec[acts_rec < 0.5] = 0
         acts_rec[acts_rec >= 0.5] = 1
         
-        #print("All zero acts?", torch.all(acts_rec == 0))
-        #print("All one acts?", torch.all(acts_rec == 0))
-        
         return torch.sum(acts_rec == x_acts) / x_acts.numel()
     
     
@@ -468,13 +403,7 @@ class VAETrainer():
         pitches_rec = torch.argmax(pitches_rec, dim=-1)
         pitches_true = torch.argmax(x_seq[..., :131], dim=-1)
         
-        #print("All EOS pitches?", torch.all(pitches_rec == 129))
-        
         mask = (pitches_true != 130)
-        #mask = torch.logical_and(pitches_true != 128,
-         #                        pitches_true != 129)
-        #mask = torch.logical_and(mask,
-         #                        pitches_true != 130)
         
         preds_pitches = (pitches_rec == pitches_true)
         preds_pitches = torch.logical_and(preds_pitches, mask)
@@ -488,13 +417,7 @@ class VAETrainer():
         dur_rec = torch.argmax(dur_rec, dim=-1)
         dur_true = torch.argmax(x_seq[..., 131:], dim=-1)
         
-        #print("All EOS durs?", torch.all(dur_rec == 97))
-        
         mask = (dur_true != 98)
-        #mask = torch.logical_and(pitches_true != 128,
-         #                        pitches_true != 129)
-        #mask = torch.logical_and(mask,
-         #                        pitches_true != 130)
         
         preds_dur = (dur_rec == dur_true)
         preds_dur = torch.logical_and(preds_dur, mask)
@@ -518,7 +441,6 @@ class VAETrainer():
             'tr_accuracies': self.tr_accuracies,
             'val_losses': self.val_losses,
             'val_accuracies': self.val_accuracies,
-            #'scheduler_state_dict': self.lr_scheduler.state_dict(), # Todo: fix
             'model_state_dict': self.model.state_dict(),
             'optimizer_state_dict': self.optimizer.state_dict()
         }, path)

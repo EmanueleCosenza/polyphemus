@@ -14,13 +14,12 @@ from torch_geometric.nn.conv import MessagePassing
 
 from torch_geometric.nn.inits import glorot, zeros
 
-from torch_geometric.nn.conv import GCNConv#, RGCNConv
+from torch_geometric.nn.conv import GCNConv
 from torch_geometric.nn.norm import BatchNorm
 from torch_geometric.nn.glob import GlobalAttention
 import math
 import torch.optim as optim
 from torch_scatter import scatter_mean
-from torch.nn.utils.rnn import pad_sequence, pack_padded_sequence
 
 
 @torch.jit._overload
@@ -107,7 +106,6 @@ class RGCNConv(MessagePassing):
         in_channels: Union[int, Tuple[int, int]],
         out_channels: int,
         num_relations: int,
-        #num_dists: int,
         nn: Callable,
         num_bases: Optional[int] = None,
         num_blocks: Optional[int] = None,
@@ -126,7 +124,6 @@ class RGCNConv(MessagePassing):
         self.in_channels = in_channels
         self.out_channels = out_channels
         self.nn = nn
-        #self.num_dists = num_dists
         self.dropout = dropout
         self.num_relations = num_relations
         self.num_bases = num_bases
@@ -164,8 +161,6 @@ class RGCNConv(MessagePassing):
             self.bias = Param(torch.Tensor(out_channels))
         else:
             self.register_parameter('bias', None)
-        
-        #self.dist_weights = Parameter(torch.Tensor(self.num_dists))
 
         self.reset_parameters()
 
@@ -174,7 +169,6 @@ class RGCNConv(MessagePassing):
         reset(self.nn)
         glorot(self.comp)
         glorot(self.root)
-        #zeros(self.dist_weights)
         zeros(self.bias)
 
 
@@ -217,13 +211,15 @@ class RGCNConv(MessagePassing):
 
         # propagate_type: (x: Tensor)
         out = torch.zeros(x_r.size(0), self.out_channels, device=x_r.device)
-
         weight = self.weight
-        if self.num_bases is not None:  # Basis-decomposition =================
+        
+        # Basis-decomposition
+        if self.num_bases is not None:
             weight = (self.comp @ weight.view(self.num_bases, -1)).view(
                 self.num_relations, self.in_channels_l, self.out_channels)
 
-        if self.num_blocks is not None:  # Block-diagonal-decomposition =====
+        # Block-diagonal-decomposition
+        if self.num_blocks is not None:
 
             if x_l.dtype == torch.long and self.num_blocks is not None:
                 raise ValueError('Block-diagonal decomposition not supported '
@@ -235,8 +231,9 @@ class RGCNConv(MessagePassing):
                 h = h.view(-1, weight.size(1), weight.size(2))
                 h = torch.einsum('abc,bcd->abd', h, weight[i])
                 out += h.contiguous().view(-1, self.out_channels)
-
-        else:  # No regularization/Basis-decomposition ========================
+        
+        else:
+            # No regularization/Basis-decomposition
             for i in range(self.num_relations):
                 tmp = masked_edge_index(edge_index, edge_type == i)
                 attr = masked_edge_attrs(edge_attr, edge_type == i)
@@ -259,9 +256,6 @@ class RGCNConv(MessagePassing):
 
 
     def message(self, x_j: Tensor, edge_attr: Tensor) -> Tensor:
-        #weights = self.dist_weights[edge_attr.view(-1).long()]
-        #weights = torch.diag(weights)
-        #return torch.matmul(weights, x_j)
         weights = self.nn(edge_attr)
         weights = weights[..., :self.in_channels_l]
         weights = weights.view(-1, self.in_channels_l)
@@ -314,48 +308,9 @@ class MLP(nn.Module):
                 x = F.relu(x)
         
         return x
-    
-    
-class EncoderRNN(nn.Module):
-    
-    def __init__(self, input_size=240, hidden_size=256, num_layers=2, 
-                 dropout=0.1):
-        super(EncoderRNN, self).__init__()
-        self.hidden_size = hidden_size
-
-        self.embedding = nn.Linear(input_size, hidden_size)
-        self.lstm = nn.LSTM(hidden_size, hidden_size, batch_first=True,
-                            num_layers=num_layers, bidirectional=True)
-
-    def forward(self, x, hidden):
-        embedded = self.embedding(x).view(1, 1, -1)
-        output = embedded
-        output, hidden = self.lstm(output, hidden)
-        return output, hidden
-    
-
-class DecoderRNN(nn.Module):
-    
-    def __init__(self, hidden_size=256, output_size=240, num_layers=2, 
-                 dropout=0.1):
-        super(DecoderRNN, self).__init__()
-        self.hidden_size = hidden_size
-
-        self.embedding = nn.Linear(output_size, hidden_size)
-        self.lstm = nn.LSTM(hidden_size, hidden_size, batch_first=True,
-                            num_layers=num_layers, bidirectional=True)
-        self.out = nn.Linear(hidden_size, output_size)
-
-    def forward(self, x, hidden):
-        output = self.embedding(x).view(1, 1, -1)
-        output, hidden = self.lstm(output, hidden)
-        return output, hidden
-
-    def initHidden(self):
-        return torch.zeros(1, 1, self.hidden_size, device=device)
 
 
-class GraphEncoder(nn.Module):
+class GCN(nn.Module):
     
     def __init__(self, input_dim=256, hidden_dim=256, n_layers=3, 
                  num_relations=3, num_dists=32, batch_norm=False, dropout=0.1):
@@ -372,7 +327,6 @@ class GraphEncoder(nn.Module):
             self.norm_layers.append(BatchNorm(hidden_dim))
         
         for i in range(n_layers-1):
-            #edge_nn = nn.Linear(num_dists, input_dim)
             self.layers.append(RGCNConv(hidden_dim, hidden_dim,
                                         num_relations, edge_nn))
             if self.batch_norm:
@@ -383,7 +337,6 @@ class GraphEncoder(nn.Module):
 
     def forward(self, data):
         x, edge_index, edge_attrs = data.x, data.edge_index, data.edge_attrs
-        #batch = data.distinct_bars
         edge_type = edge_attrs[:, 0]
         edge_attr = edge_attrs[:, 1:]
         
@@ -522,12 +475,12 @@ class Encoder(nn.Module):
                                        self.d)
 
         # Graph encoder
-        self.graph_encoder = GraphEncoder(dropout=self.dropout, 
-                                          input_dim=self.d,
-                                          hidden_dim=self.d,
-                                          n_layers=self.gnn_n_layers,
-                                          num_relations=self.n_relations,
-                                          batch_norm=self.batch_norm)
+        self.graph_encoder = GCN(dropout=self.dropout, 
+                                 input_dim=self.d,
+                                 hidden_dim=self.d,
+                                 n_layers=self.gnn_n_layers,
+                                 num_relations=self.n_relations,
+                                 batch_norm=self.batch_norm)
         
         gate_nn = nn.Sequential(
             MLP(input_dim=self.d, output_dim=1, num_layers=1, act=False,
@@ -535,13 +488,6 @@ class Encoder(nn.Module):
             nn.BatchNorm1d(1)
         )
         self.graph_attention = GlobalAttention(gate_nn)
-        
-        #self.context_bar_rnn = nn.GRU(input_size=self.d,
-        #                              hidden_size=self.d//2,
-        #                              num_layers=1,
-        #                              bidirectional=True,
-        #                              batch_first=True, 
-        #                              dropout=self.dropout)
         
         self.bars_encoder_attr = nn.Linear(self.n_bars*self.d,
                                            self.d)
@@ -554,18 +500,12 @@ class Encoder(nn.Module):
         
         self.bars_encoder_struct = nn.Linear(self.n_bars*self.d,
                                              self.d)
-        #self.struct_bar_rnn = nn.GRU(input_size=self.d,
-        #                              hidden_size=self.d//2,
-        #                              num_layers=1,
-        #                              batch_first=True, 
-        #                              dropout=self.dropout)
         
         self.linear_merge = nn.Linear(2*self.d, self.d)
         
         self.bn_lm = nn.BatchNorm1d(num_features=self.d)
         
         # Linear layers that compute the final mu and log_var
-        # Todo: as parameters
         self.linear_mu = nn.Linear(self.d, self.d)
         self.linear_log_var = nn.Linear(self.d, self.d)
 
@@ -581,10 +521,6 @@ class Encoder(nn.Module):
         non_drums = x_seq[torch.logical_not(x_graph.is_drum)]
         src_mask_non_drums = src_mask[torch.logical_not(x_graph.is_drum)]
         
-        # Permute dimensions to batch_first = False
-        #drums = drums.permute(1, 0, 2)
-        #non_drums = non_drums.permute(1, 0, 2)
-        
         # Compute note/drums embeddings
         s = drums.size()
         drums_pitch = self.drums_pitch_emb(drums[..., :self.d_token_pitches])
@@ -594,7 +530,6 @@ class Encoder(nn.Module):
         drums_dur = self.bn_de(drums_dur.view(-1, self.d//2))
         drums_dur = drums_dur.view(s[0], s[1], self.d//2)
         drums = torch.cat((drums_pitch, drums_dur), dim=-1)
-        #drums = self.dropout_layer(drums)
         # [n_nodes x max_simu_notes x d]
         
         s = non_drums.size()
@@ -605,16 +540,7 @@ class Encoder(nn.Module):
         non_drums_dur = self.bn_de(non_drums_dur.view(-1, self.d//2))
         non_drums_dur = non_drums_dur.view(s[0], s[1], self.d//2)
         non_drums = torch.cat((non_drums_pitch, non_drums_dur), dim=-1)
-        #non_drums = self.dropout_layer(non_drums)
         # [n_nodes x max_simu_notes x d]
-        
-        #len_drums = self.max_simu_notes - torch.sum(src_mask_drums, dim=1)
-        #len_non_drums = self.max_simu_notes - torch.sum(src_mask_non_drums, dim=1)
-        
-        #drums = pack_padded_sequence(drums, len_drums.cpu().view(-1),
-        #                             enforce_sorted=False)
-        #non_drums = pack_padded_sequence(non_drums, len_non_drums.cpu().view(-1),
-        #                                 enforce_sorted=False)
 
         # Compute chord embeddings both for drums and non drums
         drums = self.chord_encoder(drums.view(-1, self.d*(self.max_simu_notes-1)))
@@ -625,25 +551,13 @@ class Encoder(nn.Module):
         non_drums = self.dropout_layer(non_drums)
         # [n_nodes x d]
         
-        #hidden = torch.zeros(drums.size(1), )
-        #drums = self.chord_encoder_drums(drums)[-1]
-        #non_drums = self.chord_encoder(non_drums)[-1]
-        #drums = torch.mean(drums, dim=0)
-        #non_drums = torch.mean(non_drums, dim=0)
-        
-        #drums = self.dropout_layer(drums)
-        #non_drums = self.dropout_layer(non_drums)
-        
         # Merge drums and non-drums
-        #out = torch.zeros((x_seq.size(0), self.d_model), 
-        #                  device=self.device)
         out = torch.zeros((x_seq.size(0), self.d), 
                           device=self.device, dtype=torch.half)
         out[x_graph.is_drum] = drums
         out[torch.logical_not(x_graph.is_drum)] = non_drums
         # [n_nodes x d]
         
-        #x_graph.x = torch.cat((x_graph.node_features, out), 1)
         x_graph.x = out
         x_graph.distinct_bars = x_graph.bars + self.n_bars*x_graph.batch
         out = self.graph_encoder(x_graph)
@@ -697,53 +611,22 @@ class Decoder(nn.Module):
         self.bn_ld = nn.BatchNorm1d(num_features=2*self.d)
         
         self.bars_decoder_attr = nn.Linear(self.d, self.d * self.n_bars)
-        #self.context_bar_rnn = nn.GRU(input_size=self.d,
-        #                              hidden_size=self.d//2,
-        #                              num_layers=1,
-        #                              bidirectional=True,
-        #                              batch_first=True,
-        #                              dropout=self.dropout)
         
         self.bars_decoder_struct = nn.Linear(self.d, self.d * self.n_bars)
-        #self.struct_bar_rnn = nn.GRU(input_size=self.d//2,
-        #                              hidden_size=self.d//2,
-        #                              num_layers=1,
-        #                              batch_first=True,
-        #                              dropout=self.dropout)
         
         self.cnn_decoder = CNNDecoder(input_dim=self.d,
                                       dense_dim=self.d,
                                       dropout=0,
                                       batch_norm=self.batch_norm)
         
-        self.graph_decoder = GraphEncoder(dropout=self.dropout,
-                                          input_dim=self.d,
-                                          hidden_dim=self.d,
-                                          n_layers=self.gnn_n_layers,
-                                          num_relations=self.n_relations,
-                                          batch_norm=self.batch_norm)
-        
-        #gate_nn = nn.Sequential(
-        #    MLP(input_dim=self.d, output_dim=1, num_layers=1, act=False,
-        #              dropout=self.dropout),
-        #    nn.BatchNorm1d(1)
-        #)
-        #feat_nn = nn.Sequential(
-        #    MLP(input_dim=self.d, output_dim=self.d//2, num_layers=1,
-        #              dropout=self.dropout),
-        #    nn.BatchNorm1d(self.d//2)
-        #)
-        #self.graph_attention = GlobalAttention(gate_nn, feat_nn)
+        self.graph_decoder = GCN(dropout=self.dropout,
+                                 input_dim=self.d,
+                                 hidden_dim=self.d,
+                                 n_layers=self.gnn_n_layers,
+                                 num_relations=self.n_relations,
+                                 batch_norm=self.batch_norm)
         
         self.chord_decoder = nn.Linear(self.d, self.d*(self.max_simu_notes-1))
-        #self.chord_decoder = nn.GRU(input_size=self.d,
-        #                            hidden_size=self.d,
-        #                            num_layers=1,
-        #                            dropout=self.dropout)
-        #self.chord_decoder_drums = nn.GRU(input_size=self.d,
-        #                                  hidden_size=self.d,
-        #                                  num_layers=1,
-        #                                  dropout=self.dropout)
         
         # Pitch and dur linear layers
         self.drums_pitch_emb = nn.Linear(self.d//2, self.d_token_pitches)
@@ -799,14 +682,10 @@ class Decoder(nn.Module):
         
         # Add one-hot encoding of tracks
         # Todo: use also edge info
-        #x_graph.x = torch.cat((x_graph.node_features, out), 1)
         x_graph.x = out
         out = self.graph_decoder(x_graph)
         # [n_nodes x d]
-        #print("Node decodings:", node_decs.size())
         
-        
-        #out = torch.matmul(out, self.chord_decoder.weight)
         out = self.chord_decoder(out)
         # [n_nodes x max_simu_notes * d]
         out = out.view(-1, self.max_simu_notes-1, self.d)
@@ -823,16 +702,10 @@ class Decoder(nn.Module):
         drums_pitch = self.drums_pitch_emb(drums[..., :self.d//2])
         drums_dur = self.dur_emb(drums[..., self.d//2:])
         drums = torch.cat((drums_pitch, drums_dur), dim=-1)
-        #drums_pitch = torch.matmul(drums[..., :self.d//2], self.drums_pitch_emb.weight)
-        #drums_dur = torch.matmul(drums[..., self.d//2:], self.dur_emb.weight)
-        #drums = torch.cat((drums_pitch, drums_dur), dim=-1)
         # [n_nodes(dr) x max_simu_notes x d_token]
         non_drums_pitch = self.notes_pitch_emb(non_drums[..., :self.d//2])
         non_drums_dur = self.dur_emb(non_drums[..., self.d//2:])
         non_drums = torch.cat((non_drums_pitch, non_drums_dur), dim=-1)
-        #non_drums_pitch = torch.matmul(non_drums[..., :self.d//2], self.notes_pitch_emb.weight)
-        #non_drums_dur = torch.matmul(non_drums[..., self.d//2:], self.dur_emb.weight)
-        #non_drums = torch.cat((non_drums_pitch, non_drums_dur), dim=-1)
         # [n_nodes(non_dr) x max_simu_notes x d_token]
         
         # Merge drums and non-drums
@@ -840,8 +713,6 @@ class Decoder(nn.Module):
                           device=self.device, dtype=torch.half)
         out[x_graph.is_drum] = drums
         out[torch.logical_not(x_graph.is_drum)] = non_drums
-        
-        #out = out.view(x_seq.size())
         
         return out
         
@@ -852,7 +723,6 @@ class Decoder(nn.Module):
         # z: [bs x d]
         
         # Obtain z_structure and z_attributes from z
-        #z = self.dropout_layer(z)
         z = self.lin_divide(z)
         z = self.bn_ld(z)
         z = F.relu(z)
@@ -882,14 +752,10 @@ class Decoder(nn.Module):
         
         # Add one-hot encoding of tracks
         # Todo: use also edge info
-        #x_graph.x = torch.cat((x_graph.node_features, out), 1)
         x_graph.x = out
         out = self.graph_decoder(x_graph)
         # [n_nodes x d]
-        #print("Node decodings:", node_decs.size())
         
-        
-        #out = torch.matmul(out, self.chord_decoder.weight)
         out = self.chord_decoder(out)
         # [n_nodes x max_simu_notes * d]
         out = out.view(-1, self.max_simu_notes-1, self.d)
@@ -906,16 +772,10 @@ class Decoder(nn.Module):
         drums_pitch = self.drums_pitch_emb(drums[..., :self.d//2])
         drums_dur = self.dur_emb(drums[..., self.d//2:])
         drums = torch.cat((drums_pitch, drums_dur), dim=-1)
-        #drums_pitch = torch.matmul(drums[..., :self.d//2], self.drums_pitch_emb.weight)
-        #drums_dur = torch.matmul(drums[..., self.d//2:], self.dur_emb.weight)
-        #drums = torch.cat((drums_pitch, drums_dur), dim=-1)
         # [n_nodes(dr) x max_simu_notes x d_token]
         non_drums_pitch = self.notes_pitch_emb(non_drums[..., :self.d//2])
         non_drums_dur = self.dur_emb(non_drums[..., self.d//2:])
         non_drums = torch.cat((non_drums_pitch, non_drums_dur), dim=-1)
-        #non_drums_pitch = torch.matmul(non_drums[..., :self.d//2], self.notes_pitch_emb.weight)
-        #non_drums_dur = torch.matmul(non_drums[..., self.d//2:], self.dur_emb.weight)
-        #non_drums = torch.cat((non_drums_pitch, non_drums_dur), dim=-1)
         # [n_nodes(non_dr) x max_simu_notes x d_token]
         
         # Merge drums and non-drums
@@ -943,15 +803,12 @@ class VAE(nn.Module):
     def forward(self, x_seq, x_acts, x_graph, src_mask, tgt_mask,
                 inference=False):
         
-        #src_mask = src_mask.view(-1, src_mask.size(-1))
-        
         # Encoder pass
         mu, log_var = self.encoder(x_seq, x_acts, x_graph, src_mask)
         
         # Reparameterization trick
         z = torch.exp(0.5*log_var)
         z = z * torch.randn_like(z)
-        #print("eps:", eps.size())
         z = z + mu
         
         # Shifting target sequence and mask for transformer decoder
