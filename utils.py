@@ -7,6 +7,10 @@ from scipy.special import softmax
 import torch
 import random
 
+from constants import PitchToken, DurationToken
+import constants
+
+
 def set_seed(seed):
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
@@ -15,127 +19,72 @@ def set_seed(seed):
     np.random.seed(seed)
     random.seed(seed)
     os.environ['PYTHONHASHSEED'] = str(seed)
+
+
+# Builds multitrack pianoroll (mtp) from content tensor containing logits and 
+# structure binary tensor
+def mtp_from_logits(c_logits, s_tensor):
     
+    mtp = torch.zeros((s_tensor.size(0), s_tensor.size(1), s_tensor.size(2), 
+                       s_tensor.size(3), c_logits.size(-2), c_logits.size(-1)),
+                       device=c_logits.device, dtype=c_logits.dtype)
 
-# Constructs dense representation (with silences) from sparse representation
-def dense_from_sparse(content, structure):
+    size = mtp.size()
+    mtp = mtp.view(-1, mtp.size(-2), mtp.size(-1))
+    silence = torch.zeros((mtp.size(-2), mtp.size(-1)),
+                          device=c_logits.device, dtype=c_logits.dtype)
     
-    dense = np.zeros((structure.shape[0], structure.shape[1], structure.shape[2],
-                      structure.shape[3], content.shape[-2], content.shape[-1]))
+    # Create silences with pitch EOS and PAD tokens
+    silence[0, 129] = 1.
+    silence[1:, 130] = 1.
 
-    size = dense.shape
-
-    dense = dense.reshape(-1, dense.shape[-2], dense.shape[-1])
-
-    silence = np.zeros((dense.shape[-2], dense.shape[-1]))
-    silence[0, 129] = 1. # EOS token
-    silence[1:, 130] = 1. # PAD token
-
-    dense[structure.astype(bool).reshape(-1)] = content
-    dense[np.logical_not(structure.astype(bool).reshape(-1))] = silence
-
-    dense = dense.reshape(size)
+    # Fill the multitrack pianoroll
+    mtp[s_tensor.bool().view(-1)] = c_logits
+    mtp[torch.logical_not(s_tensor.bool().view(-1))] = silence
+    mtp = mtp.view(size)
     
-    return dense
+    return mtp
 
 
-# Constructs dense representation (with silences) from sparse representation
-def dense_from_sparse_torch(content, structure):
+def muspy_from_mtp(mtp, track_data, resolution):
     
-    dense = torch.zeros((structure.size(0), structure.size(1), structure.size(2), 
-                         structure.size(3), content.size(-2), content.size(-1)),
-                         device=content.device, dtype=content.dtype)
-
-    size = dense.size()
-
-    dense = dense.view(-1, dense.size(-2), dense.size(-1))
-
-    silence = torch.zeros((dense.size(-2), dense.size(-1)),
-                          device=content.device, dtype=content.dtype)
-    silence[0, 129] = 1. # Pitch EOS token
-    silence[1:, 130] = 1. # Pitch PAD token
-
-    dense[structure.bool().view(-1)] = content
-    dense[torch.logical_not(structure.bool().view(-1))] = silence
-
-    dense = dense.view(size)
-    
-    return dense
-
-
-def muspy_from_dense_torch(dense, track_data, resolution):
+    # Collapse bars dimension
+    mtp = mtp.permute(1, 0, 2, 3, 4)
+    size = (mtp.shape[0], -1, mtp.shape[3], mtp.shape[4])
+    mtp = mtp.reshape(*size)
     
     tracks = []
     
-    for tr in range(dense.size(0)):
+    for tr in range(mtp.size(0)):
         
         notes = []
         
-        for ts in range(dense.size(1)):
-            for note in range(dense.size(2)):
+        for ts in range(mtp.size(1)):
+            for note in range(mtp.size(2)):
                 
-                pitch = dense[tr, ts, note, :131]
-                pitch = torch.argmax(pitch)
+                # Compute pitch and duration values
+                pitch = mtp[tr, ts, note, :constants.N_PITCH_TOKENS]
+                dur = mtp[tr, ts, note, constants.N_PITCH_TOKENS:]
+                pitch, dur = torch.argmax(pitch), torch.argmax(dur)
 
-                # EOS or PAD
-                if pitch == 129 or pitch == 130:
+                if (pitch == PitchToken.EOS.value or 
+                    pitch == PitchToken.PAD.value or
+                    dur == DurationToken.EOS.value or 
+                    dur == DurationToken.PAD.value):
+                    # This chord contains no additional notes, go to next chord
                     break
                 
-                if pitch != 128:
-                    dur = dense[tr, ts, note, 131:]
-                    dur = torch.argmax(dur) + 1
-                    
-                    if dur == 97 or dur == 98 or dur == 99:
-                        dur = 4
-                        continue
-                    
-                    dur = min(dur.item(), dense.size(1)-ts-1)
-                    
-                    notes.append(muspy.Note(ts, pitch.item(), dur, 64))
-        
-        if track_data[tr][0] == 'Drums':
-            track = muspy.Track(name='Drums', is_drum=True, notes=copy.deepcopy(notes))
-        else:
-            track = muspy.Track(name=track_data[tr][0], 
-                                program=track_data[tr][1],
-                                notes=copy.deepcopy(notes))
-        tracks.append(track)
-    
-    meta = muspy.Metadata(title='prova')
-    music = muspy.Music(tracks=tracks, metadata=meta, resolution=resolution)
-    
-    return music
-
-
-def muspy_from_dense(dense, track_data, resolution):
-    
-    tracks = []
-    
-    for tr in range(dense.shape[0]):
-        
-        notes = []
-        
-        for ts in range(dense.shape[1]):
-            for note in range(dense.shape[2]):
+                if (pitch == PitchToken.SOS.value or
+                    pitch == PitchToken.SOS.value):
+                    continue
                 
-                pitch = dense[tr, ts, note, :131]
-                pitch = np.argmax(pitch)
-
-                # EOS or PAD
-                if pitch == 129 or pitch == 130:
-                    break
+                # Remapping [0, 95] to [1, 96] real duration values
+                dur = dur + 1
+                # Do not sustain notes beyond sequence limit
+                dur = min(dur.item(), mtp.size(1)-ts)
                 
-                if pitch != 128:
-                    dur = dense[tr, ts, note, 131:]
-                    dur = np.argmax(dur) + 1
-                    
-                    if dur == 97 or dur == 98 or dur == 99:
-                        dur = 4
-                        continue
-                    
-                    dur = min(dur, dense.shape[1]-ts-1)
-                    
-                    notes.append(muspy.Note(ts, pitch.item(), dur, 64))
+                notes.append(muspy.Note(ts, pitch.item(), dur, 64))
+        
         
         if track_data[tr][0] == 'Drums':
             track = muspy.Track(name='Drums', is_drum=True, notes=copy.deepcopy(notes))

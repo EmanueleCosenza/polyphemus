@@ -1,6 +1,7 @@
 import argparse
 import os
 import json
+import time
 
 import torch
 import numpy as np
@@ -15,35 +16,30 @@ from utils import set_seed
 
 from data import MIDIDataset, graph_from_tensor, graph_from_tensor_torch
 from model import VAE
-from utils import plot_struct, dense_from_sparse, dense_from_sparse_torch, muspy_from_dense, muspy_from_dense_torch
+from utils import plot_struct
 from utils import plot_pianoroll, midi_from_muspy
 from train import VAETrainer
 
 import matplotlib as mpl
+from utils import mtp_from_logits, muspy_from_mtp
 
 
 def generate_music(vae, z, s_cond=None, s_tensor_cond=None):
     
     # Get structure and content logits
-    with torch.cuda.amp.autocast():
-        _, c_logits, s_tensor_out = vae.decoder(z, s_cond)
+    _, c_logits, s_tensor_out = vae.decoder(z, s_cond)
     
     s_tensor = s_tensor_cond if s_tensor_cond != None else s_tensor_out
     
     # Build (n_batches x n_bars x n_tracks x n_timesteps x Sigma x d_token)
     # multitrack pianoroll tensor containing logits for each activation and
     # hard silences elsewhere
-    mtp = dense_from_sparse_torch(c_logits, s_tensor)
-    
-    # Collapse bars dimension
-    mtp = mtp.permute(0, 2, 1, 3, 4, 5)
-    size = (mtp.shape[0], mtp.shape[1], -1, mtp.shape[4], mtp.shape[5])
-    mtp = mtp.reshape(*size)
+    mtp = mtp_from_logits(c_logits, s_tensor)
     
     return mtp, s_tensor
 
 
-def save(mtp, dir, resolution, s_tensor=None, track_data=None, n_loop=1):
+def save(mtp, dir, resolution, s_tensor=None, track_data=None, n_loops=1):
     
     track_data = ([('Drums', -1), ('Bass', 34), ('Guitar', 1), ('Strings', 83)]
                   if track_data == None else track_data)
@@ -58,11 +54,11 @@ def save(mtp, dir, resolution, s_tensor=None, track_data=None, n_loop=1):
         save_dir = os.path.join(dir, str(i))
         os.makedirs(save_dir, exist_ok=True)
 
-        print("Saving midi sequence " + str(i+1) + "...")
+        print("Saving MIDI sequence {}...".format(str(i+1)))
         
         # Generate muspy song from multitrack pianoroll, then midi from muspy
         # and save
-        muspy_song = muspy_from_dense_torch(mtp[i], track_data, resolution)
+        muspy_song = muspy_from_mtp(mtp[i], track_data, resolution)
         midi_from_muspy(muspy_song, save_dir, name='music')
         
         # Plot the pianoroll associated to the sequence
@@ -82,16 +78,15 @@ def save(mtp, dir, resolution, s_tensor=None, track_data=None, n_loop=1):
                 plot_struct(s_curr.cpu(), name='structure', 
                             save_dir=save_dir, figsize=(12, 3))
 
-        if n_loop > 1:
+        if n_loops > 1:
             # Generate extended sequence
-            print("Saving extended (looped) midi sequence " + str(i+1) + "...")
-            extended = mtp[i].repeat(1, n_loop, 1, 1)
-            extended = muspy_from_dense_torch(extended, track_data, resolution)
+            print("Saving extended MIDI sequence " \
+                  "{} with {} loops...".format(str(i+1), n_loops))
+            extended = mtp[i].repeat(n_loops, 1, 1, 1, 1)
+            extended = muspy_from_mtp(extended, track_data, resolution)
             midi_from_muspy(extended, save_dir, name='extended')
         
         print()
-
-    print("Finished.")
     
 
 def generate_z(bs, d_model, device):
@@ -141,11 +136,11 @@ def main():
         help='Number of sequences to be generated. Default is 5.'
     )
     parser.add_argument(
-        '--n_loop', 
+        '--n_loops', 
         type=int,
         default=1, 
-        help="""If greater than 1, outputs an additional MIDI file containing 
-                the sequence looped n_loop times."""
+        help="If greater than 1, outputs an additional MIDI file containing " \
+                "the sequence looped n_loops times."
     )
     parser.add_argument(
         '--s_file', 
@@ -153,8 +148,8 @@ def main():
         help='Path to the file containing the binary structure tensor.'
     )
     parser.add_argument(
-        '--use_gpu', 
-        type=bool, 
+        '--use_gpu',
+        action='store_true',
         default=False, 
         help='Flag to enable or disable GPU usage. Default is False.'
     )
@@ -177,11 +172,11 @@ def main():
     device = torch.device("cuda") if args.use_gpu else torch.device("cpu")
     if args.use_gpu:
         torch.cuda.set_device(args.gpu_id)
+        
+    print("------------------------------------")
+    print("Loading the model on {} device...".format(device))
     
     model, params = load_model(args.model_dir, device)
-
-    structure = True
-    structure_file = args.s_file
 
     d_model = params['model']['d']
     n_bars = params['model']['n_bars']
@@ -195,10 +190,13 @@ def main():
 
     s, s_tensor = None, None
 
-    if structure:
+    if args.s_file is not None:
+        
+        print("Loading the structure tensor " \
+               "from {}...".format(args.model_dir))
         
         # Load structure tensor from file
-        with open(structure_file, 'r') as f:
+        with open(args.s_file, 'r') as f:
             s_tensor = json.load(f)
         
         s_tensor = torch.tensor(s_tensor)
@@ -207,16 +205,26 @@ def main():
         dims = list(s_tensor.size())
         expected = [n_bars, n_tracks, n_timesteps]
         if dims != expected:
-            raise ValueError(f"Loaded tensor dimensions {dims} \
-                             do not match expected dimensions {expected}")
+            raise ValueError(f"Loaded tensor dimensions {dims} " \
+                             f"do not match expected dimensions {expected}")
         
         s_tensor = s_tensor.bool()
         s_tensor = s_tensor.unsqueeze(0).repeat(bs, 1, 1, 1)
         s = model.decoder._structure_from_binary(s_tensor)
-
+    
+    print()
+    print("Generating z...")
     z = generate_z(bs, d_model, device)
+    
+    print("Generating music with the model...")
+    s_t = time.time()
     mtp, s_tensor = generate_music(model, z, s, s_tensor)
-    save(mtp, output_dir, resolution, s_tensor, track_data, args.n_loop)
+    print("Inference time: {:.3f} s".format(time.time()-s_t))
+    
+    print()
+    print("Saving MIDI files in {}...".format(output_dir))
+    save(mtp, output_dir, resolution, s_tensor, track_data, args.n_loops)
+    print("Finished saving MIDI files.")
 
 
 if __name__ == '__main__':

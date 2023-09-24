@@ -688,8 +688,7 @@ class ContentDecoder(nn.Module):
         
         # Merge drums and non-drums
         out = torch.zeros((structure.num_nodes, self.max_simu_notes-1,
-                           self.d_token),
-                          device=self.device, dtype=torch.half)
+                           self.d_token), device=self.device)
         out[structure.is_drum] = drums
         out[torch.logical_not(structure.is_drum)] = non_drums
         
