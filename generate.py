@@ -39,10 +39,7 @@ def generate_music(vae, z, s_cond=None, s_tensor_cond=None):
     return mtp, s_tensor
 
 
-def save(mtp, dir, resolution, s_tensor=None, track_data=None, n_loops=1):
-    
-    track_data = ([('Drums', -1), ('Bass', 34), ('Guitar', 1), ('Strings', 83)]
-                  if track_data == None else track_data)
+def save(mtp, dir, resolution, s_tensor=None, n_loops=1):
     
     # Clear matplotlib cache (this avoids formatting problems with first plot)
     plt.clf()
@@ -58,7 +55,7 @@ def save(mtp, dir, resolution, s_tensor=None, track_data=None, n_loops=1):
         
         # Generate muspy song from multitrack pianoroll, then midi from muspy
         # and save
-        muspy_song = muspy_from_mtp(mtp[i], track_data, resolution)
+        muspy_song = muspy_from_mtp(mtp[i], resolution)
         midi_from_muspy(muspy_song, save_dir, name='music')
         
         # Plot the pianoroll associated to the sequence
@@ -83,7 +80,7 @@ def save(mtp, dir, resolution, s_tensor=None, track_data=None, n_loops=1):
             print("Saving extended MIDI sequence " \
                   "{} with {} loops...".format(str(i+1), n_loops))
             extended = mtp[i].repeat(n_loops, 1, 1, 1, 1)
-            extended = muspy_from_mtp(extended, track_data, resolution)
+            extended = muspy_from_mtp(extended, resolution)
             midi_from_muspy(extended, save_dir, name='extended')
         
         print()
@@ -184,10 +181,8 @@ def main():
     resolution = params['model']['resolution']
     n_timesteps = 4*resolution
     output_dir = args.output_dir
-
     bs = args.n
-    track_data = [('Drums', -1), ('Bass', 34), ('Guitar', 1), ('Strings', 83)]
-
+    
     s, s_tensor = None, None
 
     if args.s_file is not None:
@@ -223,7 +218,7 @@ def main():
     
     print()
     print("Saving MIDI files in {}...".format(output_dir))
-    save(mtp, output_dir, resolution, s_tensor, track_data, args.n_loops)
+    save(mtp, output_dir, resolution, s_tensor, args.n_loops)
     print("Finished saving MIDI files.")
 
 

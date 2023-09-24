@@ -15,3 +15,12 @@ class DurationToken(Enum):
     PAD = 98
     
 N_DUR_TOKENS = 99
+
+
+TRACKS = ['Drums', 'Bass', 'Guitar', 'Strings']
+MIDI_PROGRAMS = {
+    'Drums': -1,
+    'Bass': 34,
+    'Guitar': 1,
+    'Strings': 83,
+}

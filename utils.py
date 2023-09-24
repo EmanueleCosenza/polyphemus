@@ -46,7 +46,7 @@ def mtp_from_logits(c_logits, s_tensor):
     return mtp
 
 
-def muspy_from_mtp(mtp, track_data, resolution):
+def muspy_from_mtp(mtp, resolution):
     
     # Collapse bars dimension
     mtp = mtp.permute(1, 0, 2, 3, 4)
@@ -55,16 +55,16 @@ def muspy_from_mtp(mtp, track_data, resolution):
     
     tracks = []
     
-    for tr in range(mtp.size(0)):
+    for track_idx in range(mtp.size(0)):
         
         notes = []
         
-        for ts in range(mtp.size(1)):
-            for note in range(mtp.size(2)):
+        for t in range(mtp.size(1)):
+            for note_idx in range(mtp.size(2)):
                 
                 # Compute pitch and duration values
-                pitch = mtp[tr, ts, note, :constants.N_PITCH_TOKENS]
-                dur = mtp[tr, ts, note, constants.N_PITCH_TOKENS:]
+                pitch = mtp[track_idx, t, note_idx, :constants.N_PITCH_TOKENS]
+                dur = mtp[track_idx, t, note_idx, constants.N_PITCH_TOKENS:]
                 pitch, dur = torch.argmax(pitch), torch.argmax(dur)
 
                 if (pitch == PitchToken.EOS.value or 
@@ -76,25 +76,30 @@ def muspy_from_mtp(mtp, track_data, resolution):
                 
                 if (pitch == PitchToken.SOS.value or
                     pitch == PitchToken.SOS.value):
+                    # Skip this note
                     continue
                 
-                # Remapping [0, 95] to [1, 96] real duration values
+                # Remapping duration values from [0, 95] to [1, 96]
                 dur = dur + 1
                 # Do not sustain notes beyond sequence limit
-                dur = min(dur.item(), mtp.size(1)-ts)
+                dur = min(dur.item(), mtp.size(1)-t)
                 
-                notes.append(muspy.Note(ts, pitch.item(), dur, 64))
+                notes.append(muspy.Note(t, pitch.item(), dur, 64))
         
         
-        if track_data[tr][0] == 'Drums':
-            track = muspy.Track(name='Drums', is_drum=True, notes=copy.deepcopy(notes))
-        else:
-            track = muspy.Track(name=track_data[tr][0], 
-                                program=track_data[tr][1],
-                                notes=copy.deepcopy(notes))
+        track_name = constants.TRACKS[track_idx]
+        midi_program = constants.MIDI_PROGRAMS[track_name]
+        is_drum = (track_name == 'Drums')
+        
+        track = muspy.Track(
+            name=track_name, 
+            is_drum=is_drum,
+            program=(0 if is_drum else midi_program), 
+            notes=copy.deepcopy(notes)
+        )
         tracks.append(track)
     
-    meta = muspy.Metadata(title='prova')
+    meta = muspy.Metadata()
     music = muspy.Music(tracks=tracks, metadata=meta, resolution=resolution)
     
     return music
