@@ -20,6 +20,8 @@ from torch_geometric.nn.glob import GlobalAttention
 import math
 import torch.optim as optim
 from torch_scatter import scatter_mean
+from data import MIDIDataset, graph_from_tensor, graph_from_tensor_torch
+from torch_geometric.data import Batch
 
 
 @torch.jit._overload
@@ -358,33 +360,35 @@ class CNNEncoder(nn.Module):
                  dropout=0.1):
         super().__init__()
         
+        # Convolutional layers
         if batch_norm:
             self.conv = nn.Sequential(
-                # 4*32 --> 8*4*32
+                # From 4x32 to 8x4x32
                 nn.Conv2d(1, 8, 3, padding=1),
                 nn.BatchNorm2d(8),
                 nn.ReLU(True),
-                # 8*4*32 --> 8*4*8
+                # From 8x4x32 to 8x4x8
                 nn.MaxPool2d((1, 4), stride=(1, 4)),
-                # 8*4*8 --> 16*4*8
+                # From 8x4x8 to 16x4x8
                 nn.Conv2d(8, 16, 3, padding=1),
                 nn.BatchNorm2d(16),
                 nn.ReLU(True)
             )
         else:
             self.conv = nn.Sequential(
-                # 4*32 --> 8*4*32
+                # From 4x32 to 8x4x32
                 nn.Conv2d(1, 8, 3, padding=1),
                 nn.ReLU(True),
-                # 8*4*32 --> 8*4*8
+                # From 8x4x32 to 8x4x8
                 nn.MaxPool2d((1, 4), stride=(1, 4)),
-                # 8*4*8 --> 16*4*8
+                # From 8x4x8 to 16x4x8
                 nn.Conv2d(8, 16, 3, padding=1),
                 nn.ReLU(True)
             )
         
         self.flatten = nn.Flatten(start_dim=1)
         
+        # Linear layers
         self.lin = nn.Sequential(
             nn.Dropout(dropout),
             nn.Linear(16*4*8, dense_dim),
@@ -410,6 +414,7 @@ class CNNDecoder(nn.Module):
                  dropout=0.1):
         super().__init__()
         
+        # Linear decompressors
         self.lin = nn.Sequential(
             nn.Dropout(dropout),
             nn.Linear(input_dim, dense_dim),
@@ -421,6 +426,7 @@ class CNNDecoder(nn.Module):
 
         self.unflatten = nn.Unflatten(dim=1, unflattened_size=(16, 4, 8))
 
+        # Upsample and convolutional layers
         if batch_norm:
             self.conv = nn.Sequential(
                 nn.Upsample(scale_factor=(1, 4), mode='nearest'),
@@ -451,58 +457,52 @@ class Encoder(nn.Module):
 
     def __init__(self, **kwargs):
         super().__init__()
-        
         self.__dict__.update(kwargs)
         
         self.dropout_layer = nn.Dropout(p=self.dropout)
         
-        
-        self.notes_pitch_emb = nn.Linear(self.d_token_pitches, 
-                                               self.d//2)
-        
-        self.bn_npe = nn.BatchNorm1d(num_features=self.d//2)
-        
-        self.drums_pitch_emb = nn.Linear(self.d_token_pitches, 
-                                               self.d//2)
-        
-        self.bn_dpe = nn.BatchNorm1d(num_features=self.d//2)
-        
+        # Pitch and duration embedding layers (separate layers for drums 
+        # and non drums)
+        self.notes_pitch_emb = nn.Linear(self.d_token_pitches, self.d//2)
+        self.drums_pitch_emb = nn.Linear(self.d_token_pitches, self.d//2)
         self.dur_emb = nn.Linear(self.d_token_dur, self.d//2)
         
+        # Batch norm layers
+        self.bn_npe = nn.BatchNorm1d(num_features=self.d//2)
+        self.bn_dpe = nn.BatchNorm1d(num_features=self.d//2)
         self.bn_de = nn.BatchNorm1d(num_features=self.d//2)
         
-        self.chord_encoder = nn.Linear(self.d * (self.max_simu_notes-1),
-                                       self.d)
+        self.chord_encoder = nn.Linear(self.d * (self.max_simu_notes-1), self.d)
 
         # Graph encoder
-        self.graph_encoder = GCN(dropout=self.dropout, 
-                                 input_dim=self.d,
-                                 hidden_dim=self.d,
-                                 n_layers=self.gnn_n_layers,
-                                 num_relations=self.n_relations,
-                                 batch_norm=self.batch_norm)
+        self.graph_encoder = GCN(
+            dropout=self.dropout,
+            input_dim=self.d,
+            hidden_dim=self.d,
+            n_layers=self.gnn_n_layers,
+            num_relations=self.n_relations,
+            batch_norm=self.batch_norm
+        )
         
+        # Soft attention node-aggregation layer
         gate_nn = nn.Sequential(
-            MLP(input_dim=self.d, output_dim=1, num_layers=1, act=False,
-                      dropout=self.dropout),
+            MLP(input_dim=self.d, output_dim=1, num_layers=1,
+                act=False, dropout=self.dropout),
             nn.BatchNorm1d(1)
         )
         self.graph_attention = GlobalAttention(gate_nn)
         
-        self.bars_encoder_attr = nn.Linear(self.n_bars*self.d,
-                                           self.d)
+        self.bars_encoder_attr = nn.Linear(self.n_bars*self.d,self.d)
         
-        
-        self.cnn_encoder = CNNEncoder(dense_dim=self.d,
-                                      output_dim=self.d,
-                                      dropout=0,
-                                      batch_norm=self.batch_norm)
-        
-        self.bars_encoder_struct = nn.Linear(self.n_bars*self.d,
-                                             self.d)
+        self.cnn_encoder = CNNEncoder(
+            dense_dim=self.d,
+            output_dim=self.d,
+            dropout=self.dropout,
+            batch_norm=self.batch_norm
+        )
+        self.bars_encoder_struct = nn.Linear(self.n_bars*self.d, self.d)
         
         self.linear_merge = nn.Linear(2*self.d, self.d)
-        
         self.bn_lm = nn.BatchNorm1d(num_features=self.d)
         
         # Linear layers that compute the final mu and log_var
@@ -533,7 +533,9 @@ class Encoder(nn.Module):
         # [n_nodes x max_simu_notes x d]
         
         s = non_drums.size()
-        non_drums_pitch = self.notes_pitch_emb(non_drums[..., :self.d_token_pitches])
+        non_drums_pitch = self.notes_pitch_emb(
+            non_drums[..., :self.d_token_pitches]
+        )
         non_drums_pitch = self.bn_npe(non_drums_pitch.view(-1, self.d//2))
         non_drums_pitch = non_drums_pitch.view(s[0], s[1], self.d//2)
         non_drums_dur = self.dur_emb(non_drums[..., self.d_token_pitches:])
@@ -543,8 +545,12 @@ class Encoder(nn.Module):
         # [n_nodes x max_simu_notes x d]
 
         # Compute chord embeddings both for drums and non drums
-        drums = self.chord_encoder(drums.view(-1, self.d*(self.max_simu_notes-1)))
-        non_drums = self.chord_encoder(non_drums.view(-1, self.d*(self.max_simu_notes-1)))
+        drums = self.chord_encoder(
+            drums.view(-1, self.d*(self.max_simu_notes-1))
+        )
+        non_drums = self.chord_encoder(
+            non_drums.view(-1, self.d*(self.max_simu_notes-1))
+        )
         drums = F.relu(drums)
         non_drums = F.relu(non_drums)
         drums = self.dropout_layer(drums)
@@ -552,8 +558,8 @@ class Encoder(nn.Module):
         # [n_nodes x d]
         
         # Merge drums and non-drums
-        out = torch.zeros((x_seq.size(0), self.d), 
-                          device=self.device, dtype=torch.half)
+        out = torch.zeros((x_seq.size(0), self.d), device=self.device,
+                          dtype=torch.half)
         out[x_graph.is_drum] = drums
         out[torch.logical_not(x_graph.is_drum)] = non_drums
         # [n_nodes x d]
@@ -564,8 +570,7 @@ class Encoder(nn.Module):
         # [n_nodes x d]
         
         with torch.cuda.amp.autocast(enabled=False):
-            out = self.graph_attention(out,
-                                       batch=x_graph.distinct_bars)
+            out = self.graph_attention(out, batch=x_graph.distinct_bars)
             # [bs x n_bars x d]
             
         out = out.view(-1, self.n_bars * self.d)
@@ -575,7 +580,7 @@ class Encoder(nn.Module):
         
         # Process structure
         out = self.cnn_encoder(x_acts.view(-1, self.n_tracks,
-                                                self.resolution*4))
+                                           self.resolution*4))
         # [bs * n_bars x d]
         out = out.view(-1, self.n_bars * self.d)
         # [bs x n_bars * d]
@@ -597,7 +602,180 @@ class Encoder(nn.Module):
         return mu, log_var
 
 
+class StructureDecoder(nn.Module):
+
+    def __init__(self, **kwargs):
+        super().__init__()
+        self.__dict__.update(kwargs)
+        
+        self.bars_decoder = nn.Linear(self.d, self.d*self.n_bars)
+        self.cnn_decoder = CNNDecoder(
+            input_dim=self.d,
+            dense_dim=self.d,
+            dropout=self.dropout,
+            batch_norm=self.batch_norm
+        )
+        
+        
+    def forward(self, z_s):
+        # z_s: bs x d
+        out = self.bars_decoder(z_s) # bs x (n_bars*d)
+        out = self.cnn_decoder(out.reshape(-1, self.d))
+        out = out.view(z_s.size(0), self.n_bars, self.n_tracks, -1)
+        return out
+
+
+class ContentDecoder(nn.Module):
+    
+    def __init__(self, **kwargs):
+        super().__init__()
+        self.__dict__.update(kwargs)
+        
+        self.bars_decoder = nn.Linear(self.d, self.d * self.n_bars)
+        
+        self.graph_decoder = GCN(
+            dropout=self.dropout,
+            input_dim=self.d,
+            hidden_dim=self.d,
+            n_layers=self.gnn_n_layers,
+            num_relations=self.n_relations,
+            batch_norm=self.batch_norm
+        )
+        
+        self.chord_decoder = nn.Linear(self.d, self.d*(self.max_simu_notes-1))
+        
+        # Pitch and duration (un)embedding linear layers
+        self.drums_pitch_emb = nn.Linear(self.d//2, self.d_token_pitches)
+        self.non_drums_pitch_emb = nn.Linear(self.d//2, self.d_token_pitches)
+        self.dur_emb = nn.Linear(self.d//2, self.d_token_dur)
+        
+        self.dropout_layer = nn.Dropout(p=self.dropout)
+        
+        
+    def forward(self, z_c, structure):
+        
+        out = self.bars_decoder(z_c) # bs x (n_bars*d)
+        
+        # Initialize node features with corresponding z_bar
+        # and propagate with GNN
+        structure.distinct_bars = structure.bars + self.n_bars*structure.batch
+        _, counts = torch.unique(structure.distinct_bars, return_counts=True)
+        out = out.view(-1, self.d)
+        out = torch.repeat_interleave(out, counts, axis=0) # n_nodes x d
+        structure.x = out
+        out = self.graph_decoder(structure) # n_nodes x d
+        
+        out = self.chord_decoder(out) # n_nodes x (max_simu_notes*d)
+        out = out.view(-1, self.max_simu_notes-1, self.d)
+        
+        drums = out[structure.is_drum] # n_nodes_drums x max_simu_notes x d 
+        non_drums = out[torch.logical_not(structure.is_drum)]
+        # n_nodes_non_drums x max_simu_notes x d
+        
+        # Obtain final pitch and dur decodings
+        # (softmax to be applied after forward)
+        non_drums = self.dropout_layer(non_drums)
+        drums = self.dropout_layer(drums)
+        
+        drums_pitch = self.drums_pitch_emb(drums[..., :self.d//2])
+        drums_dur = self.dur_emb(drums[..., self.d//2:])
+        drums = torch.cat((drums_pitch, drums_dur), dim=-1)
+        # n_nodes_drums x max_simu_notes x d_token
+        non_drums_pitch = self.non_drums_pitch_emb(non_drums[..., :self.d//2])
+        non_drums_dur = self.dur_emb(non_drums[..., self.d//2:])
+        non_drums = torch.cat((non_drums_pitch, non_drums_dur), dim=-1)
+        # n_nodes_non_drums x max_simu_notes x d_token
+        
+        # Merge drums and non-drums
+        out = torch.zeros((structure.num_nodes, self.max_simu_notes-1,
+                           self.d_token),
+                          device=self.device, dtype=torch.half)
+        out[structure.is_drum] = drums
+        out[torch.logical_not(structure.is_drum)] = non_drums
+        
+        return out
+
+
 class Decoder(nn.Module):
+    
+    def __init__(self, **kwargs):
+        super().__init__()
+        self.__dict__.update(kwargs)
+        
+        self.lin_decoder = nn.Linear(self.d, 2*self.d)
+        self.batch_norm = nn.BatchNorm1d(num_features=2*self.d)
+        self.dropout = nn.Dropout(p=self.dropout)
+        
+        self.s_decoder = StructureDecoder(**kwargs)
+        self.c_decoder = ContentDecoder(**kwargs)
+        
+        self.sigmoid_thresh = 0.5
+        
+    
+    def _structure_from_binary(self, s_tensor):
+        
+        # Create graph structures for each batch
+        s = []
+        for i in range(s_tensor.size(0)):
+            s.append(graph_from_tensor_torch(s_tensor[i]))
+
+        # Create batch of graphs from single graphs
+        s = Batch.from_data_list(s, exclude_keys=['batch'])
+        s = s.to(next(self.parameters()).device)
+        
+        return s
+    
+    
+    def _binary_from_logits(self, s_logits):
+        
+        # Hard threshold instead of sampling gives more pleasant results
+        s_tensor = torch.sigmoid(s_logits)
+        s_tensor[s_tensor >= self.sigmoid_thresh] = 1
+        s_tensor[s_tensor < self.sigmoid_thresh] = 0
+        s_tensor = s_tensor.bool()
+        
+        return s_tensor
+    
+    
+    def _structure_from_logits(self, s_logits):
+        
+        # Compute binary structure tensor from logits and build torch geometric 
+        # structure from binary tensor
+        s_tensor = self._binary_from_logits(s_logits)
+        s = self._structure_from_binary(s_tensor)
+        
+        return s, s_tensor
+        
+        
+    def forward(self, z, s=None):
+        
+        # Obtain z_s and z_c from z
+        z = self.lin_decoder(z)
+        z = self.batch_norm(z)
+        z = F.relu(z)
+        z = self.dropout(z) # bs x (2*d)
+        z_s, z_c = z[:, :self.d], z[:, self.d:]
+        
+        # Obtain the tensor containing structure logits
+        s_logits = self.s_decoder(z_s)
+        
+        s_tensor = None
+        if s == None:
+            # Build torch geometric graph structure from structure logits. 
+            # This step involves non differentiable operations.
+            # No gradients pass through here.
+            s, s_tensor = self._structure_from_logits(s_logits.detach())
+            
+        # Obtain the tensor containing content logits
+        c_logits = self.c_decoder(z_c, s)
+        
+        return s_logits, c_logits, s_tensor
+        
+    
+    
+        
+
+""" class Decoder(nn.Module):
 
     def __init__(self, **kwargs):
         super().__init__()
@@ -611,22 +789,25 @@ class Decoder(nn.Module):
         self.bn_ld = nn.BatchNorm1d(num_features=2*self.d)
         
         self.bars_decoder_attr = nn.Linear(self.d, self.d * self.n_bars)
-        
         self.bars_decoder_struct = nn.Linear(self.d, self.d * self.n_bars)
         
-        self.cnn_decoder = CNNDecoder(input_dim=self.d,
-                                      dense_dim=self.d,
-                                      dropout=0,
-                                      batch_norm=self.batch_norm)
+        self.cnn_decoder = CNNDecoder(
+            input_dim=self.d,
+            dense_dim=self.d,
+            dropout=self.dropout,
+            batch_norm=self.batch_norm
+        )
         
-        self.graph_decoder = GCN(dropout=self.dropout,
-                                 input_dim=self.d,
-                                 hidden_dim=self.d,
-                                 n_layers=self.gnn_n_layers,
-                                 num_relations=self.n_relations,
-                                 batch_norm=self.batch_norm)
+        self.graph_decoder = GCN(
+            dropout=self.dropout,
+            input_dim=self.d,
+            hidden_dim=self.d,
+            n_layers=self.gnn_n_layers,
+            num_relations=self.n_relations,
+            batch_norm=self.batch_norm
+        )
         
-        self.chord_decoder = nn.Linear(self.d, self.d*(self.max_simu_notes-1))
+        self.chord_decoder = nn.Linear(self.d, self.d*(self.max_simu_notes - 1))
         
         # Pitch and dur linear layers
         self.drums_pitch_emb = nn.Linear(self.d//2, self.d_token_pitches)
@@ -708,16 +889,7 @@ class Decoder(nn.Module):
         non_drums = torch.cat((non_drums_pitch, non_drums_dur), dim=-1)
         # [n_nodes(non_dr) x max_simu_notes x d_token]
         
-        # Merge drums and non-drums
-        out = torch.zeros((x_graph.num_nodes, self.max_simu_notes-1, self.d_token),
-                          device=self.device, dtype=torch.half)
-        out[x_graph.is_drum] = drums
-        out[torch.logical_not(x_graph.is_drum)] = non_drums
-        
-        return out
-        
-
-
+        # Merge drums and non-drgraph_from_tensor
     def forward(self, z, x_seq, x_acts, x_graph, src_mask, tgt_mask,
                 inference=False):
         # z: [bs x d]
@@ -786,18 +958,15 @@ class Decoder(nn.Module):
         
         out = out.view(x_seq.size())
 
-        return out, out_struct
+        return out, out_struct """
 
 
 class VAE(nn.Module):
 
     def __init__(self, **kwargs):
         super().__init__()
-        
         self.encoder = Encoder(**kwargs)
-        self.decoder = Decoder(
-            **kwargs
-        )
+        self.decoder = Decoder(**kwargs)
     
     
     def forward(self, x_seq, x_acts, x_graph, src_mask, tgt_mask,
@@ -807,7 +976,7 @@ class VAE(nn.Module):
         mu, log_var = self.encoder(x_seq, x_acts, x_graph, src_mask)
         
         # Reparameterization trick
-        z = torch.exp(0.5*log_var)
+        z = torch.exp(0.5 * log_var)
         z = z * torch.randn_like(z)
         z = z + mu
         
