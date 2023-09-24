@@ -760,7 +760,7 @@ class Decoder(nn.Module):
         s_logits = self.s_decoder(z_s)
         
         s_tensor = None
-        if s == None:
+        if s is None:
             # Build torch geometric graph structure from structure logits. 
             # This step involves non differentiable operations.
             # No gradients pass through here.
