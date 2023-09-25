@@ -115,6 +115,8 @@ def plot_pianoroll(muspy_song, save_dir=None, name='pianoroll'):
     axes_linewidth = 4
     font_size = 34
     fformat = 'png'
+    xticklabel = False
+    label = 'y'
     figsize = (20, 10)
     dpi = 200
     
@@ -126,9 +128,9 @@ def plot_pianoroll(muspy_song, save_dir=None, name='pianoroll'):
                                  figsize=figsize)
         fig.subplots_adjust(hspace=0)
         axs = axs_.tolist()
-        muspy.show_pianoroll(music=muspy_song, yticklabel='off',
-                            xticklabel='on', grid_axis='off',
-                            axs=axs, preset='full')
+        muspy.show_pianoroll(music=muspy_song, yticklabel='off', xtick='off',
+                             label=label, xticklabel=xticklabel, 
+                             grid_axis='off', axs=axs, preset='full')
     
         if save_dir:
             plt.savefig(os.path.join(save_dir, name + "." + fformat), 
@@ -141,12 +143,13 @@ def plot_structure(s_tensor, save_dir=None, name='structure'):
     axes_linewidth = 1
     font_size = 14
     fformat = 'svg'
-    figsize=(12, 3)
     dpi = 200
+    
+    n_bars = s_tensor.shape[0]
+    figsize=(n_bars*3, 3)
     
     n_timesteps = s_tensor.size(2) 
     resolution = int(n_timesteps / 4)
-    n_bars = s_tensor.shape[0]
     s_tensor = s_tensor.permute(1, 0, 2)
     s_tensor = s_tensor.reshape(s_tensor.shape[0], -1)
     
