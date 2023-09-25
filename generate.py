@@ -16,8 +16,8 @@ from utils import set_seed
 
 from data import MIDIDataset, graph_from_tensor, graph_from_tensor_torch
 from model import VAE
-from utils import plot_struct
-from utils import plot_pianoroll, midi_from_muspy
+from utils import plot_structure
+from utils import plot_pianoroll, save_midi
 from train import VAETrainer
 
 import matplotlib as mpl
@@ -39,9 +39,10 @@ def generate_music(vae, z, s_cond=None, s_tensor_cond=None):
     return mtp, s_tensor
 
 
-def save(mtp, dir, resolution, s_tensor=None, n_loops=1):
+def save(mtp, dir, s_tensor=None, n_loops=1, 
+         looped_only=False, plot_proll=True, plot_struct=True):
     
-    # Clear matplotlib cache (this avoids formatting problems with first plot)
+    # Clear matplotlib cache (this solves formatting problems with first plot)
     plt.clf()
 
     # Iterate over the generated n-bar sequences
@@ -53,35 +54,25 @@ def save(mtp, dir, resolution, s_tensor=None, n_loops=1):
 
         print("Saving MIDI sequence {}...".format(str(i+1)))
         
-        # Generate muspy song from multitrack pianoroll, then midi from muspy
-        # and save
-        muspy_song = muspy_from_mtp(mtp[i], resolution)
-        midi_from_muspy(muspy_song, save_dir, name='music')
+        if not looped_only:
+            # Generate MIDI song from multitrack pianoroll and save
+            filename = 'generated'
+            muspy_song = muspy_from_mtp(mtp[i])
+            save_midi(muspy_song, save_dir, name=filename)
         
-        # Plot the pianoroll associated to the sequence
-        preset = 'full'
-        with mpl.rc_context({'lines.linewidth': 4, 
-                             'axes.linewidth': 4, 'font.size': 34}):
-            plot_pianoroll(muspy_song, save_dir, name='pianoroll',
-                           figsize=(20, 10), fformat='png', preset=preset)
+        if plot_proll:
+            plot_pianoroll(muspy_song, save_dir)
         
-        # Plot structure_tensor if present
-        if s_tensor is not None:
-            s_curr = s_tensor[i]
-            s_curr = s_curr.permute(1, 0, 2)
-            s_curr = s_curr.reshape(s_curr.shape[0], -1)
-            with mpl.rc_context({'lines.linewidth': 1, 
-                                 'axes.linewidth': 1, 'font.size': 14}):
-                plot_struct(s_curr.cpu(), name='structure', 
-                            save_dir=save_dir, figsize=(12, 3))
+        if plot_struct:
+            plot_structure(s_tensor[i].cpu(), save_dir)
 
         if n_loops > 1:
-            # Generate extended sequence
+            # Generate extended sequence with n_loops loops
             print("Saving extended MIDI sequence " \
                   "{} with {} loops...".format(str(i+1), n_loops))
             extended = mtp[i].repeat(n_loops, 1, 1, 1, 1)
-            extended = muspy_from_mtp(extended, resolution)
-            midi_from_muspy(extended, save_dir, name='extended')
+            extended = muspy_from_mtp(extended)
+            save_midi(extended, save_dir, name='extended')
         
         print()
     
@@ -101,7 +92,8 @@ def load_model(model_dir, device):
 
     checkpoint = torch.load(os.path.join(model_dir, 'checkpoint'), 
                             map_location='cpu')
-    params = torch.load(os.path.join(model_dir, 'params'), map_location='cpu')
+    params = torch.load(os.path.join(model_dir, 'params'), 
+                        map_location='cpu')
     
     state_dict = checkpoint['model_state_dict']
     
@@ -178,8 +170,7 @@ def main():
     d_model = params['model']['d']
     n_bars = params['model']['n_bars']
     n_tracks = params['model']['n_tracks']
-    resolution = params['model']['resolution']
-    n_timesteps = 4*resolution
+    n_timesteps = 4*params['model']['resolution']
     output_dir = args.output_dir
     bs = args.n
     
@@ -218,7 +209,7 @@ def main():
     
     print()
     print("Saving MIDI files in {}...".format(output_dir))
-    save(mtp, output_dir, resolution, s_tensor, args.n_loops)
+    save(mtp, output_dir, s_tensor, args.n_loops)
     print("Finished saving MIDI files.")
 
 

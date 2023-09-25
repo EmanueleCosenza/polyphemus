@@ -17,6 +17,7 @@ class DurationToken(Enum):
 N_DUR_TOKENS = 99
 
 
+N_TRACKS = 4
 TRACKS = ['Drums', 'Bass', 'Guitar', 'Strings']
 MIDI_PROGRAMS = {
     'Drums': -1,
@@ -24,3 +25,7 @@ MIDI_PROGRAMS = {
     'Guitar': 1,
     'Strings': 83,
 }
+
+class Filenames(Enum):
+    GENERATED = 'generated'
+    LOOPED = 'looped'

@@ -3,12 +3,13 @@ import numpy as np
 import copy
 import muspy
 import os
-from scipy.special import softmax
 import torch
 import random
 
 from constants import PitchToken, DurationToken
 import constants
+import matplotlib as mpl
+
 
 
 def set_seed(seed):
@@ -35,8 +36,8 @@ def mtp_from_logits(c_logits, s_tensor):
                           device=c_logits.device, dtype=c_logits.dtype)
     
     # Create silences with pitch EOS and PAD tokens
-    silence[0, 129] = 1.
-    silence[1:, 130] = 1.
+    silence[0, PitchToken.EOS.value] = 1.
+    silence[1:, PitchToken.PAD.value] = 1.
 
     # Fill the multitrack pianoroll
     mtp[s_tensor.bool().view(-1)] = c_logits
@@ -46,7 +47,10 @@ def mtp_from_logits(c_logits, s_tensor):
     return mtp
 
 
-def muspy_from_mtp(mtp, resolution):
+def muspy_from_mtp(mtp):
+    
+    n_timesteps = mtp.size(2) 
+    resolution = int(n_timesteps / 4)
     
     # Collapse bars dimension
     mtp = mtp.permute(1, 0, 2, 3, 4)
@@ -105,35 +109,66 @@ def muspy_from_mtp(mtp, resolution):
     return music
 
 
-def plot_pianoroll(music, save_dir=None, name=None, figsize=(10, 10),
-                   fformat="png", xticklabel='on', preset='full', **kwargs):
+def plot_pianoroll(muspy_song, save_dir=None, name='pianoroll'):
+    
+    lines_linewidth = 4
+    axes_linewidth = 4
+    font_size = 34
+    fformat = 'png'
+    figsize = (20, 10)
+    dpi = 200
+    
+    with mpl.rc_context({'lines.linewidth': lines_linewidth, 
+                         'axes.linewidth': axes_linewidth, 
+                         'font.size': font_size}):
 
-    fig, axs_ = plt.subplots(4, sharex=True, figsize=figsize)
-    fig.subplots_adjust(hspace=0)
-    axs = axs_.tolist()
-    muspy.show_pianoroll(music=music, yticklabel='off',
-                         xticklabel=xticklabel, grid_axis='off',
-                         axs=axs, preset=preset, **kwargs)
+        fig, axs_ = plt.subplots(constants.N_TRACKS, sharex=True, 
+                                 figsize=figsize)
+        fig.subplots_adjust(hspace=0)
+        axs = axs_.tolist()
+        muspy.show_pianoroll(music=muspy_song, yticklabel='off',
+                            xticklabel='on', grid_axis='off',
+                            axs=axs, preset='full')
     
-    if save_dir:
-        plt.savefig(os.path.join(save_dir, name+"."+fformat), format=fformat, dpi=200)
+        if save_dir:
+            plt.savefig(os.path.join(save_dir, name + "." + fformat), 
+                        format=fformat, dpi=dpi)
         
         
-def plot_struct(s, save_dir=None, name=None, figsize=(10, 10), fformat="svg", n_bars=2):
+def plot_structure(s_tensor, save_dir=None, name='structure'):
     
-    plt.figure(figsize=figsize)
-    plt.pcolormesh(s, edgecolors='k', linewidth=1)
-    ax = plt.gca()
+    lines_linewidth = 1
+    axes_linewidth = 1
+    font_size = 14
+    fformat = 'svg'
+    figsize=(12, 3)
+    dpi = 200
     
-    plt.xticks(range(0, s.shape[1], 8), range(1, n_bars*4+1))
-    plt.yticks(range(0, 4), ['Drums', 'Bass', 'Guitar', 'Strings'])
+    n_timesteps = s_tensor.size(2) 
+    resolution = int(n_timesteps / 4)
+    n_bars = s_tensor.shape[0]
+    s_tensor = s_tensor.permute(1, 0, 2)
+    s_tensor = s_tensor.reshape(s_tensor.shape[0], -1)
     
-    ax.invert_yaxis()
+    with mpl.rc_context({'lines.linewidth': lines_linewidth, 
+                         'axes.linewidth': axes_linewidth, 
+                         'font.size': font_size}):
     
-    if save_dir:
-        plt.savefig(os.path.join(save_dir, name+"."+fformat), format=fformat, dpi=200)
+        plt.figure(figsize=figsize)
+        plt.pcolormesh(s_tensor, edgecolors='k', linewidth=1)
+        ax = plt.gca()
+        
+        plt.xticks(range(0, s_tensor.shape[1], resolution), 
+                   range(1, n_bars*4 + 1))
+        plt.yticks(range(0, s_tensor.shape[0]), constants.TRACKS)
+        
+        ax.invert_yaxis()
+        
+        if save_dir:
+            plt.savefig(os.path.join(save_dir, name + "." + fformat), 
+                        format=fformat, dpi=dpi)
         
 
-def midi_from_muspy(music, save_dir, name):
-    muspy.write_midi(os.path.join(save_dir, name+".mid"), music)
+def save_midi(muspy_song, save_dir, name):
+    muspy.write_midi(os.path.join(save_dir, name + ".mid"), muspy_song)
     

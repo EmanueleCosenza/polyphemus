@@ -279,8 +279,8 @@ class RGCNConv(MessagePassing):
 
 class MLP(nn.Module):
     
-    def __init__(self, input_dim=256, hidden_dim=256, output_dim=256, num_layers=2,
-                 act=True, dropout=0.1):
+    def __init__(self, input_dim=256, hidden_dim=256, output_dim=256, 
+                 num_layers=2, act=True, dropout=0.1):
         super().__init__()
         
         assert num_layers >= 1
@@ -510,16 +510,14 @@ class Encoder(nn.Module):
         self.linear_log_var = nn.Linear(self.d, self.d)
 
         
-    def forward(self, x_seq, x_acts, x_graph, src_mask):
+    def forward(self, x_seq, x_acts, x_graph):
         
         # No start of seq token
         x_seq = x_seq[:, 1:, :]
         
         # Get drums and non drums tensors
         drums = x_seq[x_graph.is_drum]
-        src_mask_drums = src_mask[x_graph.is_drum]
         non_drums = x_seq[torch.logical_not(x_graph.is_drum)]
-        src_mask_non_drums = src_mask[torch.logical_not(x_graph.is_drum)]
         
         # Compute note/drums embeddings
         s = drums.size()
@@ -769,195 +767,6 @@ class Decoder(nn.Module):
         c_logits = self.c_decoder(z_c, s)
         
         return s_logits, c_logits, s_tensor
-        
-    
-    
-        
-
-""" class Decoder(nn.Module):
-
-    def __init__(self, **kwargs):
-        super().__init__()
-        
-        self.__dict__.update(kwargs)
-        
-        self.dropout_layer = nn.Dropout(p=self.dropout)
-
-        self.lin_divide = nn.Linear(self.d, 2 * self.d)
-        
-        self.bn_ld = nn.BatchNorm1d(num_features=2*self.d)
-        
-        self.bars_decoder_attr = nn.Linear(self.d, self.d * self.n_bars)
-        self.bars_decoder_struct = nn.Linear(self.d, self.d * self.n_bars)
-        
-        self.cnn_decoder = CNNDecoder(
-            input_dim=self.d,
-            dense_dim=self.d,
-            dropout=self.dropout,
-            batch_norm=self.batch_norm
-        )
-        
-        self.graph_decoder = GCN(
-            dropout=self.dropout,
-            input_dim=self.d,
-            hidden_dim=self.d,
-            n_layers=self.gnn_n_layers,
-            num_relations=self.n_relations,
-            batch_norm=self.batch_norm
-        )
-        
-        self.chord_decoder = nn.Linear(self.d, self.d*(self.max_simu_notes - 1))
-        
-        # Pitch and dur linear layers
-        self.drums_pitch_emb = nn.Linear(self.d//2, self.d_token_pitches)
-        self.notes_pitch_emb = nn.Linear(self.d//2, self.d_token_pitches)
-        self.dur_emb = nn.Linear(self.d//2, self.d_token_dur)
-        
-    
-    def forward_struct(self, z):
-        # z: [bs x d]
-        
-        bs = z.size(0)
-        
-        # Obtain z_structure and z_attributes from z
-        z = self.lin_divide(z)
-        z = self.bn_ld(z)
-        z = F.relu(z)
-        z = self.dropout_layer(z)
-        # [bs x 2*d]
-        
-        out_struct = z[:, :self.d]
-        # [bs x d] 
-        out_struct = self.bars_decoder_struct(out_struct)
-        # [bs x n_bars * d]
-        
-        out_struct = self.cnn_decoder(out_struct.reshape(-1, self.d))
-        out_struct = out_struct.view(bs, self.n_bars, self.n_tracks, -1)
-        
-        return out_struct
-    
-    
-    def forward_content(self, z, x_graph):
-        
-        # Obtain z_structure and z_attributes from z
-        z = self.lin_divide(z)
-        z = self.bn_ld(z)
-        z = F.relu(z)
-        z = self.dropout_layer(z)
-        # [bs x 2*d]
-        
-        # Decode attributes
-        out = z[:, self.d:]
-        # [bs x d]
-        out = self.bars_decoder_attr(out)
-        # [bs x n_bars * d]
-        
-        # Initialize node features with corresponding z_bar
-        # and propagate with GNN
-        x_graph.distinct_bars = x_graph.bars + self.n_bars*x_graph.batch
-        _, counts = torch.unique(x_graph.distinct_bars, return_counts=True)
-        out = out.view(-1, self.d)
-        out = torch.repeat_interleave(out, counts, axis=0)
-        # [n_nodes x d]
-        
-        # Add one-hot encoding of tracks
-        # Todo: use also edge info
-        x_graph.x = out
-        out = self.graph_decoder(x_graph)
-        # [n_nodes x d]
-        
-        out = self.chord_decoder(out)
-        # [n_nodes x max_simu_notes * d]
-        out = out.view(-1, self.max_simu_notes-1, self.d)
-        
-        drums = out[x_graph.is_drum]
-        non_drums = out[torch.logical_not(x_graph.is_drum)]
-        # [n_nodes(dr/non_dr) x max_simu_notes x d]
-        
-        # Obtain final pitch and dur decodings
-        # (softmax to be applied outside the model)
-        non_drums = self.dropout_layer(non_drums)
-        drums = self.dropout_layer(drums)
-        
-        drums_pitch = self.drums_pitch_emb(drums[..., :self.d//2])
-        drums_dur = self.dur_emb(drums[..., self.d//2:])
-        drums = torch.cat((drums_pitch, drums_dur), dim=-1)
-        # [n_nodes(dr) x max_simu_notes x d_token]
-        non_drums_pitch = self.notes_pitch_emb(non_drums[..., :self.d//2])
-        non_drums_dur = self.dur_emb(non_drums[..., self.d//2:])
-        non_drums = torch.cat((non_drums_pitch, non_drums_dur), dim=-1)
-        # [n_nodes(non_dr) x max_simu_notes x d_token]
-        
-        # Merge drums and non-drgraph_from_tensor
-    def forward(self, z, x_seq, x_acts, x_graph, src_mask, tgt_mask,
-                inference=False):
-        # z: [bs x d]
-        
-        # Obtain z_structure and z_attributes from z
-        z = self.lin_divide(z)
-        z = self.bn_ld(z)
-        z = F.relu(z)
-        z = self.dropout_layer(z)
-        # [bs x 2*d]
-        
-        out_struct = z[:, :self.d]
-        # [bs x d] 
-        out_struct = self.bars_decoder_struct(out_struct)
-        # [bs x n_bars * d]
-        
-        out_struct = self.cnn_decoder(out_struct.reshape(-1, self.d))
-        out_struct = out_struct.view(x_acts.size())
-        
-        # Decode attributes
-        out = z[:, self.d:]
-        # [bs x d]
-        out = self.bars_decoder_attr(out)
-        # [bs x n_bars * d]
-        
-        # Initialize node features with corresponding z_bar
-        # and propagate with GNN
-        _, counts = torch.unique(x_graph.distinct_bars, return_counts=True)
-        out = out.view(-1, self.d)
-        out = torch.repeat_interleave(out, counts, axis=0)
-        # [n_nodes x d]
-        
-        # Add one-hot encoding of tracks
-        # Todo: use also edge info
-        x_graph.x = out
-        out = self.graph_decoder(x_graph)
-        # [n_nodes x d]
-        
-        out = self.chord_decoder(out)
-        # [n_nodes x max_simu_notes * d]
-        out = out.view(-1, self.max_simu_notes-1, self.d)
-        
-        drums = out[x_graph.is_drum]
-        non_drums = out[torch.logical_not(x_graph.is_drum)]
-        # [n_nodes(dr/non_dr) x max_simu_notes x d]
-        
-        # Obtain final pitch and dur decodings
-        # (softmax to be applied outside the model)
-        non_drums = self.dropout_layer(non_drums)
-        drums = self.dropout_layer(drums)
-        
-        drums_pitch = self.drums_pitch_emb(drums[..., :self.d//2])
-        drums_dur = self.dur_emb(drums[..., self.d//2:])
-        drums = torch.cat((drums_pitch, drums_dur), dim=-1)
-        # [n_nodes(dr) x max_simu_notes x d_token]
-        non_drums_pitch = self.notes_pitch_emb(non_drums[..., :self.d//2])
-        non_drums_dur = self.dur_emb(non_drums[..., self.d//2:])
-        non_drums = torch.cat((non_drums_pitch, non_drums_dur), dim=-1)
-        # [n_nodes(non_dr) x max_simu_notes x d_token]
-        
-        # Merge drums and non-drums
-        out = torch.zeros((x_seq.size(0), x_seq.size(1), x_seq.size(2)),
-                          device=self.device, dtype=torch.half)
-        out[x_graph.is_drum] = drums
-        out[torch.logical_not(x_graph.is_drum)] = non_drums
-        
-        out = out.view(x_seq.size())
-
-        return out, out_struct """
 
 
 class VAE(nn.Module):
@@ -968,23 +777,17 @@ class VAE(nn.Module):
         self.decoder = Decoder(**kwargs)
     
     
-    def forward(self, x_seq, x_acts, x_graph, src_mask, tgt_mask,
-                inference=False):
+    def forward(self, x_seq, x_acts, x_graph):
         
         # Encoder pass
-        mu, log_var = self.encoder(x_seq, x_acts, x_graph, src_mask)
+        mu, log_var = self.encoder(x_seq, x_acts, x_graph)
         
         # Reparameterization trick
         z = torch.exp(0.5 * log_var)
         z = z * torch.randn_like(z)
         z = z + mu
         
-        # Shifting target sequence and mask for transformer decoder
-        tgt = x_seq[..., :-1, :]
-        src_mask = src_mask[:, :-1]
-        
         # Decoder pass
-        out = self.decoder(z, tgt, x_acts, x_graph, src_mask, tgt_mask,
-                           inference=inference)
+        out = self.decoder(z, x_acts, x_graph)
         
         return out, mu, log_var

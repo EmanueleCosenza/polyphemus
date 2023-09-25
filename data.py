@@ -373,9 +373,6 @@ class MIDIDataset(Dataset):
         seq_tensor = seq_tensor.transpose(1, 0, 2, 3, 4)
         seq_acts = seq_acts.reshape(seq_acts.shape[0], self.n_bars, -1)
         seq_acts = seq_acts.transpose(1, 0, 2)
-        
-        # Construct src_key_padding_mask (PAD = 130)
-        src_mask = torch.from_numpy((seq_tensor[..., 0] == 130))
 
         # From decimals to one-hot (pitch)
         pitches = seq_tensor[..., 0]
@@ -409,15 +406,12 @@ class MIDIDataset(Dataset):
         # Filter silences in order to get a sparse representation
         new_seq_tensor = new_seq_tensor.reshape(-1, new_seq_tensor.shape[-2],
                                                 new_seq_tensor.shape[-1])
-        src_mask = src_mask.reshape(-1, src_mask.shape[-1])
         new_seq_tensor = new_seq_tensor[seq_acts.reshape(-1).astype(bool)]
-        src_mask = src_mask[seq_acts.reshape(-1).astype(bool)]
         
         new_seq_tensor = torch.Tensor(new_seq_tensor)
         seq_acts = torch.Tensor(seq_acts)
         graph.x_seq = new_seq_tensor
         graph.x_acts = seq_acts
-        graph.src_mask = src_mask
         
         # Todo: Just use torch tensors
         return graph
