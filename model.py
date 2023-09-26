@@ -1,27 +1,19 @@
-from typing import Optional, Union, Tuple
-from torch_geometric.typing import OptTensor, Adj
-from typing import Callable
-from torch_geometric.nn.inits import reset
+from typing import Callable, Optional, Union, Tuple
 
 import torch
-from torch import nn, Tensor
 import torch.nn.functional as F
+from torch import nn, Tensor
 from torch.nn import Parameter as Param
 from torch.nn import Parameter
-from torch_scatter import scatter
 from torch_sparse import SparseTensor, matmul, masked_select_nnz
+from torch_geometric.typing import OptTensor, Adj
 from torch_geometric.nn.conv import MessagePassing
-
-from torch_geometric.nn.inits import glorot, zeros
-
-from torch_geometric.nn.conv import GCNConv
+from torch_geometric.nn.inits import reset, glorot, zeros
 from torch_geometric.nn.norm import BatchNorm
 from torch_geometric.nn.glob import GlobalAttention
-import math
-import torch.optim as optim
-from torch_scatter import scatter_mean
-from data import MIDIDataset, graph_from_tensor, graph_from_tensor_torch
 from torch_geometric.data import Batch
+
+from data import graph_from_tensor_torch
 
 
 @torch.jit._overload

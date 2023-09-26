@@ -2,18 +2,17 @@ import argparse
 import os
 import json
 import time
+import math
 
 import torch
 import os
 from matplotlib import pyplot as plt
-from utils import set_seed
 
-from model import VAE
-from utils import plot_structure
-from utils import plot_pianoroll, save_midi, save_audio
-
-from utils import mtp_from_logits, muspy_from_mtp
 import config
+from model import VAE
+from utils import set_seed
+from utils import mtp_from_logits, muspy_from_mtp, set_seed
+from utils import plot_pianoroll, plot_structure, save_midi, save_audio
 
 
 def generate_music(vae, z, s_cond=None, s_tensor_cond=None):
@@ -60,7 +59,7 @@ def save(mtp, dir, s_tensor=None, n_loops=1,
 
         if n_loops > 1:
             # Copy the generated sequence n_loops times and save the looped
-            # MIDI and audio files 
+            # MIDI and audio files
             print("Saving MIDI sequence "
                   "{} looped {} times...".format(str(i + 1), n_loops))
             extended = mtp[i].repeat(n_loops, 1, 1, 1, 1)
@@ -185,8 +184,18 @@ def main():
         dims = list(s_tensor.size())
         expected = [n_bars, n_tracks, n_timesteps]
         if dims != expected:
-            raise ValueError(f"Loaded tensor dimensions {dims} "
-                             f"do not match expected dimensions {expected}")
+            if (len(dims) != len(expected) or dims[1:] != expected[1:]
+                    or dims[0] > n_bars):
+                raise ValueError(f"Loaded structure tensor dimensions {dims} "
+                                 f"do not match expected dimensions {expected}")
+            elif dims[0] > n_bars:
+                raise ValueError(f"First structure tensor dimension {dims[0]} "
+                                 f"is higher than {n_bars}")
+            else:
+                # Repeat partial structure tensor
+                r = math.ceil(n_bars / dims[0])
+                s_tensor = s_tensor.repeat(r, 1, 1)
+                s_tensor = s_tensor[:n_bars, ...]
 
         s_tensor = s_tensor.bool()
         s_tensor = s_tensor.unsqueeze(0).repeat(bs, 1, 1, 1)

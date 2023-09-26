@@ -1,13 +1,12 @@
+import itertools
+import os
+
 import torch
+import numpy as np
 from torch.utils.data import Dataset
-from torch.utils.data import DataLoader
-from torch_geometric.loader import DataLoader
 from torch_geometric.data import Dataset
 from torch_geometric.data import Data
-import itertools
 from torch_geometric.data.collate import collate
-import os
-import numpy as np
 
 
 def get_track_edges(acts, edge_type_ind=0):
@@ -364,9 +363,11 @@ class MIDIDataset(Dataset):
         seq_tensor = data["seq_tensor"]
         seq_acts = data["seq_acts"]
 
-        # From (#tracks x #timesteps x ...) to (#bars x #tracks x #timesteps x ...)
+        # From (n_tracks x n_timesteps x ...)
+        # to (n_bars x n_tracks x n_timesteps x ...)
         seq_tensor = seq_tensor.reshape(seq_tensor.shape[0], self.n_bars, -1,
-                                        seq_tensor.shape[2], seq_tensor.shape[3])
+                                        seq_tensor.shape[2],
+                                        seq_tensor.shape[3])
         seq_tensor = seq_tensor.transpose(1, 0, 2, 3, 4)
         seq_acts = seq_acts.reshape(seq_acts.shape[0], self.n_bars, -1)
         seq_acts = seq_acts.transpose(1, 0, 2)

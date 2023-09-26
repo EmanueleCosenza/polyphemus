@@ -1,14 +1,14 @@
 import os
-import muspy
+import time
+import sys
+import multiprocessing
 import itertools
 from itertools import product
-import pypianoroll as pproll
-import time
-import tqdm
-import sys
+
 import numpy as np
-import multiprocessing
-from functools import partial
+import tqdm
+import pypianoroll as pproll
+import muspy
 
 
 # Todo: to config file (or separate files)
@@ -212,8 +212,8 @@ def preprocess_file(filepath):
             # Not considering pad, sos, eos tokens,
             # Not transposing drums/percussions
             shift = np.random.choice(np.arange(-5, 7), 1)
-            cond = (seq_tensor[1:, :, :, 0] != PITCH_PAD) &                     \
-                   (seq_tensor[1:, :, :, 0] != PITCH_SOS) &                     \
+            cond = (seq_tensor[1:, :, :, 0] != PITCH_PAD) &                    \
+                   (seq_tensor[1:, :, :, 0] != PITCH_SOS) &                    \
                    (seq_tensor[1:, :, :, 0] != PITCH_EOS)
             non_perc = seq_tensor[1:, ...]
             non_perc[cond, 0] += shift

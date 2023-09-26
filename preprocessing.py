@@ -1,11 +1,12 @@
 import os
-import muspy
-from itertools import product
-import pypianoroll as pproll
-import time
-from tqdm.auto import tqdm
 import sys
+import time
+from itertools import product
+
 import numpy as np
+import muspy
+import pypianoroll as pproll
+from tqdm.auto import tqdm
 
 
 # Todo: to config file (or separate files)
@@ -205,8 +206,8 @@ def preprocess_file(filepath, dest_dir, num_samples):
             # Not considering pad, sos, eos tokens
             # Not transposing drums/percussions
             shift = np.random.choice(np.arange(-5, 7), 1)
-            cond = (seq_tensor[1:, :, :, 0] != PITCH_PAD) &                     \
-                   (seq_tensor[1:, :, :, 0] != PITCH_SOS) &                     \
+            cond = (seq_tensor[1:, :, :, 0] != PITCH_PAD) &                    \
+                   (seq_tensor[1:, :, :, 0] != PITCH_SOS) &                    \
                    (seq_tensor[1:, :, :, 0] != PITCH_EOS)
             non_perc = seq_tensor[1:, ...]
             non_perc[cond, 0] += shift
@@ -227,7 +228,8 @@ def preprocess_file(filepath, dest_dir, num_samples):
 
 # Total number of files (LMD): 116189
 # Number of unique files (LMD): 45129
-def preprocess_dataset(dataset_dir, dest_dir, num_files=612090, early_exit=None):
+def preprocess_dataset(dataset_dir, dest_dir, num_files=612090,
+                       early_exit=None):
 
     files_dict = {}
     seen = 0

@@ -1,15 +1,15 @@
-from matplotlib import pyplot as plt
-import numpy as np
 import copy
-import muspy
 import os
-import torch
 import random
+
+import numpy as np
+import torch
+from matplotlib import pyplot as plt
+import matplotlib as mpl
+import muspy
 
 from constants import PitchToken, DurationToken
 import constants
-import matplotlib as mpl
-
 import config
 
 
@@ -51,7 +51,7 @@ def mtp_from_logits(c_logits, s_tensor):
 def muspy_from_mtp(mtp):
 
     n_timesteps = mtp.size(2)
-    resolution = int(n_timesteps / 4)
+    resolution = n_timesteps // 4
 
     # Collapse bars dimension
     mtp = mtp.permute(1, 0, 2, 3, 4)
@@ -149,7 +149,7 @@ def plot_structure(s_tensor, save_dir=None, name='structure'):
     figsize = (3 * n_bars, 3)
 
     n_timesteps = s_tensor.size(2)
-    resolution = int(n_timesteps / 4)
+    resolution = n_timesteps // 4
     s_tensor = s_tensor.permute(1, 0, 2)
     s_tensor = s_tensor.reshape(s_tensor.shape[0], -1)
 
