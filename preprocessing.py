@@ -1,42 +1,31 @@
 import os
-import sys
 import time
+import sys
+import multiprocessing
+import itertools
+import argparse
 from itertools import product
 
 import numpy as np
-import muspy
+import tqdm
 import pypianoroll as pproll
-from tqdm.auto import tqdm
+import muspy
+
+import constants
+from constants import PitchToken, DurationToken
 
 
-# Todo: to config file (or separate files)
-MAX_SIMU_NOTES = 16  # 14 + SOS and EOS
+def preprocess_midi_file(filepath, dest_dir, n_bars, resolution):
 
-PITCH_SOS = 128
-PITCH_EOS = 129
-PITCH_PAD = 130
-DUR_SOS = 96
-DUR_EOS = 97
-DUR_PAD = 98
+    print("Preprocessing file {}".format(filepath))
 
-MAX_DUR = 96
-
-# Number of time steps per quarter note
-# To get bar resolution -> RESOLUTION*4
-RESOLUTION = 8
-NUM_BARS = 16
-
-
-def preprocess_file(filepath, dest_dir, num_samples):
-
+    filename = os.path.basename(filepath)
     saved_samples = 0
-
-    print("Preprocessing file " + filepath)
 
     # Load the file both as a pypianoroll song and a muspy song
     # (Need to load both since muspy.to_pypianoroll() is expensive)
     try:
-        pproll_song = pproll.read(filepath, resolution=RESOLUTION)
+        pproll_song = pproll.read(filepath, resolution=resolution)
         muspy_song = muspy.read(filepath)
     except Exception as e:
         print("Song skipped (Invalid song format)")
@@ -89,7 +78,8 @@ def preprocess_file(filepath, dest_dir, num_samples):
     # Consider all possible combinations of drum, bass, and guitar tracks
     for i, combination in enumerate(combinations):
 
-        print("Processing combination", i+1, "of", len(combinations))
+        print("Processing combination {} of {}".format(i + 1, 
+                                                       len(combinations)))
 
         # Process combination (called 'subsong' from now on)
         drum_track, bass_track, guitar_track = combination
@@ -98,7 +88,7 @@ def preprocess_file(filepath, dest_dir, num_samples):
         pproll_subsong = pproll.Multitrack(
             tracks=tracks,
             tempo=pproll_song.tempo,
-            resolution=RESOLUTION
+            resolution=resolution
         )
         muspy_subsong = muspy.from_pypianoroll(pproll_subsong)
 
@@ -111,9 +101,9 @@ def preprocess_file(filepath, dest_dir, num_samples):
             length = max(length, track_length)
         length += 1
 
-        # Add timesteps until length is a multiple of RESOLUTION
-        length = length if length % (RESOLUTION*4) == 0 \
-            else length + (RESOLUTION*4-(length % (RESOLUTION*4)))
+        # Add timesteps until length is a multiple of resolution
+        length = length if length % (4*resolution) == 0 \
+            else length + (4*resolution-(length % (4*resolution)))
 
         tracks_tensors = []
         tracks_activations = []
@@ -125,12 +115,13 @@ def preprocess_file(filepath, dest_dir, num_samples):
             # track_tensor: (length x max_simu_notes x 2 (or 3 if velocity))
             # The last dimension contains pitches and durations (and velocities)
             # int16 is enough for small to medium duration values
-            track_tensor = np.zeros((length, MAX_SIMU_NOTES, 2), np.int16)
+            track_tensor = np.zeros((length, constants.MAX_SIMU_NOTES, 2), 
+                                    np.int16)
 
-            track_tensor[:, :, 0] = PITCH_PAD
-            track_tensor[:, 0, 0] = PITCH_SOS
-            track_tensor[:, :, 1] = DUR_PAD
-            track_tensor[:, 0, 1] = DUR_SOS
+            track_tensor[:, :, 0] = PitchToken.PAD.value
+            track_tensor[:, 0, 0] = PitchToken.SOS.value
+            track_tensor[:, :, 1] = DurationToken.PAD.value
+            track_tensor[:, 0, 1] = DurationToken.SOS.value
 
             # Keeps track of how many notes have been stored in each timestep
             # (int8 imposes MAX_SIMU_NOTES < 256)
@@ -142,19 +133,20 @@ def preprocess_file(filepath, dest_dir, num_samples):
 
                 t = note.time
 
-                if notes_counter[t] >= MAX_SIMU_NOTES-1:
+                if notes_counter[t] >= constants.MAX_SIMU_NOTES-1:
                     # Skip note if there is no more space
                     continue
 
-                pitch = max(min(note.pitch, 127), 0)
+                pitch = max(min(note.pitch, constants.MAX_PITCH_TOKEN), 0)
                 track_tensor[t, notes_counter[t], 0] = pitch
-                dur = max(min(MAX_DUR, note.duration), 1)
+                dur = max(min(note.duration, constants.MAX_DUR_TOKEN + 1), 1)
                 track_tensor[t, notes_counter[t], 1] = dur-1
                 notes_counter[t] += 1
 
-            # Add end of sequence token
-            track_tensor[np.arange(0, length), notes_counter, 0] = PITCH_EOS
-            track_tensor[np.arange(0, length), notes_counter, 1] = DUR_EOS
+            # Add EOS token
+            t_range = np.arange(0, length)
+            track_tensor[t_range, notes_counter, 0] = PitchToken.EOS.value
+            track_tensor[t_range, notes_counter, 1] = DurationToken.EOS.value
 
             # Get track activations, a boolean tensor indicating whether notes
             # are being played in a timestep (sustain does not count)
@@ -173,18 +165,18 @@ def preprocess_file(filepath, dest_dir, num_samples):
         # Slide window over 'subsong_tensor' and 'subsong_activations' along the
         # time axis (2nd dimension) with the stride of a bar
         # Todo: np.lib.stride_tricks.as_strided(song_proll)
-        for i in range(0, length-NUM_BARS*RESOLUTION*4+1, RESOLUTION*4):
+        for i in range(0, length-n_bars*4*resolution+1, 4*resolution):
 
             # Get the sequence and its activations
-            seq_tensor = subsong_tensor[:, i:i+NUM_BARS*RESOLUTION*4, :]
-            seq_acts = subsong_activations[:, i:i+NUM_BARS*RESOLUTION*4]
+            seq_tensor = subsong_tensor[:, i:i+n_bars*4*resolution, :]
+            seq_acts = subsong_activations[:, i:i+n_bars*4*resolution]
             seq_tensor = np.copy(seq_tensor)
             seq_acts = np.copy(seq_acts)
 
-            if NUM_BARS > 1:
+            if n_bars > 1:
                 # Skip sequence if it contains more than one bar of consecutive
                 # silence in at least one track
-                bars = seq_acts.reshape(seq_acts.shape[0], NUM_BARS, -1)
+                bars = seq_acts.reshape(seq_acts.shape[0], n_bars, -1)
                 bars_acts = np.any(bars, axis=2)
 
                 if 1 in np.diff(np.where(bars_acts == 0)[1]):
@@ -203,94 +195,43 @@ def preprocess_file(filepath, dest_dir, num_samples):
                     continue
 
             # Randomly transpose the pitches of the sequence (-5 to 6 semitones)
-            # Not considering pad, sos, eos tokens
+            # Not considering pad, sos, eos tokens,
             # Not transposing drums/percussions
             shift = np.random.choice(np.arange(-5, 7), 1)
-            cond = (seq_tensor[1:, :, :, 0] != PITCH_PAD) &                    \
-                   (seq_tensor[1:, :, :, 0] != PITCH_SOS) &                    \
-                   (seq_tensor[1:, :, :, 0] != PITCH_EOS)
+            cond = (seq_tensor[1:, :, :, 0] != PitchToken.PAD.value) &         \
+                   (seq_tensor[1:, :, :, 0] != PitchToken.SOS.value) &         \
+                   (seq_tensor[1:, :, :, 0] != PitchToken.EOS.value)
             non_perc = seq_tensor[1:, ...]
             non_perc[cond, 0] += shift
-            non_perc[cond, 0] = np.clip(non_perc[cond, 0], a_min=0, a_max=127)
+            non_perc[cond, 0] = np.clip(non_perc[cond, 0], a_min=0, 
+                                        a_max=constants.MAX_PITCH_TOKEN)
 
             # Save sample (seq_tensor and seq_acts) to file
-            curr_sample = str(num_samples + saved_samples)
-            sample_filepath = os.path.join(dest_dir, curr_sample)
+            sample_filepath = os.path.join(
+                dest_dir, filename+str(saved_samples))
             np.savez(sample_filepath, seq_tensor=seq_tensor, seq_acts=seq_acts)
 
             saved_samples += 1
 
-    print("File preprocessing finished. Saved samples:", saved_samples)
-    print()
 
-    return saved_samples
-
-
-# Total number of files (LMD): 116189
-# Number of unique files (LMD): 45129
-def preprocess_dataset(dataset_dir, dest_dir, num_files=612090,
-                       early_exit=None):
-
-    files_dict = {}
-    seen = 0
-    tot_samples = 0
-    not_filtered = 0
-    finished = False
+def preprocess_midi_dataset(midi_dataset_dir, preprocessed_dir, n_bars, 
+                            resolution, n_files=None, n_workers=1):
 
     print("Starting preprocessing")
-
-    progress_bar = tqdm(range(early_exit)) if early_exit is not None else tqdm(
-        range(num_files))
     start = time.time()
 
     # Visit recursively the directories inside the dataset directory
-    for dirpath, dirs, files in os.walk(dataset_dir):
+    with multiprocessing.Pool(n_workers) as pool:
 
-        # Sort alphabetically the found directories
-        # (to help guess the remaining time)
-        dirs.sort()
+        walk = os.walk(midi_dataset_dir)
+        fn_gen = itertools.chain.from_iterable(
+            ((os.path.join(dirpath, file), preprocessed_dir, n_bars, resolution)
+                for file in files)
+                for dirpath, dirs, files in walk
+        )
 
-        print("Current path:", dirpath)
-        print()
-
-        for f in files:
-
-            seen += 1
-
-            if f in files_dict:
-                # Skip already seen file
-                files_dict[f] += 1
-                continue
-
-            # File never seen before, add to dictionary of files
-            # (from filename to # of occurrences)
-            files_dict[f] = 1
-
-            # Preprocess file
-            filepath = os.path.join(dirpath, f)
-            n_saved = preprocess_file(filepath, dest_dir, tot_samples)
-
-            tot_samples += n_saved
-            if n_saved > 0:
-                not_filtered += 1
-
-            progress_bar.update(1)
-
-            # Todo: also print # of processed (not filtered) files
-            #       and # of produced sequences (samples)
-            print("Total number of seen files:", seen)
-            print("Number of unique files:", len(files_dict))
-            print("Total number of non filtered songs:", not_filtered)
-            print("Total number of saved samples:", tot_samples)
-            print()
-
-            # Exit when a maximum number of files has been processed (if set)
-            if early_exit != None and len(files_dict) >= early_exit:
-                finished = True
-                break
-
-        if finished:
-            break
+        r = list(tqdm.tqdm(pool.starmap(preprocess_midi_file, fn_gen),
+                           total=n_files))
 
     end = time.time()
     hours, rem = divmod(end-start, 3600)
@@ -301,11 +242,51 @@ def preprocess_dataset(dataset_dir, dest_dir, num_files=612090,
 
 if __name__ == "__main__":
 
-    if len(sys.argv) > 1:
-        dataset_dir = sys.argv[1]
-        dest_dir = sys.argv[2]
-    else:
-        dataset_dir = 'data/lmd_matched/'
-        dest_dir = '/data/cosenza/datasets/preprocessed_2bars24'
+    parser = argparse.ArgumentParser(
+        description="Preprocesses a MIDI dataset. MIDI files can be arranged " 
+            "hierarchically in subdirectories, similarly to the Lakh MIDI "
+            "Dataset (lmd_matched) and the MetaMIDI Dataset."
+    )
+    parser.add_argument(
+        'midi_dataset_dir',
+        type=str, 
+        help='Directory of the MIDI dataset.'
+    )
+    parser.add_argument(
+        'preprocessed_dir',
+        type=str,
+        help='Directory to save the preprocessed dataset.'
+    )
+    parser.add_argument(
+        '--n_bars',
+        type=int,
+        default=2,
+        help="Number of bars for each sequence of the resulting preprocessed "
+            "dataset. Defaults to 2 bars."
+    )
+    parser.add_argument(
+        '--resolution',
+        type=int,
+        default=8,
+        help="Number of timesteps per beat. When set to r, considering only "
+            "4/4 songs are preprocessed, there will be 4*r timesteps in a bar. "
+            "Defaults to 8."
+    )
+    parser.add_argument(
+        '--n_files',
+        type=int,
+        help="Number of files in the MIDI dataset. If set, the script "
+            "will provide statistics on the time remaining."
+    )
+    parser.add_argument(
+        '--n_workers',
+        type=int,
+        default=1,
+        help="Number of parallel workers. Defaults to 1."
+    )
 
-    preprocess_dataset(dataset_dir, dest_dir)
+    args = parser.parse_args()
+
+    preprocess_midi_dataset(args.midi_dataset_dir, args.preprocessed_dir, 
+                            args.n_bars, args.resolution, args.n_files,
+                            n_workers=args.n_workers)

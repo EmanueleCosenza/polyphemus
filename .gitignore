@@ -172,6 +172,7 @@ cython_debug/
 data/
 .ipynb_checkpoints/
 models/
+old_models/
 soundfonts/
 *.out
 .vscode/
