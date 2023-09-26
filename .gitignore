@@ -174,4 +174,5 @@ data/
 models/
 soundfonts/
 *.out
+.vscode/
 
