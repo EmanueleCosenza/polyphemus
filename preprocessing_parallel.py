@@ -12,7 +12,7 @@ from functools import partial
 
 
 # Todo: to config file (or separate files)
-MAX_SIMU_NOTES = 16 # 14 + SOS and EOS
+MAX_SIMU_NOTES = 16  # 14 + SOS and EOS
 
 PITCH_SOS = 128
 PITCH_EOS = 129
@@ -35,7 +35,7 @@ dest_dir = "/data/cosenza/datasets/MMD/preprocessed_2bars_par"
 def preprocess_file(filepath):
 
     print("Preprocessing file " + filepath)
-    
+
     filename = os.path.basename(filepath)
     saved_samples = 0
 
@@ -52,7 +52,7 @@ def preprocess_file(filepath):
     for t in muspy_song.time_signatures:
         if t.numerator != 4 or t.denominator != 4:
             print("Song skipped ({}/{} time signature)".
-                            format(t.numerator, t.denominator))
+                  format(t.numerator, t.denominator))
             return 0
 
     # Gather tracks of pypianoroll song based on MIDI program number
@@ -77,11 +77,11 @@ def preprocess_file(filepath):
             strings_tracks.append(track)
 
     # Filter song if it does not contain drum, guitar, bass or strings tracks
-    #if not guitar_tracks \
+    # if not guitar_tracks \
     if not drum_tracks or not guitar_tracks \
             or not bass_tracks or not strings_tracks:
         print("Song skipped (does not contain drum or "
-                "guitar or bass or strings tracks)")
+              "guitar or bass or strings tracks)")
         return 0
 
     # Merge strings tracks into a single pypianoroll track
@@ -118,9 +118,8 @@ def preprocess_file(filepath):
         length += 1
 
         # Add timesteps until length is a multiple of RESOLUTION
-        length = length if length%(RESOLUTION*4) == 0 \
-                            else length + (RESOLUTION*4-(length%(RESOLUTION*4)))
-
+        length = length if length % (RESOLUTION*4) == 0 \
+            else length + (RESOLUTION*4-(length % (RESOLUTION*4)))
 
         tracks_tensors = []
         tracks_activations = []
@@ -177,7 +176,6 @@ def preprocess_file(filepath):
         # (#tracks x length)
         subsong_activations = np.stack(tracks_activations, axis=0)
 
-
         # Slide window over 'subsong_tensor' and 'subsong_activations' along the
         # time axis (2nd dimension) with the stride of a bar
         # Todo: np.lib.stride_tricks.as_strided(song_proll)
@@ -222,20 +220,21 @@ def preprocess_file(filepath):
             non_perc[cond, 0] = np.clip(non_perc[cond, 0], a_min=0, a_max=127)
 
             # Save sample (seq_tensor and seq_acts) to file
-            sample_filepath = os.path.join(dest_dir, filename+str(saved_samples))
+            sample_filepath = os.path.join(
+                dest_dir, filename+str(saved_samples))
             np.savez(sample_filepath, seq_tensor=seq_tensor, seq_acts=seq_acts)
-            
-            saved_samples += 1
 
+            saved_samples += 1
 
 
 # Total number of files (LMD): 116189
 # Number of unique files (LMD): 45129
-def preprocess_dataset(dataset_dir, dest_dir, workers=1, num_files=612090, early_exit=None):
+def preprocess_dataset(dataset_dir, dest_dir, workers=1,
+                       num_files=612090, early_exit=None):
 
     print("Starting preprocessing")
     start = time.time()
-    
+
     with multiprocessing.Pool(workers) as pool:
 
         walk = os.walk(dataset_dir)
@@ -249,12 +248,11 @@ def preprocess_dataset(dataset_dir, dest_dir, workers=1, num_files=612090, early
     hours, rem = divmod(end-start, 3600)
     minutes, seconds = divmod(rem, 60)
     print("Preprocessing completed in (h:m:s): {:0>2}:{:0>2}:{:05.2f}"
-              .format(int(hours),int(minutes),seconds))
-
+          .format(int(hours), int(minutes), seconds))
 
 
 if __name__ == "__main__":
-    
+
     workers = 48
 
     if len(sys.argv) > 1:

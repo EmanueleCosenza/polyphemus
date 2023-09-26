@@ -1,0 +1,18 @@
+
+# These values indicate the MIDI programs used for each track. 
+# Possible values: [0, 127]
+# Check https://en.wikipedia.org/wiki/General_MIDI for a complete list 
+# of MIDI programs (remember to map values to the [0, 127] range).
+# The drums value is ignored (drums have a dedicated MIDI channel and each
+# program corresponds to a different drum sound). The guitar track typically 
+# plays accompaniment chords and it can also be intepreted as a 
+# piano/accompaniment track. The strings track typically contains a 
+# lead melody.
+MIDI_PROGRAMS:
+  Drums: -1
+  Bass: 34 # Electric Bass (picked)
+  Guitar: 4 # Electric Piano 1
+  Strings: 54 # Synth Voice
+
+# The path of the soundfont file needed to convert MIDI to audio
+SOUNDFONT_PATH: "soundfonts/FluidR3_GM.sf2"

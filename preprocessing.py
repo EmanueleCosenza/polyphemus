@@ -9,7 +9,7 @@ import numpy as np
 
 
 # Todo: to config file (or separate files)
-MAX_SIMU_NOTES = 16 # 14 + SOS and EOS
+MAX_SIMU_NOTES = 16  # 14 + SOS and EOS
 
 PITCH_SOS = 128
 PITCH_EOS = 129
@@ -45,7 +45,7 @@ def preprocess_file(filepath, dest_dir, num_samples):
     for t in muspy_song.time_signatures:
         if t.numerator != 4 or t.denominator != 4:
             print("Song skipped ({}/{} time signature)".
-                            format(t.numerator, t.denominator))
+                  format(t.numerator, t.denominator))
             return 0
 
     # Gather tracks of pypianoroll song based on MIDI program number
@@ -70,11 +70,11 @@ def preprocess_file(filepath, dest_dir, num_samples):
             strings_tracks.append(track)
 
     # Filter song if it does not contain drum, guitar, bass or strings tracks
-    #if not guitar_tracks \
+    # if not guitar_tracks \
     if not drum_tracks or not guitar_tracks \
             or not bass_tracks or not strings_tracks:
         print("Song skipped (does not contain drum or "
-                "guitar or bass or strings tracks)")
+              "guitar or bass or strings tracks)")
         return 0
 
     # Merge strings tracks into a single pypianoroll track
@@ -111,9 +111,8 @@ def preprocess_file(filepath, dest_dir, num_samples):
         length += 1
 
         # Add timesteps until length is a multiple of RESOLUTION
-        length = length if length%(RESOLUTION*4) == 0 \
-                            else length + (RESOLUTION*4-(length%(RESOLUTION*4)))
-
+        length = length if length % (RESOLUTION*4) == 0 \
+            else length + (RESOLUTION*4-(length % (RESOLUTION*4)))
 
         tracks_tensors = []
         tracks_activations = []
@@ -170,7 +169,6 @@ def preprocess_file(filepath, dest_dir, num_samples):
         # (#tracks x length)
         subsong_activations = np.stack(tracks_activations, axis=0)
 
-
         # Slide window over 'subsong_tensor' and 'subsong_activations' along the
         # time axis (2nd dimension) with the stride of a bar
         # Todo: np.lib.stride_tricks.as_strided(song_proll)
@@ -221,12 +219,10 @@ def preprocess_file(filepath, dest_dir, num_samples):
 
             saved_samples += 1
 
-
     print("File preprocessing finished. Saved samples:", saved_samples)
     print()
 
     return saved_samples
-
 
 
 # Total number of files (LMD): 116189
@@ -241,7 +237,8 @@ def preprocess_dataset(dataset_dir, dest_dir, num_files=612090, early_exit=None)
 
     print("Starting preprocessing")
 
-    progress_bar = tqdm(range(early_exit)) if early_exit is not None else tqdm(range(num_files))
+    progress_bar = tqdm(range(early_exit)) if early_exit is not None else tqdm(
+        range(num_files))
     start = time.time()
 
     # Visit recursively the directories inside the dataset directory
@@ -297,8 +294,7 @@ def preprocess_dataset(dataset_dir, dest_dir, num_files=612090, early_exit=None)
     hours, rem = divmod(end-start, 3600)
     minutes, seconds = divmod(rem, 60)
     print("Preprocessing completed in (h:m:s): {:0>2}:{:0>2}:{:05.2f}"
-              .format(int(hours),int(minutes),seconds))
-
+          .format(int(hours), int(minutes), seconds))
 
 
 if __name__ == "__main__":
