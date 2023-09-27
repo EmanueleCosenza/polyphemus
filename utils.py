@@ -25,6 +25,8 @@ def set_seed(seed):
 
 # Builds multitrack pianoroll (mtp) from content tensor containing logits and
 # structure binary tensor
+# c_logits: num_nodes x max_simu_notes x d_token
+# s_tensor: n_batches x n_bars x n_tracks x n_timesteps
 def mtp_from_logits(c_logits, s_tensor):
 
     mtp = torch.zeros((s_tensor.size(0), s_tensor.size(1), s_tensor.size(2),
@@ -32,7 +34,7 @@ def mtp_from_logits(c_logits, s_tensor):
                       device=c_logits.device, dtype=c_logits.dtype)
 
     size = mtp.size()
-    mtp = mtp.view(-1, mtp.size(-2), mtp.size(-1))
+    mtp = mtp.reshape(-1, mtp.size(-2), mtp.size(-1))
     silence = torch.zeros((mtp.size(-2), mtp.size(-1)),
                           device=c_logits.device, dtype=c_logits.dtype)
 
@@ -41,9 +43,9 @@ def mtp_from_logits(c_logits, s_tensor):
     silence[1:, PitchToken.PAD.value] = 1.
 
     # Fill the multitrack pianoroll
-    mtp[s_tensor.bool().view(-1)] = c_logits
-    mtp[torch.logical_not(s_tensor.bool().view(-1))] = silence
-    mtp = mtp.view(size)
+    mtp[s_tensor.bool().reshape(-1)] = c_logits
+    mtp[torch.logical_not(s_tensor.bool().reshape(-1))] = silence
+    mtp = mtp.reshape(size)
 
     return mtp
 

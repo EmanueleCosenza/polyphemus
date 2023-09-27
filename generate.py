@@ -36,7 +36,7 @@ def save(mtp, dir, s_tensor=None, n_loops=1,
     # Clear matplotlib cache (this solves formatting problems with first plot)
     plt.clf()
 
-    # Iterate over the generated n-bar sequences
+    # Iterate over batches
     for i in range(mtp.size(0)):
 
         # Create the directory if it does not exist

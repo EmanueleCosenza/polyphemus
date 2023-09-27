@@ -13,7 +13,7 @@ from torch_geometric.nn.norm import BatchNorm
 from torch_geometric.nn.glob import GlobalAttention
 from torch_geometric.data import Batch
 
-from data import graph_from_tensor_torch
+from data import graph_from_tensor
 
 
 @torch.jit._overload
@@ -632,24 +632,24 @@ class ContentDecoder(nn.Module):
 
         self.dropout_layer = nn.Dropout(p=self.dropout)
 
-    def forward(self, z_c, structure):
+    def forward(self, z_c, s):
 
         out = self.bars_decoder(z_c)  # bs x (n_bars*d)
 
         # Initialize node features with corresponding z_bar
         # and propagate with GNN
-        structure.distinct_bars = structure.bars + self.n_bars*structure.batch
-        _, counts = torch.unique(structure.distinct_bars, return_counts=True)
+        s.distinct_bars = s.bars + self.n_bars*s.batch
+        _, counts = torch.unique(s.distinct_bars, return_counts=True)
         out = out.view(-1, self.d)
         out = torch.repeat_interleave(out, counts, axis=0)  # n_nodes x d
-        structure.x = out
-        out = self.graph_decoder(structure)  # n_nodes x d
+        s.x = out
+        out = self.graph_decoder(s)  # n_nodes x d
 
         out = self.chord_decoder(out)  # n_nodes x (max_simu_notes*d)
         out = out.view(-1, self.max_simu_notes-1, self.d)
 
-        drums = out[structure.is_drum]  # n_nodes_drums x max_simu_notes x d
-        non_drums = out[torch.logical_not(structure.is_drum)]
+        drums = out[s.is_drum]  # n_nodes_drums x max_simu_notes x d
+        non_drums = out[torch.logical_not(s.is_drum)]
         # n_nodes_non_drums x max_simu_notes x d
 
         # Obtain final pitch and dur decodings
@@ -667,10 +667,10 @@ class ContentDecoder(nn.Module):
         # n_nodes_non_drums x max_simu_notes x d_token
 
         # Merge drums and non-drums
-        out = torch.zeros((structure.num_nodes, self.max_simu_notes-1,
+        out = torch.zeros((s.num_nodes, self.max_simu_notes-1,
                            self.d_token), device=self.device)
-        out[structure.is_drum] = drums
-        out[torch.logical_not(structure.is_drum)] = non_drums
+        out[s.is_drum] = drums
+        out[torch.logical_not(s.is_drum)] = non_drums
 
         return out
 
@@ -695,7 +695,7 @@ class Decoder(nn.Module):
         # Create graph structures for each batch
         s = []
         for i in range(s_tensor.size(0)):
-            s.append(graph_from_tensor_torch(s_tensor[i]))
+            s.append(graph_from_tensor(s_tensor[i]))
 
         # Create batch of graphs from single graphs
         s = Batch.from_data_list(s, exclude_keys=['batch'])

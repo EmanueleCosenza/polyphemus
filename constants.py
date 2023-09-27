@@ -1,6 +1,20 @@
 from enum import Enum
 
 
+N_TRACKS = 4
+TRACKS = ['Drums', 'Bass', 'Guitar', 'Strings']
+
+# These defaults, which should not be changed, are set when the related 
+# variables in the YAML config file are not set. 
+DEFAULT_MIDI_PROGRAMS = {
+    'Drums': -1,
+    'Bass': 34,
+    'Guitar': 1,
+    'Strings': 83,
+}
+DEFAULT_SOUNDFONT_PATH = '/usr/share/soundfonts/FluidR3_GM.sf2'
+
+
 # Pitch tokens have values in the range [0, 130]. Tokens from 0 to 127 represent
 # MIDI pitches. Token 60 represents middle C (C4).
 # See https://www.inspiredacoustics.com/en/MIDI_note_numbers_and_center_frequencies
@@ -26,17 +40,15 @@ class DurationToken(Enum):
 N_DUR_TOKENS = 99
 MAX_DUR_TOKEN = 95
 
+
 # Number of maximum tokens stored in each timestep (14 + SOS and EOS)
 MAX_SIMU_NOTES = 16
 
 
-N_TRACKS = 4
-TRACKS = ['Drums', 'Bass', 'Guitar', 'Strings']
-DEFAULT_MIDI_PROGRAMS = {
-    'Drums': -1,
-    'Bass': 34,
-    'Guitar': 1,
-    'Strings': 83,
-}
+# This enum contains edge type indices for each edge type
+class EdgeTypes(Enum):
+    TRACK = 0 # This has to be interpreted as the starting index
+    ONSET = N_TRACKS
+    NEXT = N_TRACKS + 1
 
-DEFAULT_SOUNDFONT_PATH = '/usr/share/soundfonts/FluidR3_GM.sf2'
+

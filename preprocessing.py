@@ -105,23 +105,23 @@ def preprocess_midi_file(filepath, dest_dir, n_bars, resolution):
         length = length if length % (4*resolution) == 0 \
             else length + (4*resolution-(length % (4*resolution)))
 
-        tracks_tensors = []
-        tracks_activations = []
+        tracks_content = []
+        tracks_structure = []
 
-        # Todo: adapt to velocity
         for notes in tracks_notes:
 
-            # Initialize encoder-ready track tensor
-            # track_tensor: (length x max_simu_notes x 2 (or 3 if velocity))
-            # The last dimension contains pitches and durations (and velocities)
-            # int16 is enough for small to medium duration values
-            track_tensor = np.zeros((length, constants.MAX_SIMU_NOTES, 2), 
+            # track_content: length x max_simu_notes x 2
+            # This is used as a basis to build the final content tensors for
+            # each sequence.
+            # The last dimension contains pitches and durations. int16 is enough
+            # to encode small to medium duration values.
+            track_content = np.zeros((length, constants.MAX_SIMU_NOTES, 2), 
                                     np.int16)
 
-            track_tensor[:, :, 0] = PitchToken.PAD.value
-            track_tensor[:, 0, 0] = PitchToken.SOS.value
-            track_tensor[:, :, 1] = DurationToken.PAD.value
-            track_tensor[:, 0, 1] = DurationToken.SOS.value
+            track_content[:, :, 0] = PitchToken.PAD.value
+            track_content[:, 0, 0] = PitchToken.SOS.value
+            track_content[:, :, 1] = DurationToken.PAD.value
+            track_content[:, 0, 1] = DurationToken.SOS.value
 
             # Keeps track of how many notes have been stored in each timestep
             # (int8 imposes MAX_SIMU_NOTES < 256)
@@ -138,78 +138,76 @@ def preprocess_midi_file(filepath, dest_dir, n_bars, resolution):
                     continue
 
                 pitch = max(min(note.pitch, constants.MAX_PITCH_TOKEN), 0)
-                track_tensor[t, notes_counter[t], 0] = pitch
+                track_content[t, notes_counter[t], 0] = pitch
                 dur = max(min(note.duration, constants.MAX_DUR_TOKEN + 1), 1)
-                track_tensor[t, notes_counter[t], 1] = dur-1
+                track_content[t, notes_counter[t], 1] = dur-1
                 notes_counter[t] += 1
 
             # Add EOS token
             t_range = np.arange(0, length)
-            track_tensor[t_range, notes_counter, 0] = PitchToken.EOS.value
-            track_tensor[t_range, notes_counter, 1] = DurationToken.EOS.value
+            track_content[t_range, notes_counter, 0] = PitchToken.EOS.value
+            track_content[t_range, notes_counter, 1] = DurationToken.EOS.value
 
             # Get track activations, a boolean tensor indicating whether notes
             # are being played in a timestep (sustain does not count)
             # (needed for graph rep.)
             activations = np.array(notes_counter-1, dtype=bool)
 
-            tracks_tensors.append(track_tensor)
-            tracks_activations.append(activations)
+            tracks_content.append(track_content)
+            tracks_structure.append(activations)
 
-        # (#tracks x length x max_simu_notes x 2 (or 3))
-        subsong_tensor = np.stack(tracks_tensors, axis=0)
+        # n_tracks x length x max_simu_notes x 2
+        subsong_content = np.stack(tracks_content, axis=0)
 
-        # (#tracks x length)
-        subsong_activations = np.stack(tracks_activations, axis=0)
+        # n_tracks x length
+        subsong_structure = np.stack(tracks_structure, axis=0)
 
-        # Slide window over 'subsong_tensor' and 'subsong_activations' along the
+        # Slide window over 'subsong_content' and 'subsong_structure' along the
         # time axis (2nd dimension) with the stride of a bar
-        # Todo: np.lib.stride_tricks.as_strided(song_proll)
+        # Todo: np.lib.stride_tricks.as_strided(song_proll)?
         for i in range(0, length-n_bars*4*resolution+1, 4*resolution):
 
-            # Get the sequence and its activations
-            seq_tensor = subsong_tensor[:, i:i+n_bars*4*resolution, :]
-            seq_acts = subsong_activations[:, i:i+n_bars*4*resolution]
-            seq_tensor = np.copy(seq_tensor)
-            seq_acts = np.copy(seq_acts)
+            # Get the content and structure tensors of a single sequence
+            c_tensor = subsong_content[:, i:i+n_bars*4*resolution, :]
+            s_tensor = subsong_structure[:, i:i+n_bars*4*resolution]
+            c_tensor = np.copy(c_tensor)
+            s_tensor = np.copy(s_tensor)
 
             if n_bars > 1:
                 # Skip sequence if it contains more than one bar of consecutive
                 # silence in at least one track
-                bars = seq_acts.reshape(seq_acts.shape[0], n_bars, -1)
+                bars = s_tensor.reshape(s_tensor.shape[0], n_bars, -1)
                 bars_acts = np.any(bars, axis=2)
 
                 if 1 in np.diff(np.where(bars_acts == 0)[1]):
                     continue
 
                 # Skip sequence if it contains one bar of complete silence
-                # (in terms of note activations)
                 silences = np.logical_not(np.any(bars_acts, axis=0))
                 if np.any(silences):
                     continue
 
             else:
-                # In the case of just 1 bar, skip it if all tracks are silenced
-                bar_acts = np.any(seq_acts, axis=1)
+                # Skip if all tracks are silenced
+                bar_acts = np.any(s_tensor, axis=1)
                 if not np.any(bar_acts):
                     continue
 
             # Randomly transpose the pitches of the sequence (-5 to 6 semitones)
-            # Not considering pad, sos, eos tokens,
-            # Not transposing drums/percussions
+            # Not considering SOS, EOS or PAD tokens. Not transposing drums.
             shift = np.random.choice(np.arange(-5, 7), 1)
-            cond = (seq_tensor[1:, :, :, 0] != PitchToken.PAD.value) &         \
-                   (seq_tensor[1:, :, :, 0] != PitchToken.SOS.value) &         \
-                   (seq_tensor[1:, :, :, 0] != PitchToken.EOS.value)
-            non_perc = seq_tensor[1:, ...]
-            non_perc[cond, 0] += shift
-            non_perc[cond, 0] = np.clip(non_perc[cond, 0], a_min=0, 
-                                        a_max=constants.MAX_PITCH_TOKEN)
+            cond = (c_tensor[1:, :, :, 0] != PitchToken.PAD.value) &           \
+                   (c_tensor[1:, :, :, 0] != PitchToken.SOS.value) &           \
+                   (c_tensor[1:, :, :, 0] != PitchToken.EOS.value)
+            non_drums = c_tensor[1:, ...]
+            non_drums[cond, 0] += shift
+            non_drums[cond, 0] = np.clip(non_drums[cond, 0], a_min=0, 
+                                         a_max=constants.MAX_PITCH_TOKEN)
 
-            # Save sample (seq_tensor and seq_acts) to file
+            # Save sample (content and structure) to file
             sample_filepath = os.path.join(
                 dest_dir, filename+str(saved_samples))
-            np.savez(sample_filepath, seq_tensor=seq_tensor, seq_acts=seq_acts)
+            np.savez(sample_filepath, c_tensor=c_tensor, s_tensor=s_tensor)
 
             saved_samples += 1
 

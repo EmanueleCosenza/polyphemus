@@ -174,7 +174,7 @@ class VAETrainer():
 
                 progress_bar.update(1)
 
-                # When appropriate, save model and stats on disk
+                # Save model and stats on disk
                 if (self.save_every > 0 and
                         (self.tot_batches + 1) % self.save_every == 0):
                     print("\nSaving model to disk...\n")
