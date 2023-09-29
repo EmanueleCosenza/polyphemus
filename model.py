@@ -12,6 +12,7 @@ from torch_geometric.nn.inits import reset, glorot, zeros
 from torch_geometric.nn.norm import BatchNorm
 from torch_geometric.nn.glob import GlobalAttention
 from torch_geometric.data import Batch
+from torch_geometric.nn.conv import RGCNConv
 
 from data import graph_from_tensor
 
@@ -39,151 +40,25 @@ def masked_edge_attrs(edge_attrs, edge_mask):
     return edge_attrs[edge_mask, :]
 
 
-class RGCNConv(MessagePassing):
-    r"""The relational graph convolutional operator from the `"Modeling
-    Relational Data with Graph Convolutional Networks"
-    <https://arxiv.org/abs/1703.06103>`_ paper
-
-    .. math::
-        \mathbf{x}^{\prime}_i = \mathbf{\Theta}_{\textrm{root}} \cdot
-        \mathbf{x}_i + \sum_{r \in \mathcal{R}} \sum_{j \in \mathcal{N}_r(i)}
-        \frac{1}{|\mathcal{N}_r(i)|} \mathbf{\Theta}_r \cdot \mathbf{x}_j,
-
-    where :math:`\mathcal{R}` denotes the set of relations, *i.e.* edge types.
-    Edge type needs to be a one-dimensional :obj:`torch.long` tensor which
-    stores a relation identifier
-    :math:`\in \{ 0, \ldots, |\mathcal{R}| - 1\}` for each edge.
-
-    .. note::
-        This implementation is as memory-efficient as possible by iterating
-        over each individual relation type.
-        Therefore, it may result in low GPU utilization in case the graph has a
-        large number of relations.
-        As an alternative approach, :class:`FastRGCNConv` does not iterate over
-        each individual type, but may consume a large amount of memory to
-        compensate.
-        We advise to check out both implementations to see which one fits your
-        needs.
-
-    Args:
-        in_channels (int or tuple): Size of each input sample. A tuple
-            corresponds to the sizes of source and target dimensionalities.
-            In case no input features are given, this argument should
-            correspond to the number of nodes in your graph.
-        out_channels (int): Size of each output sample.
-        num_relations (int): Number of relations.
-        nn (torch.nn.Module): A neural network :math:`h_{\mathbf{\Theta}}` that
-            maps edge features :obj:`edge_attr` of shape :obj:`[-1,
-            num_edge_features]` to shape
-            :obj:`[-1, in_channels * out_channels]`, *e.g.*, defined by
-            :class:`torch.nn.Sequential`.
-        num_bases (int, optional): If set to not :obj:`None`, this layer will
-            use the basis-decomposition regularization scheme where
-            :obj:`num_bases` denotes the number of bases to use.
-            (default: :obj:`None`)
-        num_blocks (int, optional): If set to not :obj:`None`, this layer will
-            use the block-diagonal-decomposition regularization scheme where
-            :obj:`num_blocks` denotes the number of blocks to use.
-            (default: :obj:`None`)
-        aggr (string, optional): The aggregation scheme to use
-            (:obj:`"add"`, :obj:`"mean"`, :obj:`"max"`).
-            (default: :obj:`"mean"`)
-        root_weight (bool, optional): If set to :obj:`False`, the layer will
-            not add transformed root node features to the output.
-            (default: :obj:`True`)
-        bias (bool, optional): If set to :obj:`False`, the layer will not learn
-            an additive bias. (default: :obj:`True`)
-        **kwargs (optional): Additional arguments of
-            :class:`torch_geometric.nn.conv.MessagePassing`.
-    """
-
-    def __init__(
-        self,
-        in_channels: Union[int, Tuple[int, int]],
-        out_channels: int,
-        num_relations: int,
-        nn: Callable,
-        num_bases: Optional[int] = None,
-        num_blocks: Optional[int] = None,
-        dropout: Optional[float] = 0.1,
-        aggr: str = 'mean',
-        root_weight: bool = True,
-        bias: bool = True,
-        **kwargs,
-    ):
-        super().__init__(aggr=aggr, node_dim=0, **kwargs)
-
-        if num_bases is not None and num_blocks is not None:
-            raise ValueError('Can not apply both basis-decomposition and '
-                             'block-diagonal-decomposition at the same time.')
-
-        self.in_channels = in_channels
-        self.out_channels = out_channels
+class GCL(RGCNConv):
+    
+    def __init__(self, in_channels, out_channels, num_relations, nn, 
+                 dropout=0.1, **kwargs):
+        super().__init__(in_channels=in_channels, out_channels=out_channels, 
+                         num_relations=num_relations, **kwargs)
         self.nn = nn
         self.dropout = dropout
-        self.num_relations = num_relations
-        self.num_bases = num_bases
-        self.num_blocks = num_blocks
-
-        if isinstance(in_channels, int):
-            in_channels = (in_channels, in_channels)
-        self.in_channels_l = in_channels[0]
-
-        if num_bases is not None:
-            self.weight = Parameter(
-                torch.Tensor(num_bases, in_channels[0], out_channels))
-            self.comp = Parameter(torch.Tensor(num_relations, num_bases))
-
-        elif num_blocks is not None:
-            assert (in_channels[0] % num_blocks == 0
-                    and out_channels % num_blocks == 0)
-            self.weight = Parameter(
-                torch.Tensor(num_relations, num_blocks,
-                             in_channels[0] // num_blocks,
-                             out_channels // num_blocks))
-            self.register_parameter('comp', None)
-
-        else:
-            self.weight = Parameter(
-                torch.Tensor(num_relations, in_channels[0], out_channels))
-            self.register_parameter('comp', None)
-
-        if root_weight:
-            self.root = Param(torch.Tensor(in_channels[1], out_channels))
-        else:
-            self.register_parameter('root', None)
-
-        if bias:
-            self.bias = Param(torch.Tensor(out_channels))
-        else:
-            self.register_parameter('bias', None)
-
-        self.reset_parameters()
-
-    def reset_parameters(self):
-        glorot(self.weight)
+        
+        self.reset_edge_nn()
+    
+    
+    def reset_edge_nn(self):
         reset(self.nn)
-        glorot(self.comp)
-        glorot(self.root)
-        zeros(self.bias)
-
+    
+    
     def forward(self, x: Union[OptTensor, Tuple[OptTensor, Tensor]],
                 edge_index: Adj, edge_type: OptTensor = None,
                 edge_attr: OptTensor = None):
-        r"""
-        Args:
-            x: The input node features. Can be either a :obj:`[num_nodes,
-                in_channels]` node feature matrix, or an optional
-                one-dimensional node index tensor (in which case input features
-                are treated as trainable node embeddings).
-                Furthermore, :obj:`x` can be of type :obj:`tuple` denoting
-                source and destination node features.
-            edge_type: The one-dimensional relation type/index for each edge in
-                :obj:`edge_index`.
-                Should be only :obj:`None` in case :obj:`edge_index` is of type
-                :class:`torch_sparse.tensor.SparseTensor`.
-                (default: :obj:`None`)
-        """
 
         # Convert input features to a pair of node features or node indices.
         x_l: OptTensor = None
@@ -248,54 +123,49 @@ class RGCNConv(MessagePassing):
             out += self.bias
 
         return out
-
+    
+    
     def message(self, x_j: Tensor, edge_attr: Tensor) -> Tensor:
+        
+        # Use edge nn to compute weights from edge attributes 
+        # (=onehot timestep distances between nodes)
         weights = self.nn(edge_attr)
         weights = weights[..., :self.in_channels_l]
         weights = weights.view(-1, self.in_channels_l)
-        ret = x_j * weights
-        ret = F.relu(ret)
-        ret = F.dropout(ret, p=self.dropout, training=self.training)
-        return ret
-
-    def message_and_aggregate(self, adj_t: SparseTensor, x: Tensor) -> Tensor:
-        adj_t = adj_t.set_value(None, layout=None)
-        return matmul(adj_t, x, reduce=self.aggr)
-
-    def __repr__(self) -> str:
-        return (f'{self.__class__.__name__}({self.in_channels}, '
-                f'{self.out_channels}, num_relations={self.num_relations})')
+        
+        out = x_j * weights
+        out = F.relu(out)
+        out = F.dropout(out, p=self.dropout, training=self.training)
+        
+        return out
 
 
 class MLP(nn.Module):
 
     def __init__(self, input_dim=256, hidden_dim=256, output_dim=256,
-                 num_layers=2, act=True, dropout=0.1):
+                 num_layers=2, activation=True, dropout=0.1):
         super().__init__()
 
         self.layers = nn.ModuleList()
-
+        
         if num_layers == 1:
             self.layers.append(nn.Linear(input_dim, output_dim))
         else:
+            # Input layer (1) + Intermediate layers (n-2) + Output layer (1) 
             self.layers.append(nn.Linear(input_dim, hidden_dim))
-
-            for i in range(num_layers-2):
+            for _ in range(num_layers-2):
                 self.layers.append(nn.Linear(hidden_dim, hidden_dim))
-
             self.layers.append(nn.Linear(hidden_dim, output_dim))
 
-        self.act = act
+        self.activation = activation
         self.p = dropout
 
     def forward(self, x):
-
         for layer in self.layers:
             x = F.dropout(x, p=self.p, training=self.training)
             x = layer(x)
-            if self.act:
+            if self.activation:
                 x = F.relu(x)
-
         return x
 
 
@@ -310,30 +180,33 @@ class GCN(nn.Module):
         edge_nn = nn.Linear(num_dists, input_dim)
         self.batch_norm = batch_norm
 
-        self.layers.append(RGCNConv(input_dim, hidden_dim,
-                                    num_relations, edge_nn))
+        self.layers.append(GCL(input_dim, hidden_dim, num_relations, edge_nn))
         if self.batch_norm:
             self.norm_layers.append(BatchNorm(hidden_dim))
 
         for i in range(n_layers-1):
-            self.layers.append(RGCNConv(hidden_dim, hidden_dim,
-                                        num_relations, edge_nn))
+            self.layers.append(GCL(hidden_dim, hidden_dim, 
+                                   num_relations, edge_nn))
             if self.batch_norm:
                 self.norm_layers.append(BatchNorm(hidden_dim))
 
         self.p = dropout
 
     def forward(self, data):
+        
         x, edge_index, edge_attrs = data.x, data.edge_index, data.edge_attrs
         edge_type = edge_attrs[:, 0]
         edge_attr = edge_attrs[:, 1:]
 
         for i in range(len(self.layers)):
+            
             residual = x
             x = F.dropout(x, p=self.p, training=self.training)
             x = self.layers[i](x, edge_index, edge_type, edge_attr)
+            
             if self.batch_norm:
                 x = self.norm_layers[i](x)
+                
             x = F.relu(x)
             x = residual + x
 
@@ -384,12 +257,10 @@ class CNNEncoder(nn.Module):
         )
 
     def forward(self, x):
-
         x = x.unsqueeze(1)
         x = self.conv(x)
         x = self.flatten(x)
         x = self.lin(x)
-
         return x
 
 
@@ -429,12 +300,11 @@ class CNNDecoder(nn.Module):
             )
 
     def forward(self, x):
-
         x = self.lin(x)
         x = self.unflatten(x)
         x = self.conv(x)
-
-        return x.unsqueeze(1)
+        x = x.unsqueeze(1)
+        return x
 
 
 class Encoder(nn.Module):
@@ -472,7 +342,7 @@ class Encoder(nn.Module):
         # Soft attention node-aggregation layer
         gate_nn = nn.Sequential(
             MLP(input_dim=self.d, output_dim=1, num_layers=1,
-                act=False, dropout=self.dropout),
+                activation=False, dropout=self.dropout),
             nn.BatchNorm1d(1)
         )
         self.graph_attention = GlobalAttention(gate_nn)
