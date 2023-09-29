@@ -7,6 +7,7 @@ import torch
 from matplotlib import pyplot as plt
 import matplotlib as mpl
 import muspy
+from prettytable import PrettyTable
 
 from constants import PitchToken, DurationToken
 import constants
@@ -21,6 +22,32 @@ def set_seed(seed):
     np.random.seed(seed)
     random.seed(seed)
     os.environ['PYTHONHASHSEED'] = str(seed)
+
+
+def append_dict(dest_d, source_d):
+
+    for k, v in source_d.items():
+        dest_d[k].append(v)
+
+
+def print_params(model):
+    
+    table = PrettyTable(["Modules", "Parameters"])
+    total_params = 0
+    
+    for name, parameter in model.named_parameters():
+        
+        if not parameter.requires_grad:
+            continue
+            
+        param = parameter.numel()
+        table.add_row([name, param])
+        total_params += param
+        
+    print(table)
+    print(f"Total Trainable Params: {total_params}")
+    
+    return total_params
 
 
 # Builds multitrack pianoroll (mtp) from content tensor containing logits and
@@ -50,6 +77,7 @@ def mtp_from_logits(c_logits, s_tensor):
     return mtp
 
 
+# mtp: n_batches x n_bars x n_tracks x n_timesteps x max_simu_notes x d_token
 def muspy_from_mtp(mtp):
 
     n_timesteps = mtp.size(2)
@@ -78,7 +106,7 @@ def muspy_from_mtp(mtp):
                     pitch == PitchToken.PAD.value or
                     dur == DurationToken.EOS.value or
                         dur == DurationToken.PAD.value):
-                    # This chord contains no additional notes, go to next chord
+                    # The chord contains no additional notes, go to next chord
                     break
 
                 if (pitch == PitchToken.SOS.value or

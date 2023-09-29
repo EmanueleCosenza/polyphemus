@@ -8,20 +8,14 @@ import numpy as np
 import torch.nn.functional as F
 from torch import nn
 from tqdm.auto import tqdm
+import pprint
+
+import constants
+from constants import PitchToken, DurationToken
+from utils import append_dict
 
 
-def generate_square_subsequent_mask(sz):
-    """Generates an upper-triangular matrix of -inf, with zeros on diag."""
-    return torch.triu(torch.ones(sz, sz) * float('-inf'), diagonal=1)
-
-
-def append_dict(dest_d, source_d):
-
-    for k, v in source_d.items():
-        dest_d[k].append(v)
-
-
-class VAETrainer():
+class PolyphemusTrainer():
 
     def __init__(self, model_dir, checkpoint=False, model=None, optimizer=None,
                  init_lr=1e-4, lr_scheduler=None, device=torch.device("cuda"),
@@ -37,10 +31,10 @@ class VAETrainer():
         self.eval_every = eval_every
         self.iters_to_accumulate = iters_to_accumulate
 
-        # Criteria with ignored padding
+        # Loss criteria with ignored padding
         self.bce_unreduced = nn.BCEWithLogitsLoss(reduction='none')
-        self.ce_p = nn.CrossEntropyLoss(ignore_index=130)
-        self.ce_d = nn.CrossEntropyLoss(ignore_index=98)
+        self.ce_p = nn.CrossEntropyLoss(ignore_index=PitchToken.PAD.value)
+        self.ce_d = nn.CrossEntropyLoss(ignore_index=DurationToken.PAD.value)
 
         # Training stats
         self.tr_losses = defaultdict(list)
@@ -64,53 +58,43 @@ class VAETrainer():
             self.load_checkpoint()
 
 
-    def train(self, trainloader, validloader=None, epochs=1,
-              early_exit=None):
-
-        self.model.train()
-
-        print("Starting training.\n")
+    def train(self, trainloader, validloader=None, epochs=1, early_exit=None):
 
         if not self.times:
             start = time.time()
             self.times.append(start)
 
-        progress_bar = tqdm(range(len(trainloader)))
+        self.model.train()
         scaler = torch.cuda.amp.GradScaler()
-
-        # Zero out the gradients
         self.optimizer.zero_grad()
+        progress_bar = tqdm(range(len(trainloader)))
 
         for epoch in range(epochs):
-
             self.cur_epoch = epoch
-
-            for batch_idx, inputs in enumerate(trainloader):
-
+            for batch_idx, graph in enumerate(trainloader):
                 self.cur_batch_idx = batch_idx
 
-                # Get the inputs
-                x_graph = inputs.to(self.device)
-                x_seq, x_acts = x_graph.x_seq, x_graph.x_acts
-                inputs = (x_seq, x_acts, x_graph)
+                # Move batch of graphs to device. Note: a single graph here
+                # represents a bar in the original sequence.
+                graph = graph.to(self.device)
+                s_tensor, c_tensor = graph.s_tensor, graph.c_tensor
 
                 with torch.cuda.amp.autocast():
-                    # Forward pass, get the reconstructions
-                    outputs, mu, log_var = self.model(x_seq, x_acts, x_graph)
+                    # Forward pass to obtain mu, log(sigma^2), computed by the
+                    # encoder, and structure and content logits, computed by the
+                    # decoder
+                    (s_logits, c_logits), mu, log_var = self.model(graph)
 
-                    # Compute the backprop loss and other required losses
-                    tot_loss, losses = self._compute_losses(inputs, outputs, mu,
-                                                            log_var)
+                    # Compute losses
+                    tot_loss, losses = self._losses(
+                        s_tensor, s_logits, 
+                        c_tensor, c_logits, 
+                        mu, log_var
+                    )
                     tot_loss = tot_loss / self.iters_to_accumulate
-
-                # Free GPU
-                del x_seq
-                del x_acts
 
                 # Backprop
                 scaler.scale(tot_loss).backward()
-                # tot_loss.backward()
-                # self.optimizer.step()
 
                 if (self.tot_batches + 1) % self.iters_to_accumulate == 0:
                     scaler.step(self.optimizer)
@@ -119,19 +103,23 @@ class VAETrainer():
                     if self.lr_scheduler is not None:
                         self.lr_scheduler.step()
                     if self.beta_update:
-                        self._update_beta()
+                        # Beta annealing
+                        self._anneal_beta()
 
                 # Compute accuracies
-                accs = self._compute_accuracies(
-                    inputs, outputs, x_graph.is_drum)
+                accs = self._accuracies(
+                    s_tensor, s_logits,
+                    c_tensor, c_logits,
+                    graph.is_drum
+                )
 
                 # Update the stats
                 append_dict(self.tr_losses, losses)
+                append_dict(self.tr_accuracies, accs)
                 last_lr = (self.lr_scheduler.lr
                            if self.lr_scheduler is not None else self.init_lr)
                 self.lrs.append(last_lr)
                 self.betas.append(self.beta)
-                append_dict(self.tr_accuracies, accs)
                 now = time.time()
                 self.times.append(now)
 
@@ -177,7 +165,6 @@ class VAETrainer():
                 # Save model and stats on disk
                 if (self.save_every > 0 and
                         (self.tot_batches + 1) % self.save_every == 0):
-                    print("\nSaving model to disk...\n")
                     self._save_model('checkpoint')
 
                 # Stop prematurely if early_exit is set and reached
@@ -188,19 +175,17 @@ class VAETrainer():
                 self.tot_batches += 1
 
         end = time.time()
-        # Todo: self.__print_time()
         hours, rem = divmod(end-start, 3600)
         minutes, seconds = divmod(rem, 60)
         print("Training completed in (h:m:s): {:0>2}:{:0>2}:{:05.2f}"
               .format(int(hours), int(minutes), seconds))
 
-        print("Saving model to disk...")
         self._save_model('checkpoint')
 
         print("Model saved.")
 
 
-    def _update_beta(self):
+    def _anneal_beta(self):
 
         # Number of gradient updates
         i = self.tot_batches
@@ -228,19 +213,17 @@ class VAETrainer():
 
                 # Get the inputs and move them to device
                 x_graph = inputs.to(self.device)
-                x_seq, x_acts = x_graph.x_seq, x_graph.x_acts
-                inputs = (x_seq, x_acts, x_graph)
+                c_tensor, s_tensor = x_graph.c_tensor, x_graph.s_tensor
+                inputs = (c_tensor, s_tensor, x_graph)
 
                 with torch.cuda.amp.autocast():
                     # Forward pass, get the reconstructions
-                    outputs, mu, log_var = self.model(x_seq, x_acts, x_graph)
+                    outputs, mu, log_var = self.model(c_tensor, s_tensor, x_graph)
 
                     # Compute losses and accuracies wrt batch
-                    _, losses_b = self._compute_losses(inputs, outputs, mu,
-                                                       log_var)
+                    _, losses_b = self._losses(inputs, outputs, mu, log_var)
 
-                accs_b = self._compute_accuracies(
-                    inputs, outputs, x_graph.is_drum)
+                accs_b = self._accuracies(inputs, outputs, x_graph.is_drum)
 
                 # Save losses and accuracies
                 append_dict(losses, losses_b)
@@ -260,38 +243,50 @@ class VAETrainer():
         return avg_losses, avg_accs
 
 
-    def _compute_losses(self, inputs, outputs, mu, log_var):
+    def _losses(self, s_tensor, s_logits, c_tensor, c_logits, mu, log_var):
 
-        x_seq, x_acts, _ = inputs
-        seq_rec, acts_rec = outputs
+        # Do not consider SOS token
+        c_tensor = c_tensor[..., 1:, :]
+        c_logits = c_logits.reshape(-1, c_logits.size(-1))
+        c_tensor = c_tensor.reshape(-1, c_tensor.size(-1))
+        
+        # Reshape logits to match s_tensor dimensions:
+        # n_graphs (in batch) x n_tracks x n_timesteps
+        s_logits = s_tensor.reshape(-1, *s_logits.shape[2:])
 
-        # Shift outputs for transformer decoder loss and filter silences
-        x_seq = x_seq[..., 1:, :]
-
-        # Compute the losses
-        acts_loss = self.bce_unreduced(
-            acts_rec.view(-1), x_acts.view(-1).float())
-        acts_loss = torch.mean(acts_loss)
-
-        pitches_loss = self.ce_p(
-            seq_rec.reshape(-1, seq_rec.size(-1))[:, :131],
-            x_seq.reshape(-1, x_seq.size(-1))[:, :131].argmax(dim=1)
-        )
-        dur_loss = self.ce_d(
-            seq_rec.reshape(-1, seq_rec.size(-1))[:, 131:],
-            x_seq.reshape(-1, x_seq.size(-1))[:, 131:].argmax(dim=1)
-        )
-        kld_loss = -0.5 * torch.sum(1+log_var-mu.pow(2)-log_var.exp(),
+        # Binary structure tensor loss (binary cross entropy)
+        s_loss = self.bce_unreduced(
+            s_logits.view(-1), s_tensor.view(-1).float())
+        s_loss = torch.mean(s_loss)
+        
+        # Content tensor loss (pitches). argmax is used to obtain token numbers 
+        # from onehot rep
+        pitch_logits = c_logits[:, :constants.N_PITCH_TOKENS]
+        pitch_true = c_tensor[:, :constants.N_PITCH_TOKENS].argmax(dim=1)
+        pitch_loss = self.ce_p(pitch_logits, pitch_true)
+        
+        # Content tensor loss (durations)
+        dur_logits = c_logits[:, constants.N_PITCH_TOKENS:]
+        dur_true = c_tensor[:, constants.N_PITCH_TOKENS:].argmax(dim=1)
+        dur_loss = self.ce_d(dur_logits, dur_true)
+        
+        # Kullback-Leibler divergence loss 
+        # Derivation in Kingma, Diederik P., and Max Welling. "Auto-encoding 
+        # variational bayes." (2013), Appendix B.
+        # (https://arxiv.org/pdf/1312.6114.pdf)
+        kld_loss = -0.5 * torch.sum(1 + log_var - mu.pow(2) - log_var.exp(),
                                     dim=1)
         kld_loss = torch.mean(kld_loss)
-        rec_loss = pitches_loss + dur_loss + acts_loss
+        
+        # Reconstruction loss and total loss
+        rec_loss = pitch_loss + dur_loss + s_loss
         tot_loss = rec_loss + self.beta*kld_loss
 
         losses = {
             'tot': tot_loss.item(),
-            'pitches': pitches_loss.item(),
+            'pitches': pitch_loss.item(),
             'dur': dur_loss.item(),
-            'acts': acts_loss.item(),
+            'acts': s_loss.item(),
             'rec': rec_loss.item(),
             'kld': kld_loss.item(),
             'beta*kld': self.beta*kld_loss.item()
@@ -300,135 +295,168 @@ class VAETrainer():
         return tot_loss, losses
 
 
-    def _compute_accuracies(self, inputs, outputs, is_drum):
+    def _accuracies(self, s_tensor, s_logits, c_tensor, c_logits, 
+                            is_drum):
 
-        x_seq, x_acts, _ = inputs
-        seq_rec, acts_rec = outputs
+        # Do not consider SOS token
+        c_tensor = c_tensor[..., 1:, :]
+        
+        # Reshape logits to match s_tensor dimensions:
+        # n_graphs (in batch) x n_tracks x n_timesteps
+        s_logits = s_tensor.reshape(-1, *s_logits.shape[2:])
 
-        # Shift outputs and filter silences
-        x_seq = x_seq[..., 1:, :]
-
-        notes_acc = self._note_accuracy(seq_rec, x_seq)
-        pitches_acc = self._pitches_accuracy(seq_rec, x_seq)
-        pitches_acc_drums = self._pitches_accuracy(seq_rec, x_seq,
-                                                   is_drum, drums=True)
-        pitches_acc_non_drums = self._pitches_accuracy(seq_rec, x_seq,
-                                                       is_drum, drums=False)
-        dur_acc = self._dur_accuracy(seq_rec, x_seq)
-        acts_acc = self._acts_accuracy(acts_rec, x_acts)
-        acts_precision = self._acts_precision(acts_rec, x_acts)
-        acts_recall = self._acts_recall(acts_rec, x_acts)
-        acts_f1 = (2 * acts_recall * acts_precision /
-                   (acts_recall + acts_precision))
+        # Note accuracy considers both pitches and durations
+        note_acc = self._note_accuracy(c_logits, c_tensor)
+        
+        pitch_acc = self._pitch_accuracy(c_logits, c_tensor)
+        
+        # Compute pitch accuracies for drums and non drums separately
+        pitch_acc_drums = self._pitch_accuracy(
+            c_logits, c_tensor, drums=True, is_drum=is_drum
+        )
+        pitch_acc_non_drums = self._pitch_accuracy(
+            c_logits, c_tensor,drums=False, is_drum=is_drum
+        )
+        
+        dur_acc = self._duration_accuracy(c_logits, c_tensor)
+        
+        s_acc = self._structure_accuracy(s_logits, s_tensor)
+        s_precision = self._structure_precision(s_logits, s_tensor)
+        s_recall = self._structure_recall(s_logits, s_tensor)
+        s_f1 = (2*s_recall*s_precision / (s_recall+s_precision))
 
         accs = {
-            'notes': notes_acc.item(),
-            'pitches': pitches_acc.item(),
-            'pitches_drums': pitches_acc_drums.item(),
-            'pitches_non_drums': pitches_acc_non_drums.item(),
+            'note': note_acc.item(),
+            'pitch': pitch_acc.item(),
+            'pitch_drums': pitch_acc_drums.item(),
+            'pitch_non_drums': pitch_acc_non_drums.item(),
             'dur': dur_acc.item(),
-            'acts_acc': acts_acc.item(),
-            'acts_precision': acts_precision.item(),
-            'acts_recall': acts_recall.item(),
-            'acts_f1': acts_f1.item()
+            's_acc': s_acc.item(),
+            's_precision': s_precision.item(),
+            's_recall': s_recall.item(),
+            's_f1': s_f1.item()
         }
 
         return accs
 
 
-    def _note_accuracy(self, seq_rec, x_seq):
-
-        pitches_rec = F.softmax(seq_rec[..., :131], dim=-1)
-        pitches_rec = torch.argmax(pitches_rec, dim=-1)
-        pitches_true = torch.argmax(x_seq[..., :131], dim=-1)
-
-        mask_p = (pitches_true != 130)
-
-        preds_pitches = (pitches_rec == pitches_true)
-        preds_pitches = torch.logical_and(preds_pitches, mask_p)
-
-        dur_rec = F.softmax(seq_rec[..., 131:], dim=-1)
-        dur_rec = torch.argmax(dur_rec, dim=-1)
-        dur_true = torch.argmax(x_seq[..., 131:], dim=-1)
-
-        mask_d = (dur_true != 98)
-
-        preds_dur = (dur_rec == dur_true)
-        preds_dur = torch.logical_and(preds_dur, mask_d)
-
-        return torch.sum(torch.logical_and(preds_pitches,
-                                           preds_dur)) / torch.sum(mask_p)
-
-
-    def _acts_precision(self, acts_rec, x_acts):
-
-        acts_rec = torch.sigmoid(acts_rec)
-        acts_rec[acts_rec < 0.5] = 0
-        acts_rec[acts_rec >= 0.5] = 1
-
-        tp = torch.sum(x_acts[acts_rec == 1])
-
-        return tp / torch.sum(acts_rec)
-
-
-    def _acts_recall(self, acts_rec, x_acts):
-
-        acts_rec = torch.sigmoid(acts_rec)
-        acts_rec[acts_rec < 0.5] = 0
-        acts_rec[acts_rec >= 0.5] = 1
-
-        tp = torch.sum(x_acts[acts_rec == 1])
-
-        return tp / torch.sum(x_acts)
-
-
-    def _acts_accuracy(self, acts_rec, x_acts):
-
-        acts_rec = torch.sigmoid(acts_rec)
-        acts_rec[acts_rec < 0.5] = 0
-        acts_rec[acts_rec >= 0.5] = 1
-
-        return torch.sum(acts_rec == x_acts) / x_acts.numel()
-
-
-    def _pitches_accuracy(self, seq_rec, x_seq, is_drum=None, drums=None):
-
+    def _pitch_accuracy(self, c_logits, c_tensor, drums=None, is_drum=None):
+ 
+        # When drums is None, just compute the global pitch accuracy without
+        # distinguishing between drum and non drum pitches
         if drums is not None:
             if drums:
-                seq_rec = seq_rec[is_drum]
-                x_seq = x_seq[is_drum]
+                c_logits = c_logits[is_drum]
+                c_tensor = c_tensor[is_drum]
             else:
-                seq_rec = seq_rec[torch.logical_not(is_drum)]
-                x_seq = x_seq[torch.logical_not(is_drum)]
+                c_logits = c_logits[torch.logical_not(is_drum)]
+                c_tensor = c_tensor[torch.logical_not(is_drum)]
 
-        pitches_rec = F.softmax(seq_rec[..., :131], dim=-1)
-        pitches_rec = torch.argmax(pitches_rec, dim=-1)
-        pitches_true = torch.argmax(x_seq[..., :131], dim=-1)
+        # Apply softmax to obtain pitch reconstructions
+        pitch_rec = c_logits[..., :constants.N_PITCH_TOKENS]
+        pitch_rec = F.softmax(pitch_rec, dim=-1)
+        pitch_rec = torch.argmax(pitch_rec, dim=-1)
+        
+        pitch_true = c_tensor[..., :constants.N_PITCH_TOKENS]
+        pitch_true = torch.argmax(pitch_true, dim=-1)
 
-        mask = (pitches_true != 130)
+        # Do not consider PAD tokens when computing accuracies
+        not_pad = (pitch_true != PitchToken.PAD.value)
+        
+        correct = (pitch_rec == pitch_true)
+        correct = torch.logical_and(correct, not_pad)
 
-        preds_pitches = (pitches_rec == pitches_true)
-        preds_pitches = torch.logical_and(preds_pitches, mask)
-
-        return torch.sum(preds_pitches) / torch.sum(mask)
+        return torch.sum(correct) / torch.sum(not_pad)
 
 
-    def _dur_accuracy(self, seq_rec, x_seq):
+    def _duration_accuracy(self, c_logits, c_tensor):
 
-        dur_rec = F.softmax(seq_rec[..., 131:], dim=-1)
+        # Apply softmax to obtain reconstructed durations
+        dur_rec = c_logits[..., constants.N_PITCH_TOKENS:]
+        dur_rec = F.softmax(dur_rec, dim=-1)
         dur_rec = torch.argmax(dur_rec, dim=-1)
-        dur_true = torch.argmax(x_seq[..., 131:], dim=-1)
+        
+        dur_true = c_tensor[..., constants.N_PITCH_TOKENS:]
+        dur_true = torch.argmax(dur_true, dim=-1)
 
-        mask = (dur_true != 98)
+        # Do not consider PAD tokens when computing accuracies
+        not_pad = (dur_true != DurationToken.PAD.value)
 
-        preds_dur = (dur_rec == dur_true)
-        preds_dur = torch.logical_and(preds_dur, mask)
+        correct = (dur_rec == dur_true)
+        correct = torch.logical_and(correct, not_pad)
 
-        return torch.sum(preds_dur) / torch.sum(mask)
+        return torch.sum(correct) / torch.sum(not_pad)
+
+
+    def _note_accuracy(self, c_logits, c_tensor):
+
+        # Apply softmax to obtain pitch reconstructions
+        pitch_rec = c_logits[..., :constants.N_PITCH_TOKENS]
+        pitch_rec = F.softmax(pitch_rec, dim=-1)
+        pitch_rec = torch.argmax(pitch_rec, dim=-1)
+        
+        pitch_true = c_tensor[..., :constants.N_PITCH_TOKENS]
+        pitch_true = torch.argmax(pitch_true, dim=-1)
+
+        not_pad_p = (pitch_true != PitchToken.PAD.value)
+
+        correct_p = (pitch_rec == pitch_true)
+        correct_p = torch.logical_and(correct_p, not_pad_p)
+
+        dur_rec = c_logits[..., constants.N_PITCH_TOKENS:]
+        dur_rec = F.softmax(dur_rec, dim=-1)
+        dur_rec = torch.argmax(dur_rec, dim=-1)
+        
+        dur_true = c_tensor[..., constants.N_PITCH_TOKENS:]
+        dur_true = torch.argmax(dur_true, dim=-1)
+
+        not_pad_d = (dur_true != DurationToken.PAD.value)
+
+        correct_d = (dur_rec == dur_true)
+        correct_d = torch.logical_and(correct_d, not_pad_d)
+        
+        note_accuracy = torch.sum(
+            torch.logical_and(correct_p, correct_d)) / torch.sum(not_pad_p)
+
+        return note_accuracy
+
+
+    def _structure_accuracy(self, s_logits, s_tensor):
+        
+        s_logits = torch.sigmoid(s_logits)
+        s_logits[s_logits < 0.5] = 0
+        s_logits[s_logits >= 0.5] = 1
+
+        return torch.sum(s_logits == s_tensor) / s_tensor.numel()
+
+
+    def _structure_precision(self, s_logits, s_tensor):
+
+        s_logits = torch.sigmoid(s_logits)
+        s_logits[s_logits < 0.5] = 0
+        s_logits[s_logits >= 0.5] = 1
+
+        tp = torch.sum(s_tensor[s_logits == 1])
+
+        return tp / torch.sum(s_logits)
+
+
+    def _structure_recall(self, s_logits, s_tensor):
+
+        s_logits = torch.sigmoid(s_logits)
+        s_logits[s_logits < 0.5] = 0
+        s_logits[s_logits >= 0.5] = 1
+
+        tp = torch.sum(s_tensor[s_logits == 1])
+
+        return tp / torch.sum(s_tensor)
 
 
     def _save_model(self, filename):
+        
         path = os.path.join(self.model_dir, filename)
+        print("Saving model to disk...\n")
+        
         torch.save({
             'epoch': self.cur_epoch,
             'batch': self.cur_batch_idx,
@@ -446,6 +474,8 @@ class VAETrainer():
             'model_state_dict': self.model.state_dict(),
             'optimizer_state_dict': self.optimizer.state_dict()
         }, path)
+        
+        print("The model has been successfully saved.")
 
 
     def load(self):
@@ -474,19 +504,19 @@ class VAETrainer():
         print("Elapsed time from start (h:m:s): {:0>2}:{:0>2}:{:05.2f}"
               .format(int(hours), int(minutes), seconds))
 
-        avg_lr = mean(self.lrs[-self.print_every:])
-
-        # Take mean of the last non-printed batches for each stat
-
+        # Take mean of the last non-printed batches for each loss and accuracy
         avg_losses = {}
         for k, l in self.tr_losses.items():
-            avg_losses[k] = mean(l[-self.print_every:])
+            v = mean(l[-self.print_every:])
+            avg_losses[k] = round(v, 2)
 
         avg_accs = {}
         for k, l in self.tr_accuracies.items():
-            avg_accs[k] = mean(l[-self.print_every:])
+            v = mean(l[-self.print_every:])
+            avg_accs[k] = round(v, 2)
 
         print("Losses:")
-        print(avg_losses)
+        pprint.pprint(avg_losses, indent=2)
+        
         print("Accuracies:")
-        print(avg_accs)
+        pprint.pprint(avg_accs, indent=2)

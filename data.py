@@ -254,7 +254,7 @@ class PolyphemusDataset(Dataset):
         # Concatenate pitches and durations
         c_tensor = torch.cat((onehot_p, onehot_d), dim=-1)
 
-        # Construct the graph representing the whole piece from structure tensor
+        # Build graph structure from structure tensor
         graph = graph_from_tensor(s_tensor)
 
         # Filter silences in order to get a sparse representation
@@ -262,6 +262,6 @@ class PolyphemusDataset(Dataset):
         c_tensor = c_tensor[s_tensor.reshape(-1).bool()]
 
         graph.c_tensor = c_tensor
-        graph.s_tensor = s_tensor
+        graph.s_tensor = s_tensor.float()
 
         return graph

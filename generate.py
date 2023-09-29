@@ -17,10 +17,14 @@ from utils import plot_pianoroll, plot_structure, save_midi, save_audio
 
 def generate_music(vae, z, s_cond=None, s_tensor_cond=None):
 
-    # Get structure and content logits
-    _, c_logits, s_tensor_out = vae.decoder(z, s_cond)
+    # Decoder pass to get structure and content logits
+    s_logits, c_logits = vae.decoder(z, s_cond)
 
-    s_tensor = s_tensor_cond if s_tensor_cond != None else s_tensor_out
+    if s_tensor_cond != None:
+        s_tensor = s_tensor_cond
+    else:
+        # Compute binary structure tensor from logits
+        s_tensor = vae.decoder._binary_from_logits(s_logits)
 
     # Build (n_batches x n_bars x n_tracks x n_timesteps x Sigma x d_token)
     # multitrack pianoroll tensor containing logits for each activation and

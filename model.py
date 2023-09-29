@@ -364,14 +364,16 @@ class Encoder(nn.Module):
         self.linear_mu = nn.Linear(self.d, self.d)
         self.linear_log_var = nn.Linear(self.d, self.d)
 
-    def forward(self, x_seq, x_acts, x_graph):
+    def forward(self, graph):
+
+        c_tensor, s_tensor = graph.c_tensor, graph.s_tensor
 
         # No start of seq token
-        x_seq = x_seq[:, 1:, :]
+        c_tensor = c_tensor[:, 1:, :]
 
         # Get drums and non drums tensors
-        drums = x_seq[x_graph.is_drum]
-        non_drums = x_seq[torch.logical_not(x_graph.is_drum)]
+        drums = c_tensor[graph.is_drum]
+        non_drums = c_tensor[torch.logical_not(graph.is_drum)]
 
         # Compute note/drums embeddings
         s = drums.size()
@@ -410,19 +412,19 @@ class Encoder(nn.Module):
         # [n_nodes x d]
 
         # Merge drums and non-drums
-        out = torch.zeros((x_seq.size(0), self.d), device=self.device,
+        out = torch.zeros((c_tensor.size(0), self.d), device=self.device,
                           dtype=torch.half)
-        out[x_graph.is_drum] = drums
-        out[torch.logical_not(x_graph.is_drum)] = non_drums
+        out[graph.is_drum] = drums
+        out[torch.logical_not(graph.is_drum)] = non_drums
         # [n_nodes x d]
 
-        x_graph.x = out
-        x_graph.distinct_bars = x_graph.bars + self.n_bars*x_graph.batch
-        out = self.graph_encoder(x_graph)
+        graph.x = out
+        graph.distinct_bars = graph.bars + self.n_bars*graph.batch
+        out = self.graph_encoder(graph)
         # [n_nodes x d]
 
         with torch.cuda.amp.autocast(enabled=False):
-            out = self.graph_attention(out, batch=x_graph.distinct_bars)
+            out = self.graph_attention(out, batch=graph.distinct_bars)
             # [bs x n_bars x d]
 
         out = out.view(-1, self.n_bars * self.d)
@@ -431,7 +433,7 @@ class Encoder(nn.Module):
         # [bs x d]
 
         # Process structure
-        out = self.cnn_encoder(x_acts.view(-1, self.n_tracks,
+        out = self.cnn_encoder(s_tensor.view(-1, self.n_tracks,
                                            self.resolution * 4))
         # [bs * n_bars x d]
         out = out.view(-1, self.n_bars * self.d)
@@ -522,8 +524,9 @@ class ContentDecoder(nn.Module):
         non_drums = out[torch.logical_not(s.is_drum)]
         # n_nodes_non_drums x max_simu_notes x d
 
-        # Obtain final pitch and dur decodings
-        # (softmax to be applied after forward)
+        # Obtain final pitch and dur logits (softmax will be applied 
+        # outside forward)
+        
         non_drums = self.dropout_layer(non_drums)
         drums = self.dropout_layer(drums)
 
@@ -531,14 +534,15 @@ class ContentDecoder(nn.Module):
         drums_dur = self.dur_emb(drums[..., self.d//2:])
         drums = torch.cat((drums_pitch, drums_dur), dim=-1)
         # n_nodes_drums x max_simu_notes x d_token
+        
         non_drums_pitch = self.non_drums_pitch_emb(non_drums[..., :self.d//2])
         non_drums_dur = self.dur_emb(non_drums[..., self.d//2:])
         non_drums = torch.cat((non_drums_pitch, non_drums_dur), dim=-1)
         # n_nodes_non_drums x max_simu_notes x d_token
 
         # Merge drums and non-drums
-        out = torch.zeros((s.num_nodes, self.max_simu_notes-1,
-                           self.d_token), device=self.device)
+        out = torch.zeros((s.num_nodes, self.max_simu_notes-1, self.d_token), 
+                          device=self.device, dtype=drums.dtype)
         out[s.is_drum] = drums
         out[torch.logical_not(s.is_drum)] = non_drums
 
@@ -590,7 +594,7 @@ class Decoder(nn.Module):
         s_tensor = self._binary_from_logits(s_logits)
         s = self._structure_from_binary(s_tensor)
 
-        return s, s_tensor
+        return s
 
     def forward(self, z, s=None):
 
@@ -604,17 +608,16 @@ class Decoder(nn.Module):
         # Obtain the tensor containing structure logits
         s_logits = self.s_decoder(z_s)
 
-        s_tensor = None
         if s is None:
             # Build torch geometric graph structure from structure logits.
             # This step involves non differentiable operations.
             # No gradients pass through here.
-            s, s_tensor = self._structure_from_logits(s_logits.detach())
+            s = self._structure_from_logits(s_logits.detach())
 
         # Obtain the tensor containing content logits
         c_logits = self.c_decoder(z_c, s)
 
-        return s_logits, c_logits, s_tensor
+        return s_logits, c_logits
 
 
 class VAE(nn.Module):
@@ -624,10 +627,10 @@ class VAE(nn.Module):
         self.encoder = Encoder(**kwargs)
         self.decoder = Decoder(**kwargs)
 
-    def forward(self, x_seq, x_acts, x_graph):
+    def forward(self, graph):
 
         # Encoder pass
-        mu, log_var = self.encoder(x_seq, x_acts, x_graph)
+        mu, log_var = self.encoder(graph)
 
         # Reparameterization trick
         z = torch.exp(0.5 * log_var)
@@ -635,6 +638,6 @@ class VAE(nn.Module):
         z = z + mu
 
         # Decoder pass
-        out = self.decoder(z, x_acts, x_graph)
+        out = self.decoder(z, graph)
 
         return out, mu, log_var
