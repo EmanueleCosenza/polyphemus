@@ -110,12 +110,12 @@ def preprocess_midi_file(filepath, dest_dir, n_bars, resolution):
 
         for notes in tracks_notes:
 
-            # track_content: length x max_simu_notes x 2
+            # track_content: length x MAX_SIMU_TOKENS x 2
             # This is used as a basis to build the final content tensors for
             # each sequence.
             # The last dimension contains pitches and durations. int16 is enough
             # to encode small to medium duration values.
-            track_content = np.zeros((length, constants.MAX_SIMU_NOTES, 2), 
+            track_content = np.zeros((length, constants.MAX_SIMU_TOKENS, 2), 
                                     np.int16)
 
             track_content[:, :, 0] = PitchToken.PAD.value
@@ -124,7 +124,7 @@ def preprocess_midi_file(filepath, dest_dir, n_bars, resolution):
             track_content[:, 0, 1] = DurationToken.SOS.value
 
             # Keeps track of how many notes have been stored in each timestep
-            # (int8 imposes MAX_SIMU_NOTES < 256)
+            # (int8 imposes MAX_SIMU_TOKENS < 256)
             notes_counter = np.ones(length, dtype=np.int8)
 
             # Todo: np.put_along_axis?
@@ -133,7 +133,7 @@ def preprocess_midi_file(filepath, dest_dir, n_bars, resolution):
 
                 t = note.time
 
-                if notes_counter[t] >= constants.MAX_SIMU_NOTES-1:
+                if notes_counter[t] >= constants.MAX_SIMU_TOKENS-1:
                     # Skip note if there is no more space
                     continue
 
@@ -156,7 +156,7 @@ def preprocess_midi_file(filepath, dest_dir, n_bars, resolution):
             tracks_content.append(track_content)
             tracks_structure.append(activations)
 
-        # n_tracks x length x max_simu_notes x 2
+        # n_tracks x length x MAX_SIMU_TOKENS x 2
         subsong_content = np.stack(tracks_content, axis=0)
 
         # n_tracks x length

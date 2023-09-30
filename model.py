@@ -322,7 +322,7 @@ class Encoder(nn.Module):
         self.bn_de = nn.BatchNorm1d(num_features=self.d//2)
 
         self.chord_encoder = nn.Linear(
-            self.d * (constants.MAX_SIMU_NOTES-1), self.d)
+            self.d * (constants.MAX_SIMU_TOKENS-1), self.d)
 
         self.graph_encoder = GCN(
             dropout=self.dropout,
@@ -379,7 +379,7 @@ class Encoder(nn.Module):
         drums_dur = self.bn_de(drums_dur.view(-1, self.d//2))
         drums_dur = drums_dur.view(s[0], s[1], self.d//2)
         drums = torch.cat((drums_pitch, drums_dur), dim=-1)
-        # [n_nodes x max_simu_notes x d]
+        # [n_nodes x MAX_SIMU_TOKENS x d]
 
         s = non_drums.size()
         non_drums_pitch = self.notes_pitch_emb(
@@ -391,14 +391,14 @@ class Encoder(nn.Module):
         non_drums_dur = self.bn_de(non_drums_dur.view(-1, self.d//2))
         non_drums_dur = non_drums_dur.view(s[0], s[1], self.d//2)
         non_drums = torch.cat((non_drums_pitch, non_drums_dur), dim=-1)
-        # [n_nodes x max_simu_notes x d]
+        # [n_nodes x MAX_SIMU_TOKENS x d]
 
         # Compute chord embeddings both for drums and non drums
         drums = self.chord_encoder(
-            drums.view(-1, self.d * (constants.MAX_SIMU_NOTES-1))
+            drums.view(-1, self.d * (constants.MAX_SIMU_TOKENS-1))
         )
         non_drums = self.chord_encoder(
-            non_drums.view(-1, self.d * (constants.MAX_SIMU_NOTES-1))
+            non_drums.view(-1, self.d * (constants.MAX_SIMU_TOKENS-1))
         )
         drums = F.relu(drums)
         non_drums = F.relu(non_drums)
@@ -491,7 +491,7 @@ class ContentDecoder(nn.Module):
         )
 
         self.chord_decoder = nn.Linear(
-            self.d, self.d*(constants.MAX_SIMU_NOTES-1))
+            self.d, self.d*(constants.MAX_SIMU_TOKENS-1))
 
         # Pitch and duration (un)embedding linear layers
         self.drums_pitch_emb = nn.Linear(self.d//2, constants.N_PITCH_TOKENS)
@@ -514,12 +514,12 @@ class ContentDecoder(nn.Module):
         s.x = out
         out = self.graph_decoder(s)  # n_nodes x d
 
-        out = self.chord_decoder(out)  # n_nodes x (max_simu_notes*d)
-        out = out.view(-1, constants.MAX_SIMU_NOTES-1, self.d)
+        out = self.chord_decoder(out)  # n_nodes x (MAX_SIMU_TOKENS*d)
+        out = out.view(-1, constants.MAX_SIMU_TOKENS-1, self.d)
 
-        drums = out[s.is_drum]  # n_nodes_drums x max_simu_notes x d
+        drums = out[s.is_drum]  # n_nodes_drums x MAX_SIMU_TOKENS x d
         non_drums = out[torch.logical_not(s.is_drum)]
-        # n_nodes_non_drums x max_simu_notes x d
+        # n_nodes_non_drums x MAX_SIMU_TOKENS x d
 
         # Obtain final pitch and dur logits (softmax will be applied
         # outside forward)
@@ -529,16 +529,16 @@ class ContentDecoder(nn.Module):
         drums_pitch = self.drums_pitch_emb(drums[..., :self.d//2])
         drums_dur = self.dur_emb(drums[..., self.d//2:])
         drums = torch.cat((drums_pitch, drums_dur), dim=-1)
-        # n_nodes_drums x max_simu_notes x d_token
+        # n_nodes_drums x MAX_SIMU_TOKENS x d_token
 
         non_drums_pitch = self.non_drums_pitch_emb(non_drums[..., :self.d//2])
         non_drums_dur = self.dur_emb(non_drums[..., self.d//2:])
         non_drums = torch.cat((non_drums_pitch, non_drums_dur), dim=-1)
-        # n_nodes_non_drums x max_simu_notes x d_token
+        # n_nodes_non_drums x MAX_SIMU_TOKENS x d_token
 
         # Merge drums and non-drums in the final output tensor
         d_token = constants.D_TOKEN_PAIR
-        out = torch.zeros((s.num_nodes, constants.MAX_SIMU_NOTES-1, d_token),
+        out = torch.zeros((s.num_nodes, constants.MAX_SIMU_TOKENS-1, d_token),
                           device=self.device, dtype=drums.dtype)
         out[s.is_drum] = drums
         out[torch.logical_not(s.is_drum)] = non_drums

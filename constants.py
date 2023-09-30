@@ -45,7 +45,7 @@ MAX_DUR_TOKEN = 95
 D_TOKEN_PAIR = N_PITCH_TOKENS + N_DUR_TOKENS
 
 # Number of maximum tokens stored in each timestep (14 + SOS and EOS)
-MAX_SIMU_NOTES = 16
+MAX_SIMU_TOKENS = 16
 
 
 # This enum contains edge type indices for each edge type

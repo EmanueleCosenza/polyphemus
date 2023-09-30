@@ -54,7 +54,7 @@ def print_divider():
 
 # Builds multitrack pianoroll (mtp) from content tensor containing logits and
 # structure binary tensor
-# c_logits: num_nodes x max_simu_notes x d_token
+# c_logits: num_nodes x MAX_SIMU_TOKENS x d_token
 # s_tensor: n_batches x n_bars x n_tracks x n_timesteps
 def mtp_from_logits(c_logits, s_tensor):
 
@@ -79,7 +79,7 @@ def mtp_from_logits(c_logits, s_tensor):
     return mtp
 
 
-# mtp: n_batches x n_bars x n_tracks x n_timesteps x max_simu_notes x d_token
+# mtp: n_batches x n_bars x n_tracks x n_timesteps x MAX_SIMU_TOKENS x d_token
 def muspy_from_mtp(mtp):
 
     n_timesteps = mtp.size(2)
