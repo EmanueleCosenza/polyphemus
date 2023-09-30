@@ -217,25 +217,25 @@ class CNNEncoder(nn.Module):
         # Convolutional layers
         if batch_norm:
             self.conv = nn.Sequential(
-                # From 4x32 to 8x4x32
+                # From (4 x 32) to (8 x 4 x 32)
                 nn.Conv2d(1, 8, 3, padding=1),
                 nn.BatchNorm2d(8),
                 nn.ReLU(True),
-                # From 8x4x32 to 8x4x8
+                # From (8 x 4 x 32) to (8 x 4 x 8)
                 nn.MaxPool2d((1, 4), stride=(1, 4)),
-                # From 8x4x8 to 16x4x8
+                # From (8 x 4 x 8) to (16 x 4 x 8)
                 nn.Conv2d(8, 16, 3, padding=1),
                 nn.BatchNorm2d(16),
                 nn.ReLU(True)
             )
         else:
             self.conv = nn.Sequential(
-                # From 4x32 to 8x4x32
+                # From 4 x 32 to 8 x 4 x 32
                 nn.Conv2d(1, 8, 3, padding=1),
                 nn.ReLU(True),
-                # From 8x4x32 to 8x4x8
+                # From (8 x 4 x 32) to (8 x 4 x 8)
                 nn.MaxPool2d((1, 4), stride=(1, 4)),
-                # From 8x4x8 to 16x4x8
+                # From (8 x 4 x 8) to (16 x 4 x 8)
                 nn.Conv2d(8, 16, 3, padding=1),
                 nn.ReLU(True)
             )
@@ -245,7 +245,7 @@ class CNNEncoder(nn.Module):
         # Linear layers
         self.lin = nn.Sequential(
             nn.Dropout(dropout),
-            nn.Linear(16*4*8, dense_dim),
+            nn.Linear(16 * 4 * 8, dense_dim),
             nn.ReLU(True),
             nn.Dropout(dropout),
             nn.Linear(dense_dim, output_dim)
@@ -271,7 +271,7 @@ class CNNDecoder(nn.Module):
             nn.Linear(input_dim, dense_dim),
             nn.ReLU(True),
             nn.Dropout(dropout),
-            nn.Linear(dense_dim, 16*4*8),
+            nn.Linear(dense_dim, 16 * 4 * 8),
             nn.ReLU(True)
         )
 
@@ -302,7 +302,7 @@ class CNNDecoder(nn.Module):
         return x
 
 
-class Encoder(nn.Module):
+class ContentEncoder(nn.Module):
 
     def __init__(self, **kwargs):
         super().__init__()
@@ -312,14 +312,15 @@ class Encoder(nn.Module):
 
         # Pitch and duration embedding layers (separate layers for drums
         # and non drums)
-        self.notes_pitch_emb = nn.Linear(constants.N_PITCH_TOKENS, self.d//2)
+        self.non_drums_pitch_emb = nn.Linear(constants.N_PITCH_TOKENS, 
+                                             self.d//2)
         self.drums_pitch_emb = nn.Linear(constants.N_PITCH_TOKENS, self.d//2)
         self.dur_emb = nn.Linear(constants.N_DUR_TOKENS, self.d//2)
 
         # Batch norm layers
-        self.bn_npe = nn.BatchNorm1d(num_features=self.d//2)
-        self.bn_dpe = nn.BatchNorm1d(num_features=self.d//2)
-        self.bn_de = nn.BatchNorm1d(num_features=self.d//2)
+        self.bn_non_drums = nn.BatchNorm1d(num_features=self.d//2)
+        self.bn_drums = nn.BatchNorm1d(num_features=self.d//2)
+        self.bn_dur = nn.BatchNorm1d(num_features=self.d//2)
 
         self.chord_encoder = nn.Linear(
             self.d * (constants.MAX_SIMU_TOKENS-1), self.d)
@@ -341,59 +342,45 @@ class Encoder(nn.Module):
         )
         self.graph_attention = GlobalAttention(gate_nn)
 
-        self.bars_encoder_attr = nn.Linear(self.n_bars*self.d, self.d)
-
-        self.cnn_encoder = CNNEncoder(
-            dense_dim=self.d,
-            output_dim=self.d,
-            dropout=self.dropout,
-            batch_norm=self.batch_norm
-        )
-        self.bars_encoder_struct = nn.Linear(self.n_bars*self.d, self.d)
-
-        self.linear_merge = nn.Linear(2*self.d, self.d)
-        self.bn_lm = nn.BatchNorm1d(num_features=self.d)
-
-        # Linear layers that compute the final mu and log_var
-        self.linear_mu = nn.Linear(self.d, self.d)
-        self.linear_log_var = nn.Linear(self.d, self.d)
-
+        self.bars_encoder = nn.Linear(self.n_bars * self.d, self.d)
+    
     def forward(self, graph):
+        
+        c_tensor = graph.c_tensor
 
-        c_tensor, s_tensor = graph.c_tensor, graph.s_tensor
-
-        # No start of seq token
+        # Discard SOS token
         c_tensor = c_tensor[:, 1:, :]
 
         # Get drums and non drums tensors
         drums = c_tensor[graph.is_drum]
         non_drums = c_tensor[torch.logical_not(graph.is_drum)]
 
-        # Compute note/drums embeddings
+        # Compute drums embeddings
         s = drums.size()
         drums_pitch = self.drums_pitch_emb(
             drums[..., :constants.N_PITCH_TOKENS])
-        drums_pitch = self.bn_dpe(drums_pitch.view(-1, self.d//2))
+        drums_pitch = self.bn_drums(drums_pitch.view(-1, self.d//2))
         drums_pitch = drums_pitch.view(s[0], s[1], self.d//2)
         drums_dur = self.dur_emb(drums[..., constants.N_PITCH_TOKENS:])
-        drums_dur = self.bn_de(drums_dur.view(-1, self.d//2))
+        drums_dur = self.bn_dur(drums_dur.view(-1, self.d//2))
         drums_dur = drums_dur.view(s[0], s[1], self.d//2)
         drums = torch.cat((drums_pitch, drums_dur), dim=-1)
-        # [n_nodes x MAX_SIMU_TOKENS x d]
+        # n_nodes x MAX_SIMU_TOKENS x d
 
+        # Compute non drums embeddings
         s = non_drums.size()
-        non_drums_pitch = self.notes_pitch_emb(
+        non_drums_pitch = self.non_drums_pitch_emb(
             non_drums[..., :constants.N_PITCH_TOKENS]
         )
-        non_drums_pitch = self.bn_npe(non_drums_pitch.view(-1, self.d//2))
+        non_drums_pitch = self.bn_non_drums(non_drums_pitch.view(-1, self.d//2))
         non_drums_pitch = non_drums_pitch.view(s[0], s[1], self.d//2)
         non_drums_dur = self.dur_emb(non_drums[..., constants.N_PITCH_TOKENS:])
-        non_drums_dur = self.bn_de(non_drums_dur.view(-1, self.d//2))
+        non_drums_dur = self.bn_dur(non_drums_dur.view(-1, self.d//2))
         non_drums_dur = non_drums_dur.view(s[0], s[1], self.d//2)
         non_drums = torch.cat((non_drums_pitch, non_drums_dur), dim=-1)
-        # [n_nodes x MAX_SIMU_TOKENS x d]
+        # n_nodes x MAX_SIMU_TOKENS x d
 
-        # Compute chord embeddings both for drums and non drums
+        # Compute chord embeddings (drums and non drums)
         drums = self.chord_encoder(
             drums.view(-1, self.d * (constants.MAX_SIMU_TOKENS-1))
         )
@@ -404,49 +391,97 @@ class Encoder(nn.Module):
         non_drums = F.relu(non_drums)
         drums = self.dropout_layer(drums)
         non_drums = self.dropout_layer(non_drums)
-        # [n_nodes x d]
+        # n_nodes x d
 
-        # Merge drums and non-drums
+        # Merge drums and non drums
         out = torch.zeros((c_tensor.size(0), self.d), device=self.device,
                           dtype=drums.dtype)
         out[graph.is_drum] = drums
         out[torch.logical_not(graph.is_drum)] = non_drums
-        # [n_nodes x d]
+        # n_nodes x d
 
+        # Set initial graph node states to intermediate chord representations 
+        # and pass through GCN
         graph.x = out
         graph.distinct_bars = graph.bars + self.n_bars*graph.batch
         out = self.graph_encoder(graph)
-        # [n_nodes x d]
+        # n_nodes x d
 
+        # Aggregate final node states into bar encodings with soft attention
         with torch.cuda.amp.autocast(enabled=False):
             out = self.graph_attention(out, batch=graph.distinct_bars)
-            # [bs x n_bars x d]
+        # bs x n_bars x d
 
         out = out.view(-1, self.n_bars * self.d)
-        # [bs x n_bars * d]
-        out_attr = self.bars_encoder_attr(out)
-        # [bs x d]
+        # bs x (n_bars*d)
+        z_c = self.bars_encoder(out)
+        # bs x d
+        
+        return z_c
 
-        # Process structure
+
+class StructureEncoder(nn.Module):
+
+    def __init__(self, **kwargs):
+        super().__init__()
+        self.__dict__.update(kwargs)
+
+        self.cnn_encoder = CNNEncoder(
+            dense_dim=self.d,
+            output_dim=self.d,
+            dropout=self.dropout,
+            batch_norm=self.batch_norm
+        )
+        self.bars_encoder = nn.Linear(self.n_bars * self.d, self.d)
+    
+    def forward(self, graph):
+        
+        s_tensor = graph.s_tensor
         out = self.cnn_encoder(s_tensor.view(-1, constants.N_TRACKS,
                                              self.resolution * 4))
-        # [bs * n_bars x d]
+        # (bs*n_bars) x d
         out = out.view(-1, self.n_bars * self.d)
-        # [bs x n_bars * d]
-        out_struct = self.bars_encoder_struct(out)
-        # [bs x d]
+        # bs x (n_bars*d)
+        z_s = self.bars_encoder(out)
+        # bs x d
 
-        # Merge attr state and struct state
-        out = torch.cat((out_attr, out_struct), dim=1)
-        out = self.dropout_layer(out)
-        out = self.linear_merge(out)
-        out = self.bn_lm(out)
-        out = F.relu(out)
+        return z_s
+    
+
+class Encoder(nn.Module):
+
+    def __init__(self, **kwargs):
+        super().__init__()
+        self.__dict__.update(kwargs)
+
+        self.s_encoder = StructureEncoder(**kwargs)
+        self.c_encoder = ContentEncoder(**kwargs)
+
+        self.dropout_layer = nn.Dropout(p=self.dropout)
+
+        # Linear layer that merges content and structure representations
+        self.linear_merge = nn.Linear(2*self.d, self.d)
+        self.bn_linear_merge = nn.BatchNorm1d(num_features=self.d)
+
+        self.linear_mu = nn.Linear(self.d, self.d)
+        self.linear_log_var = nn.Linear(self.d, self.d)
+
+    def forward(self, graph):
+        
+        z_s = self.s_encoder(graph)
+        z_c = self.c_encoder(graph)
+        
+        # Merge content and structure representation
+        z_g = torch.cat((z_c, z_s), dim=1)
+        z_g = self.dropout_layer(z_g)
+        z_g = self.linear_merge(z_g)
+        z_g = self.bn_linear_merge(z_g)
+        z_g = F.relu(z_g)
 
         # Compute mu and log(std^2)
-        out = self.dropout_layer(out)
-        mu = self.linear_mu(out)
-        log_var = self.linear_log_var(out)
+        z_g = self.dropout_layer(z_g)
+        mu = self.linear_mu(z_g)
+        log_var = self.linear_log_var(z_g)
 
         return mu, log_var
 
@@ -457,7 +492,7 @@ class StructureDecoder(nn.Module):
         super().__init__()
         self.__dict__.update(kwargs)
 
-        self.bars_decoder = nn.Linear(self.d, self.d*self.n_bars)
+        self.bars_decoder = nn.Linear(self.d, self.d * self.n_bars)
         self.cnn_decoder = CNNDecoder(
             input_dim=self.d,
             dense_dim=self.d,

@@ -9,6 +9,7 @@ import os
 from matplotlib import pyplot as plt
 
 import generation_config
+import constants
 from model import VAE
 from utils import set_seed
 from utils import mtp_from_logits, muspy_from_mtp, set_seed
@@ -91,16 +92,16 @@ def load_model(model_dir, device):
 
     checkpoint = torch.load(os.path.join(model_dir, 'checkpoint'),
                             map_location='cpu')
-    params = torch.load(os.path.join(model_dir, 'params'),
-                        map_location='cpu')
+    configuration = torch.load(os.path.join(model_dir, 'configuration'),
+                               map_location='cpu')
 
     state_dict = checkpoint['model_state_dict']
 
-    model = VAE(**params['model'], device=device).to(device)
+    model = VAE(**configuration['model'], device=device).to(device)
     model.load_state_dict(state_dict)
     model.eval()
 
-    return model, params
+    return model, configuration
 
 
 def main():
@@ -164,12 +165,12 @@ def main():
     print_divider()
     print("Loading the model on {} device...".format(device))
 
-    model, params = load_model(args.model_dir, device)
+    model, configuration = load_model(args.model_dir, device)
 
-    d_model = params['model']['d']
-    n_bars = params['model']['n_bars']
-    n_tracks = params['model']['n_tracks']
-    n_timesteps = 4 * params['model']['resolution']
+    d_model = configuration['model']['d']
+    n_bars = configuration['model']['n_bars']
+    n_tracks = constants.N_TRACKS
+    n_timesteps = 4 * configuration['model']['resolution']
     output_dir = args.output_dir
     bs = args.n
 

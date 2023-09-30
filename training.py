@@ -313,8 +313,8 @@ class PolyphemusTrainer():
             s_logits.view(-1), s_tensor.view(-1).float())
         s_loss = torch.mean(s_loss)
 
-        # Content tensor loss (pitches). argmax is used to obtain token numbers
-        # from onehot rep
+        # Content tensor loss (pitches)
+        # argmax is used to obtain token ids from onehot rep
         pitch_logits = c_logits[:, :constants.N_PITCH_TOKENS]
         pitch_true = c_tensor[:, :constants.N_PITCH_TOKENS].argmax(dim=1)
         pitch_loss = self.ce_p(pitch_logits, pitch_true)
