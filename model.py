@@ -1,19 +1,17 @@
-from typing import Callable, Optional, Union, Tuple
+from typing import Union, Tuple
 
 import torch
 import torch.nn.functional as F
 from torch import nn, Tensor
-from torch.nn import Parameter as Param
-from torch.nn import Parameter
-from torch_sparse import SparseTensor, matmul, masked_select_nnz
+from torch_sparse import SparseTensor, masked_select_nnz
 from torch_geometric.typing import OptTensor, Adj
-from torch_geometric.nn.conv import MessagePassing
-from torch_geometric.nn.inits import reset, glorot, zeros
+from torch_geometric.nn.inits import reset
 from torch_geometric.nn.norm import BatchNorm
 from torch_geometric.nn.glob import GlobalAttention
 from torch_geometric.data import Batch
 from torch_geometric.nn.conv import RGCNConv
 
+import constants
 from data import graph_from_tensor
 
 
@@ -41,21 +39,19 @@ def masked_edge_attrs(edge_attrs, edge_mask):
 
 
 class GCL(RGCNConv):
-    
-    def __init__(self, in_channels, out_channels, num_relations, nn, 
+
+    def __init__(self, in_channels, out_channels, num_relations, nn,
                  dropout=0.1, **kwargs):
-        super().__init__(in_channels=in_channels, out_channels=out_channels, 
+        super().__init__(in_channels=in_channels, out_channels=out_channels,
                          num_relations=num_relations, **kwargs)
         self.nn = nn
         self.dropout = dropout
-        
+
         self.reset_edge_nn()
-    
-    
+
     def reset_edge_nn(self):
         reset(self.nn)
-    
-    
+
     def forward(self, x: Union[OptTensor, Tuple[OptTensor, Tensor]],
                 edge_index: Adj, edge_type: OptTensor = None,
                 edge_attr: OptTensor = None):
@@ -123,20 +119,19 @@ class GCL(RGCNConv):
             out += self.bias
 
         return out
-    
-    
+
     def message(self, x_j: Tensor, edge_attr: Tensor) -> Tensor:
-        
-        # Use edge nn to compute weights from edge attributes 
+
+        # Use edge nn to compute weights from edge attributes
         # (=onehot timestep distances between nodes)
         weights = self.nn(edge_attr)
         weights = weights[..., :self.in_channels_l]
         weights = weights.view(-1, self.in_channels_l)
-        
+
         out = x_j * weights
         out = F.relu(out)
         out = F.dropout(out, p=self.dropout, training=self.training)
-        
+
         return out
 
 
@@ -147,13 +142,13 @@ class MLP(nn.Module):
         super().__init__()
 
         self.layers = nn.ModuleList()
-        
+
         if num_layers == 1:
             self.layers.append(nn.Linear(input_dim, output_dim))
         else:
-            # Input layer (1) + Intermediate layers (n-2) + Output layer (1) 
+            # Input layer (1) + Intermediate layers (n-2) + Output layer (1)
             self.layers.append(nn.Linear(input_dim, hidden_dim))
-            for _ in range(num_layers-2):
+            for _ in range(num_layers - 2):
                 self.layers.append(nn.Linear(hidden_dim, hidden_dim))
             self.layers.append(nn.Linear(hidden_dim, output_dim))
 
@@ -185,7 +180,7 @@ class GCN(nn.Module):
             self.norm_layers.append(BatchNorm(hidden_dim))
 
         for i in range(n_layers-1):
-            self.layers.append(GCL(hidden_dim, hidden_dim, 
+            self.layers.append(GCL(hidden_dim, hidden_dim,
                                    num_relations, edge_nn))
             if self.batch_norm:
                 self.norm_layers.append(BatchNorm(hidden_dim))
@@ -193,20 +188,20 @@ class GCN(nn.Module):
         self.p = dropout
 
     def forward(self, data):
-        
+
         x, edge_index, edge_attrs = data.x, data.edge_index, data.edge_attrs
         edge_type = edge_attrs[:, 0]
         edge_attr = edge_attrs[:, 1:]
 
         for i in range(len(self.layers)):
-            
+
             residual = x
             x = F.dropout(x, p=self.p, training=self.training)
             x = self.layers[i](x, edge_index, edge_type, edge_attr)
-            
+
             if self.batch_norm:
                 x = self.norm_layers[i](x)
-                
+
             x = F.relu(x)
             x = residual + x
 
@@ -317,9 +312,9 @@ class Encoder(nn.Module):
 
         # Pitch and duration embedding layers (separate layers for drums
         # and non drums)
-        self.notes_pitch_emb = nn.Linear(self.d_token_pitches, self.d//2)
-        self.drums_pitch_emb = nn.Linear(self.d_token_pitches, self.d//2)
-        self.dur_emb = nn.Linear(self.d_token_dur, self.d//2)
+        self.notes_pitch_emb = nn.Linear(constants.N_PITCH_TOKENS, self.d//2)
+        self.drums_pitch_emb = nn.Linear(constants.N_PITCH_TOKENS, self.d//2)
+        self.dur_emb = nn.Linear(constants.N_DUR_TOKENS, self.d//2)
 
         # Batch norm layers
         self.bn_npe = nn.BatchNorm1d(num_features=self.d//2)
@@ -327,15 +322,14 @@ class Encoder(nn.Module):
         self.bn_de = nn.BatchNorm1d(num_features=self.d//2)
 
         self.chord_encoder = nn.Linear(
-            self.d * (self.max_simu_notes-1), self.d)
+            self.d * (constants.MAX_SIMU_NOTES-1), self.d)
 
-        # Graph encoder
         self.graph_encoder = GCN(
             dropout=self.dropout,
             input_dim=self.d,
             hidden_dim=self.d,
             n_layers=self.gnn_n_layers,
-            num_relations=self.n_relations,
+            num_relations=constants.N_EDGE_TYPES,
             batch_norm=self.batch_norm
         )
 
@@ -377,10 +371,11 @@ class Encoder(nn.Module):
 
         # Compute note/drums embeddings
         s = drums.size()
-        drums_pitch = self.drums_pitch_emb(drums[..., :self.d_token_pitches])
+        drums_pitch = self.drums_pitch_emb(
+            drums[..., :constants.N_PITCH_TOKENS])
         drums_pitch = self.bn_dpe(drums_pitch.view(-1, self.d//2))
         drums_pitch = drums_pitch.view(s[0], s[1], self.d//2)
-        drums_dur = self.dur_emb(drums[..., self.d_token_pitches:])
+        drums_dur = self.dur_emb(drums[..., constants.N_PITCH_TOKENS:])
         drums_dur = self.bn_de(drums_dur.view(-1, self.d//2))
         drums_dur = drums_dur.view(s[0], s[1], self.d//2)
         drums = torch.cat((drums_pitch, drums_dur), dim=-1)
@@ -388,11 +383,11 @@ class Encoder(nn.Module):
 
         s = non_drums.size()
         non_drums_pitch = self.notes_pitch_emb(
-            non_drums[..., :self.d_token_pitches]
+            non_drums[..., :constants.N_PITCH_TOKENS]
         )
         non_drums_pitch = self.bn_npe(non_drums_pitch.view(-1, self.d//2))
         non_drums_pitch = non_drums_pitch.view(s[0], s[1], self.d//2)
-        non_drums_dur = self.dur_emb(non_drums[..., self.d_token_pitches:])
+        non_drums_dur = self.dur_emb(non_drums[..., constants.N_PITCH_TOKENS:])
         non_drums_dur = self.bn_de(non_drums_dur.view(-1, self.d//2))
         non_drums_dur = non_drums_dur.view(s[0], s[1], self.d//2)
         non_drums = torch.cat((non_drums_pitch, non_drums_dur), dim=-1)
@@ -400,10 +395,10 @@ class Encoder(nn.Module):
 
         # Compute chord embeddings both for drums and non drums
         drums = self.chord_encoder(
-            drums.view(-1, self.d * (self.max_simu_notes-1))
+            drums.view(-1, self.d * (constants.MAX_SIMU_NOTES-1))
         )
         non_drums = self.chord_encoder(
-            non_drums.view(-1, self.d * (self.max_simu_notes-1))
+            non_drums.view(-1, self.d * (constants.MAX_SIMU_NOTES-1))
         )
         drums = F.relu(drums)
         non_drums = F.relu(non_drums)
@@ -413,7 +408,7 @@ class Encoder(nn.Module):
 
         # Merge drums and non-drums
         out = torch.zeros((c_tensor.size(0), self.d), device=self.device,
-                          dtype=torch.half)
+                          dtype=drums.dtype)
         out[graph.is_drum] = drums
         out[torch.logical_not(graph.is_drum)] = non_drums
         # [n_nodes x d]
@@ -433,8 +428,8 @@ class Encoder(nn.Module):
         # [bs x d]
 
         # Process structure
-        out = self.cnn_encoder(s_tensor.view(-1, self.n_tracks,
-                                           self.resolution * 4))
+        out = self.cnn_encoder(s_tensor.view(-1, constants.N_TRACKS,
+                                             self.resolution * 4))
         # [bs * n_bars x d]
         out = out.view(-1, self.n_bars * self.d)
         # [bs x n_bars * d]
@@ -474,7 +469,7 @@ class StructureDecoder(nn.Module):
         # z_s: bs x d
         out = self.bars_decoder(z_s)  # bs x (n_bars*d)
         out = self.cnn_decoder(out.reshape(-1, self.d))
-        out = out.view(z_s.size(0), self.n_bars, self.n_tracks, -1)
+        out = out.view(z_s.size(0), self.n_bars, constants.N_TRACKS, -1)
         return out
 
 
@@ -491,16 +486,18 @@ class ContentDecoder(nn.Module):
             input_dim=self.d,
             hidden_dim=self.d,
             n_layers=self.gnn_n_layers,
-            num_relations=self.n_relations,
+            num_relations=constants.N_EDGE_TYPES,
             batch_norm=self.batch_norm
         )
 
-        self.chord_decoder = nn.Linear(self.d, self.d*(self.max_simu_notes-1))
+        self.chord_decoder = nn.Linear(
+            self.d, self.d*(constants.MAX_SIMU_NOTES-1))
 
         # Pitch and duration (un)embedding linear layers
-        self.drums_pitch_emb = nn.Linear(self.d//2, self.d_token_pitches)
-        self.non_drums_pitch_emb = nn.Linear(self.d//2, self.d_token_pitches)
-        self.dur_emb = nn.Linear(self.d//2, self.d_token_dur)
+        self.drums_pitch_emb = nn.Linear(self.d//2, constants.N_PITCH_TOKENS)
+        self.non_drums_pitch_emb = nn.Linear(
+            self.d//2, constants.N_PITCH_TOKENS)
+        self.dur_emb = nn.Linear(self.d//2, constants.N_DUR_TOKENS)
 
         self.dropout_layer = nn.Dropout(p=self.dropout)
 
@@ -518,15 +515,14 @@ class ContentDecoder(nn.Module):
         out = self.graph_decoder(s)  # n_nodes x d
 
         out = self.chord_decoder(out)  # n_nodes x (max_simu_notes*d)
-        out = out.view(-1, self.max_simu_notes-1, self.d)
+        out = out.view(-1, constants.MAX_SIMU_NOTES-1, self.d)
 
         drums = out[s.is_drum]  # n_nodes_drums x max_simu_notes x d
         non_drums = out[torch.logical_not(s.is_drum)]
         # n_nodes_non_drums x max_simu_notes x d
 
-        # Obtain final pitch and dur logits (softmax will be applied 
+        # Obtain final pitch and dur logits (softmax will be applied
         # outside forward)
-        
         non_drums = self.dropout_layer(non_drums)
         drums = self.dropout_layer(drums)
 
@@ -534,14 +530,15 @@ class ContentDecoder(nn.Module):
         drums_dur = self.dur_emb(drums[..., self.d//2:])
         drums = torch.cat((drums_pitch, drums_dur), dim=-1)
         # n_nodes_drums x max_simu_notes x d_token
-        
+
         non_drums_pitch = self.non_drums_pitch_emb(non_drums[..., :self.d//2])
         non_drums_dur = self.dur_emb(non_drums[..., self.d//2:])
         non_drums = torch.cat((non_drums_pitch, non_drums_dur), dim=-1)
         # n_nodes_non_drums x max_simu_notes x d_token
 
-        # Merge drums and non-drums
-        out = torch.zeros((s.num_nodes, self.max_simu_notes-1, self.d_token), 
+        # Merge drums and non-drums in the final output tensor
+        d_token = constants.D_TOKEN_PAIR
+        out = torch.zeros((s.num_nodes, constants.MAX_SIMU_NOTES-1, d_token),
                           device=self.device, dtype=drums.dtype)
         out[s.is_drum] = drums
         out[torch.logical_not(s.is_drum)] = non_drums

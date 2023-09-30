@@ -41,6 +41,9 @@ N_DUR_TOKENS = 99
 MAX_DUR_TOKEN = 95
 
 
+# Dimension of (pitch, duration) token pair
+D_TOKEN_PAIR = N_PITCH_TOKENS + N_DUR_TOKENS
+
 # Number of maximum tokens stored in each timestep (14 + SOS and EOS)
 MAX_SIMU_NOTES = 16
 
@@ -50,5 +53,8 @@ class EdgeTypes(Enum):
     TRACK = 0 # This has to be interpreted as the starting index
     ONSET = N_TRACKS
     NEXT = N_TRACKS + 1
+
+# N_TRACKS track types + 1 onset edge type + 1 next edge type
+N_EDGE_TYPES = N_TRACKS + 2
 
 

@@ -1,0 +1,31 @@
+{
+    "batch_size": 256,
+    "model": {
+        "dropout": 0,
+        "batch_norm": true,
+        "gnn_n_layers": 8,
+        "d": 512,
+        "n_bars": 2,
+        "resolution": 8
+    },
+    "optimizer": {
+        "betas": [
+            0.9,
+            0.98
+        ],
+        "eps": 1e-09,
+        "lr": 5e-06
+    },
+    "lr_scheduler": {
+        "peak_lr": 0.0001,
+        "final_lr_scale": 0.01,
+        "warmup_steps": 8000,
+        "decay_steps": 800000
+    },
+    "beta_scheduler": {
+        "anneal_start": 40000,
+        "beta_max": 0.01,
+        "step_size": 0.001,
+        "anneal_end": 500000
+    }
+}

@@ -2,7 +2,7 @@ import yaml
 from constants import DEFAULT_MIDI_PROGRAMS, DEFAULT_SOUNDFONT_PATH
 
 
-CONFIG_FILENAME = 'config.yaml'
+CONFIG_FILENAME = 'generation_config.yaml'
 
 
 def load_config(filename):

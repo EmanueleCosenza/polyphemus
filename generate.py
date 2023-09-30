@@ -8,11 +8,13 @@ import torch
 import os
 from matplotlib import pyplot as plt
 
-import config
+import generation_config
 from model import VAE
 from utils import set_seed
 from utils import mtp_from_logits, muspy_from_mtp, set_seed
-from utils import plot_pianoroll, plot_structure, save_midi, save_audio
+from utils import print_divider
+from utils import save_midi, save_audio
+from plot import plot_pianoroll, plot_structure
 
 
 def generate_music(vae, z, s_cond=None, s_tensor_cond=None):
@@ -35,7 +37,7 @@ def generate_music(vae, z, s_cond=None, s_tensor_cond=None):
 
 
 def save(mtp, dir, s_tensor=None, n_loops=1,
-         looped_only=False, plot_proll=True, plot_struct=True):
+         looped_only=False, plot_proll=False, plot_struct=False):
 
     # Clear matplotlib cache (this solves formatting problems with first plot)
     plt.clf()
@@ -131,7 +133,7 @@ def main():
     parser.add_argument(
         '--s_file',
         type=str,
-        help='Path to the file containing the binary structure tensor.'
+        help='Path to the JSON file containing the binary structure tensor.'
     )
     parser.add_argument(
         '--use_gpu',
@@ -159,7 +161,7 @@ def main():
     if args.use_gpu:
         torch.cuda.set_device(args.gpu_id)
 
-    print("------------------------------------")
+    print_divider()
     print("Loading the model on {} device...".format(device))
 
     model, params = load_model(args.model_dir, device)

@@ -4,14 +4,12 @@ import random
 
 import numpy as np
 import torch
-from matplotlib import pyplot as plt
-import matplotlib as mpl
 import muspy
 from prettytable import PrettyTable
 
 from constants import PitchToken, DurationToken
 import constants
-import config
+import generation_config
 
 
 def set_seed(seed):
@@ -31,23 +29,27 @@ def append_dict(dest_d, source_d):
 
 
 def print_params(model):
-    
+
     table = PrettyTable(["Modules", "Parameters"])
     total_params = 0
-    
+
     for name, parameter in model.named_parameters():
-        
+
         if not parameter.requires_grad:
             continue
-            
+
         param = parameter.numel()
         table.add_row([name, param])
         total_params += param
-        
+
     print(table)
-    print(f"Total Trainable Params: {total_params}")
-    
+    print(f"Total Trainable Parameters: {total_params}")
+
     return total_params
+
+
+def print_divider():
+    print('—' * 40)
 
 
 # Builds multitrack pianoroll (mtp) from content tensor containing logits and
@@ -122,7 +124,7 @@ def muspy_from_mtp(mtp):
                 notes.append(muspy.Note(t, pitch.item(), dur, 64))
 
         track_name = constants.TRACKS[track_idx]
-        midi_program = config.MIDI_PROGRAMS[track_name]
+        midi_program = generation_config.MIDI_PROGRAMS[track_name]
         is_drum = (track_name == 'Drums')
 
         track = muspy.Track(
@@ -139,75 +141,12 @@ def muspy_from_mtp(mtp):
     return music
 
 
-def plot_pianoroll(muspy_song, save_dir=None, name='pianoroll'):
-
-    lines_linewidth = 4
-    axes_linewidth = 4
-    font_size = 34
-    fformat = 'png'
-    xticklabel = False
-    label = 'y'
-    figsize = (20, 10)
-    dpi = 200
-
-    with mpl.rc_context({'lines.linewidth': lines_linewidth,
-                         'axes.linewidth': axes_linewidth,
-                         'font.size': font_size}):
-
-        fig, axs_ = plt.subplots(constants.N_TRACKS, sharex=True,
-                                 figsize=figsize)
-        fig.subplots_adjust(hspace=0)
-        axs = axs_.tolist()
-        muspy.show_pianoroll(music=muspy_song, yticklabel='off', xtick='off',
-                             label=label, xticklabel=xticklabel,
-                             grid_axis='off', axs=axs, preset='full')
-
-        if save_dir:
-            plt.savefig(os.path.join(save_dir, name + "." + fformat),
-                        format=fformat, dpi=dpi)
-
-
-def plot_structure(s_tensor, save_dir=None, name='structure'):
-
-    lines_linewidth = 1
-    axes_linewidth = 1
-    font_size = 14
-    fformat = 'svg'
-    dpi = 200
-
-    n_bars = s_tensor.shape[0]
-    figsize = (3 * n_bars, 3)
-
-    n_timesteps = s_tensor.size(2)
-    resolution = n_timesteps // 4
-    s_tensor = s_tensor.permute(1, 0, 2)
-    s_tensor = s_tensor.reshape(s_tensor.shape[0], -1)
-
-    with mpl.rc_context({'lines.linewidth': lines_linewidth,
-                         'axes.linewidth': axes_linewidth,
-                         'font.size': font_size}):
-
-        plt.figure(figsize=figsize)
-        plt.pcolormesh(s_tensor, edgecolors='k', linewidth=1)
-        ax = plt.gca()
-
-        plt.xticks(range(0, s_tensor.shape[1], resolution),
-                   range(1, 4*n_bars + 1))
-        plt.yticks(range(0, s_tensor.shape[0]), constants.TRACKS)
-
-        ax.invert_yaxis()
-
-        if save_dir:
-            plt.savefig(os.path.join(save_dir, name + "." + fformat),
-                        format=fformat, dpi=dpi)
-
-
 def save_midi(muspy_song, save_dir, name):
     muspy.write_midi(os.path.join(save_dir, name + ".mid"), muspy_song)
 
 
 def save_audio(muspy_song, save_dir, name):
-    soundfont_path = (config.SOUNDFONT_PATH 
-                      if os.path.exists(config.SOUNDFONT_PATH) else None)
+    soundfont_path = (generation_config.SOUNDFONT_PATH
+                      if os.path.exists(generation_config.SOUNDFONT_PATH) else None)
     muspy.write_audio(os.path.join(save_dir, name + ".wav"), muspy_song,
                       soundfont_path=soundfont_path)

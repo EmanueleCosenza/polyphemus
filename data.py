@@ -12,8 +12,8 @@ from constants import EdgeTypes
 
 
 def get_node_labels(s_tensor, ones_idxs):
-    # Build a node label tensor which has node labels in place of each 
-    # activation in the stucture tensor
+    # Build a tensor which has node labels in place of each activation in the 
+    # stucture tensor
     labels = torch.zeros_like(s_tensor, dtype=torch.long)
     n_nodes = len(ones_idxs[0])
     labels[ones_idxs] = torch.arange(n_nodes)

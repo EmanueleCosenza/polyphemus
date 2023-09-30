@@ -3,7 +3,7 @@
 # Possible values: [0, 127]
 # Check https://en.wikipedia.org/wiki/General_MIDI for a complete list 
 # of MIDI programs (remember to map values to the [0, 127] range).
-# The drums value is ignored (drums have a dedicated MIDI channel and each
+# The `drums` value is ignored (drums have a dedicated MIDI channel and each
 # program corresponds to a different drum sound). The guitar track typically 
 # plays accompaniment chords and it can also be intepreted as a 
 # piano/accompaniment track. The strings track typically contains a 
