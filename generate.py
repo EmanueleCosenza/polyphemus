@@ -220,6 +220,7 @@ def main():
     print("Saving MIDI files in {}...\n".format(output_dir))
     save(mtp, output_dir, s_tensor, args.n_loops)
     print("Finished saving MIDI files.")
+    print_divider()
 
 
 if __name__ == '__main__':
