@@ -90,6 +90,7 @@ class PolyphemusTrainer():
         self.lr_scheduler = lr_scheduler
         self.beta_scheduler = beta_scheduler
         self.device = device if device is not None else torch.device("cpu")
+        self.cuda = True if self.device.type == 'cuda' else False
         self.print_every = print_every
         self.save_every = save_every
         self.eval_every = eval_every
@@ -119,7 +120,7 @@ class PolyphemusTrainer():
         self.times.append(start)
 
         self.model.train()
-        scaler = torch.cuda.amp.GradScaler()
+        scaler = torch.cuda.amp.GradScaler() if self.cuda else None
         self.optimizer.zero_grad()
         progress_bar = tqdm(range(len(trainloader)))
 
@@ -133,7 +134,7 @@ class PolyphemusTrainer():
                 graph = graph.to(self.device)
                 s_tensor, c_tensor = graph.s_tensor, graph.c_tensor
 
-                with torch.cuda.amp.autocast():
+                with torch.cuda.amp.autocast(enabled=self.cuda):
                     # Forward pass to obtain mu, log(sigma^2), computed by the
                     # encoder, and structure and content logits, computed by the
                     # decoder
@@ -148,13 +149,19 @@ class PolyphemusTrainer():
                     tot_loss = tot_loss / self.iters_to_accumulate
 
                 # Backpropagation
-                scaler.scale(tot_loss).backward()
+                if self.cuda:
+                    scaler.scale(tot_loss).backward()
+                else:
+                    tot_loss.backward()
 
                 # Update weights with accumulated gradients
                 if (self.tot_batches + 1) % self.iters_to_accumulate == 0:
 
-                    scaler.step(self.optimizer)
-                    scaler.update()
+                    if self.cuda:
+                        scaler.step(self.optimizer)
+                        scaler.update()
+                    else:
+                        self.optimizer.step()
 
                     self.optimizer.zero_grad()
 

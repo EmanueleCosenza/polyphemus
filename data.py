@@ -227,7 +227,7 @@ class PolyphemusDataset(Dataset):
         s_tensor = s_tensor.reshape(s_tensor.shape[0], self.n_bars, -1)
         s_tensor = s_tensor.permute(1, 0, 2)
 
-        # From decimals to one-hot (pitches)
+        # From decimals to onehot (pitches)
         pitches = c_tensor[..., 0]
         onehot_p = torch.zeros(
             (pitches.shape[0]*pitches.shape[1]*pitches.shape[2]*pitches.shape[3],
@@ -239,7 +239,7 @@ class PolyphemusDataset(Dataset):
                                     pitches.shape[2], pitches.shape[3], 
                                     constants.N_PITCH_TOKENS)
 
-        # From decimals to one-hot (durations)
+        # From decimals to onehot (durations)
         durs = c_tensor[..., 1]
         onehot_d = torch.zeros(
             (durs.shape[0]*durs.shape[1]*durs.shape[2]*durs.shape[3],
