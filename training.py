@@ -522,24 +522,6 @@ class PolyphemusTrainer():
 
         print("The model has been successfully saved.")
 
-    def load(self):
-
-        checkpoint = torch.load(os.path.join(self.model_dir, 'checkpoint'))
-
-        self.cur_epoch = checkpoint['epoch']
-        self.cur_batch_idx = checkpoint['batch']
-        self.save_every = checkpoint['save_every']
-        self.eval_every = checkpoint['eval_every']
-        self.lrs = checkpoint['lrs']
-        self.tr_losses = checkpoint['tr_losses']
-        self.tr_accuracies = checkpoint['tr_accuracies']
-        self.val_losses = checkpoint['val_losses']
-        self.val_accuracies = checkpoint['val_accuracies']
-        self.times = checkpoint['times']
-        self.min_val_loss = checkpoint['min_val_loss']
-        self.beta = checkpoint['beta']
-        self.tot_batches = checkpoint['tot_batches']
-
     def _print_stats(self):
 
         hours, rem = divmod(self.times[-1]-self.times[0], 3600)

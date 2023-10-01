@@ -122,7 +122,7 @@ class GCL(RGCNConv):
 
     def message(self, x_j: Tensor, edge_attr: Tensor) -> Tensor:
 
-        # Use edge nn to compute weights from edge attributes
+        # Use edge nn to compute weight tensor from edge attributes
         # (=onehot timestep distances between nodes)
         weights = self.nn(edge_attr)
         weights = weights[..., :self.in_channels_l]
@@ -230,12 +230,9 @@ class CNNEncoder(nn.Module):
             )
         else:
             self.conv = nn.Sequential(
-                # From 4 x 32 to 8 x 4 x 32
                 nn.Conv2d(1, 8, 3, padding=1),
                 nn.ReLU(True),
-                # From (8 x 4 x 32) to (8 x 4 x 8)
                 nn.MaxPool2d((1, 4), stride=(1, 4)),
-                # From (8 x 4 x 8) to (16 x 4 x 8)
                 nn.Conv2d(8, 16, 3, padding=1),
                 nn.ReLU(True)
             )
@@ -356,27 +353,27 @@ class ContentEncoder(nn.Module):
         non_drums = c_tensor[torch.logical_not(graph.is_drum)]
 
         # Compute drums embeddings
-        s = drums.size()
+        sz = drums.size()
         drums_pitch = self.drums_pitch_emb(
             drums[..., :constants.N_PITCH_TOKENS])
         drums_pitch = self.bn_drums(drums_pitch.view(-1, self.d//2))
-        drums_pitch = drums_pitch.view(s[0], s[1], self.d//2)
+        drums_pitch = drums_pitch.view(sz[0], sz[1], self.d//2)
         drums_dur = self.dur_emb(drums[..., constants.N_PITCH_TOKENS:])
         drums_dur = self.bn_dur(drums_dur.view(-1, self.d//2))
-        drums_dur = drums_dur.view(s[0], s[1], self.d//2)
+        drums_dur = drums_dur.view(sz[0], sz[1], self.d//2)
         drums = torch.cat((drums_pitch, drums_dur), dim=-1)
         # n_nodes x MAX_SIMU_TOKENS x d
 
         # Compute non drums embeddings
-        s = non_drums.size()
+        sz = non_drums.size()
         non_drums_pitch = self.non_drums_pitch_emb(
             non_drums[..., :constants.N_PITCH_TOKENS]
         )
         non_drums_pitch = self.bn_non_drums(non_drums_pitch.view(-1, self.d//2))
-        non_drums_pitch = non_drums_pitch.view(s[0], s[1], self.d//2)
+        non_drums_pitch = non_drums_pitch.view(sz[0], sz[1], self.d//2)
         non_drums_dur = self.dur_emb(non_drums[..., constants.N_PITCH_TOKENS:])
         non_drums_dur = self.bn_dur(non_drums_dur.view(-1, self.d//2))
-        non_drums_dur = non_drums_dur.view(s[0], s[1], self.d//2)
+        non_drums_dur = non_drums_dur.view(sz[0], sz[1], self.d//2)
         non_drums = torch.cat((non_drums_pitch, non_drums_dur), dim=-1)
         # n_nodes x MAX_SIMU_TOKENS x d
 
@@ -616,6 +613,12 @@ class Decoder(nn.Module):
         s_tensor[s_tensor >= self.sigmoid_thresh] = 1
         s_tensor[s_tensor < self.sigmoid_thresh] = 0
         s_tensor = s_tensor.bool()
+        
+        # Avoid empty bars by creating a fake activation for each empty
+        # (n_tracks x n_timesteps) bar matrix in position [0, 0]
+        empty_mask = ~s_tensor.any(dim=-1).any(dim=-1)
+        idxs = torch.nonzero(empty_mask, as_tuple=True)
+        s_tensor[idxs + (0, 0)] = True
 
         return s_tensor
 

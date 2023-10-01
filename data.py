@@ -12,22 +12,23 @@ from constants import EdgeTypes
 
 
 def get_node_labels(s_tensor, ones_idxs):
-    # Build a tensor which has node labels in place of each activation in the 
+    # Build a tensor which has node labels in place of each activation in the
     # stucture tensor
-    labels = torch.zeros_like(s_tensor, dtype=torch.long)
+    labels = torch.zeros_like(s_tensor, dtype=torch.long, 
+                              device=s_tensor.device)
     n_nodes = len(ones_idxs[0])
-    labels[ones_idxs] = torch.arange(n_nodes)
+    labels[ones_idxs] = torch.arange(n_nodes, device=s_tensor.device)
     return labels
 
 
 def get_track_edges(s_tensor, ones_idxs=None, node_labels=None):
-    
+
     track_edges = []
 
     if ones_idxs is None:
         # Indices where the binary structure tensor is active
         ones_idxs = torch.nonzero(s_tensor, as_tuple=True)
-    
+
     if node_labels is None:
         node_labels = get_node_labels(s_tensor, ones_idxs)
 
@@ -37,27 +38,28 @@ def get_track_edges(s_tensor, ones_idxs=None, node_labels=None):
         tss = list(ones_idxs[1][ones_idxs[0] == track])
         edge_type = EdgeTypes.TRACK.value + track
         edges = [
-            # Edge tuple: (u, v, type, ts_distance). Zip is used to obtain 
-            # consecutive active timesteps. Edges in different tracks have 
+            # Edge tuple: (u, v, type, ts_distance). Zip is used to obtain
+            # consecutive active timesteps. Edges in different tracks have
             # different types.
-            (node_labels[track, t1], node_labels[track, t2], edge_type, t2 - t1)
+            (node_labels[track, t1],
+             node_labels[track, t2], edge_type, t2 - t1)
             for t1, t2 in zip(tss[:-1], tss[1:])
         ]
         inverse_edges = [(u, v, t, d) for (v, u, t, d) in edges]
         track_edges.extend(edges + inverse_edges)
 
     return torch.tensor(track_edges, dtype=torch.long)
-    
+
 
 def get_onset_edges(s_tensor, ones_idxs=None, node_labels=None):
-    
+
     onset_edges = []
     edge_type = EdgeTypes.ONSET.value
 
     if ones_idxs is None:
         # Indices where the binary structure tensor is active
         ones_idxs = torch.nonzero(s_tensor, as_tuple=True)
-    
+
     if node_labels is None:
         node_labels = get_node_labels(s_tensor, ones_idxs)
 
@@ -82,14 +84,14 @@ def get_next_edges(s_tensor, ones_idxs=None, node_labels=None):
 
     next_edges = []
     edge_type = EdgeTypes.NEXT.value
-    
+
     if ones_idxs is None:
         # Indices where the binary structure tensor is active
         ones_idxs = torch.nonzero(s_tensor, as_tuple=True)
-    
+
     if node_labels is None:
         node_labels = get_node_labels(s_tensor, ones_idxs)
-    
+
     # List of active timesteps
     tss = torch.nonzero(torch.any(s_tensor.bool(), dim=0)).squeeze()
     if tss.dim() == 0:
@@ -101,17 +103,17 @@ def get_next_edges(s_tensor, ones_idxs=None, node_labels=None):
         # Get all the active tracks in the two timesteps
         t1_tracks = ones_idxs[0][ones_idxs[1] == t1]
         t2_tracks = ones_idxs[0][ones_idxs[1] == t2]
-        
+
         # Combine the source and destination tracks, removing combinations with
         # the same source and destination track (since these represent track
         # edges).
         tracks_product = list(itertools.product(t1_tracks, t2_tracks))
-        tracks_product = [(track1, track2) 
-                          for (track1, track2) in tracks_product 
+        tracks_product = [(track1, track2)
+                          for (track1, track2) in tracks_product
                           if track1 != track2]
         # Edge tuple: (u, v, type, ts_distance).
-        edges = [(node_labels[track1, t1], node_labels[track2, t2], 
-                  edge_type, t2 - t1) 
+        edges = [(node_labels[track1, t1], node_labels[track2, t2],
+                  edge_type, t2 - t1)
                  for track1, track2 in tracks_product]
 
         next_edges.extend(edges)
@@ -120,14 +122,14 @@ def get_next_edges(s_tensor, ones_idxs=None, node_labels=None):
 
 
 def get_track_features(s_tensor):
-    
+
     # Indices where the binary structure tensor is active
     ones_idxs = torch.nonzero(s_tensor)
-    
+
     n_nodes = len(ones_idxs)
     tracks = ones_idxs[:, 0]
     n_tracks = s_tensor.size(0)
-    
+
     # The feature n_nodes x n_tracks tensor contains one-hot tracks
     # representations for each node
     features = torch.zeros((n_nodes, n_tracks))
@@ -136,7 +138,7 @@ def get_track_features(s_tensor):
     return features
 
 
-def graph_from_tensor(s_tensor, force_no_empty=True):
+def graph_from_tensor(s_tensor):
 
     bars = []
 
@@ -145,21 +147,22 @@ def graph_from_tensor(s_tensor, force_no_empty=True):
 
         bar = s_tensor[i]
 
-        if force_no_empty:
-            if not torch.any(bar):
-                bar[0][0] = 1
+        # If the bar contains no activations, add a fake one to avoid having 
+        # to deal with empty graphs
+        if not torch.any(bar):
+            bar[0, 0] = 1
 
         # Get edges from boolean activations
-        # Todo: optimize
         track_edges = get_track_edges(bar)
         onset_edges = get_onset_edges(bar)
         next_edges = get_next_edges(bar)
         edges = [track_edges, onset_edges, next_edges]
 
         # Concatenate edge tensors (N x 4) (if any)
-        no_edges = (len(track_edges) == 0 and
-                    len(onset_edges) == 0 and len(next_edges) == 0)
-        if not no_edges:
+        is_edgeless = (len(track_edges) == 0 and
+                       len(onset_edges) == 0 and
+                       len(next_edges) == 0)
+        if not is_edgeless:
             edge_list = torch.cat([x for x in edges
                                    if torch.numel(x) > 0])
 
@@ -167,15 +170,16 @@ def graph_from_tensor(s_tensor, force_no_empty=True):
         # If no edges, add fake self-edge
         # edge_list[:, :2] contains source and destination node labels
         # edge_list[:, 2:] contains edge types and timestep distances
-        edge_index = (torch.LongTensor([[0], [0]]) if no_edges else
-                      edge_list[:, :2].t().contiguous())
-        attrs = (torch.Tensor([[0, 0]]) if no_edges else
-                 edge_list[:, 2:])
+        edge_index = (edge_list[:, :2].t().contiguous() if not is_edgeless else
+                      torch.LongTensor([[0], [0]]))
+        attrs = (edge_list[:, 2:] if not is_edgeless else
+                 torch.Tensor([[0, 0]]))
 
         # Add one hot timestep distance to edge attributes
         edge_attrs = torch.zeros(attrs.size(0), s_tensor.shape[-1] + 1)
         edge_attrs[:, 0] = attrs[:, 0]
-        edge_attrs[torch.arange(edge_attrs.size(0)), attrs.long()[:, 1] + 1] = 1
+        edge_attrs[torch.arange(edge_attrs.size(0)),
+                   attrs.long()[:, 1] + 1] = 1
 
         node_features = get_track_features(bar)
         is_drum = node_features[:, 0].bool()
@@ -236,7 +240,7 @@ class PolyphemusDataset(Dataset):
         )
         onehot_p[torch.arange(0, onehot_p.shape[0]), pitches.reshape(-1)] = 1.
         onehot_p = onehot_p.reshape(pitches.shape[0], pitches.shape[1],
-                                    pitches.shape[2], pitches.shape[3], 
+                                    pitches.shape[2], pitches.shape[3],
                                     constants.N_PITCH_TOKENS)
 
         # From decimals to onehot (durations)
@@ -248,7 +252,7 @@ class PolyphemusDataset(Dataset):
         )
         onehot_d[torch.arange(0, onehot_d.shape[0]), durs.reshape(-1)] = 1.
         onehot_d = onehot_d.reshape(durs.shape[0], durs.shape[1],
-                                    durs.shape[2], durs.shape[3], 
+                                    durs.shape[2], durs.shape[3],
                                     constants.N_DUR_TOKENS)
 
         # Concatenate pitches and durations

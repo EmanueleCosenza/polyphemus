@@ -23,7 +23,7 @@ def generate_music(vae, z, s_cond=None, s_tensor_cond=None):
     # Decoder pass to get structure and content logits
     s_logits, c_logits = vae.decoder(z, s_cond)
 
-    if s_tensor_cond != None:
+    if s_tensor_cond is not None:
         s_tensor = s_tensor_cond
     else:
         # Compute binary structure tensor from logits
@@ -50,7 +50,7 @@ def save(mtp, dir, s_tensor=None, n_loops=1,
         save_dir = os.path.join(dir, str(i))
         os.makedirs(save_dir, exist_ok=True)
 
-        print("Saving MIDI sequence {}...".format(str(i+1)))
+        print("Saving MIDI sequence {}...".format(str(i + 1)))
 
         if not looped_only:
             # Generate MIDI song from multitrack pianoroll and save
@@ -172,7 +172,6 @@ def main():
     n_tracks = constants.N_TRACKS
     n_timesteps = 4 * configuration['model']['resolution']
     output_dir = args.output_dir
-    bs = args.n
 
     s, s_tensor = None, None
 
@@ -185,7 +184,7 @@ def main():
         with open(args.s_file, 'r') as f:
             s_tensor = json.load(f)
 
-        s_tensor = torch.tensor(s_tensor)
+        s_tensor = torch.tensor(s_tensor, dtype=bool)
 
         # Check structure dimensions
         dims = list(s_tensor.size())
@@ -203,14 +202,25 @@ def main():
                 r = math.ceil(n_bars / dims[0])
                 s_tensor = s_tensor.repeat(r, 1, 1)
                 s_tensor = s_tensor[:n_bars, ...]
-
-        s_tensor = s_tensor.bool()
-        s_tensor = s_tensor.unsqueeze(0).repeat(bs, 1, 1, 1)
+        
+        # Avoid empty bars by creating a fake activation for each empty
+        # (n_tracks x n_timesteps) bar matrix in position [0, 0]
+        empty_mask = ~s_tensor.any(dim=-1).any(dim=-1)
+        if empty_mask.any():
+            print("The provided structure tensor contains empty bars. Fake "
+                  "track activations will be created to avoid processing "
+                  "empty bars.")
+        idxs = torch.nonzero(empty_mask, as_tuple=True)
+        s_tensor[idxs + (0, 0)] = True
+        
+        # Repeat structure along new batch dimension
+        s_tensor = s_tensor.unsqueeze(0).repeat(args.n, 1, 1, 1)
+        
         s = model.decoder._structure_from_binary(s_tensor)
 
     print()
     print("Generating z...")
-    z = generate_z(bs, d_model, device)
+    z = generate_z(args.n, d_model, device)
 
     print("Generating music with the model...")
     s_t = time.time()
