@@ -38,7 +38,7 @@ To run Polyphemus, follow these steps:
    ```
    or, if you prefer, through `conda` as follows:
    ```sh
-   conda install fluidsynth
+   conda install -c conda-forge fluidsynth
    ```
 
    To quickly get a working SoundFont, you can run the following:
@@ -49,7 +49,7 @@ To run Polyphemus, follow these steps:
 
    If you don't have root access to your machine, you can do the same by running the shell script provided in the repo:
    ```sh
-   ./download_fluid_soundfont.sh soundfonts/
+   ./download_soundfont.sh soundfonts/
    ```
    This automatically finds the `FluidR3_GM.sf2` file in the `fluid-soundfont-gm` package and downloads it in the `soundfonts/` directory.
 
@@ -67,7 +67,7 @@ To run Polyphemus, follow these steps:
 
 ## Generation
 
-If you have already installed Polyphemus and downloaded the pretrained models, in order to generate music, you can just run the `generate.py` script as follows:
+If you have already installed Polyphemus and downloaded the pretrained models, in order to generate music, you can simply run the `generate.py` script as follows:
 ```sh
 python3 generate.py models/LMD2/ music/ --n 10 --n_loops 4
 ```
@@ -123,7 +123,10 @@ python3 preprocess.py midi_dataset_dir preprocessed_dir
 ```
 where `midi_dataset_dir` is the directory of the MIDI dataset and `preprocessed_dir` is the directory to save the preprocessed dataset. For the script to work, the `midi_dataset_dir` directory must only contain `.mid` files in a flat or hierarchical fashion (i.e. in a tree of subdirectories).
 
-If you want to preprocess the Lahk MIDI Dataset (`LMD-matched`), you can do so by first downloading it from [here](https://colinraffel.com/projects/lmd/).
+If you want to preprocess the Lahk MIDI Dataset (`LMD-matched`), you can first download it from [here](https://colinraffel.com/projects/lmd/), or just use the following command:
+```sh
+wget http://hog.ee.columbia.edu/craffel/lmd/lmd_matched.tar.gz
+```
 
 
 ### Training
