@@ -30,7 +30,7 @@ To run Polyphemus, follow these steps:
    ```
 
 5. **Prepare Your Environment for Audio Generation (Recommended):**
-   If you intend to generate audio from MIDI files directly with the provided scripts, you will need a sound synthesizer like [`fluidsynth`](https://github.com/FluidSynth/fluidsynth/wiki), and a [SoundFont](https://github.com/FluidSynth/fluidsynth/wiki/SoundFont) `.sf2` file that tells `fluidsynth` what are the audio samples to be played for each MIDI instrument.
+   If you intend to generate audio from MIDI files directly with the provided scripts, you will need a sound synthesizer like [`fluidsynth`](https://github.com/FluidSynth/fluidsynth/wiki) and a [SoundFont](https://github.com/FluidSynth/fluidsynth/wiki/SoundFont) `.sf2` file that tells `fluidsynth` what are the audio samples to be played for each MIDI instrument.
    
    You can get `fluidsynth` with the following command:
    ```sh
