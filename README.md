@@ -47,7 +47,7 @@ To run Polyphemus, follow these steps:
    ```
    This installs the Fluid (R3) General MIDI SoundFont, a SoundFont that is known to work well with `fluidsynth`. By default, after the installation, the SoundFont will be stored in `/usr/share/sounds/sf2/FluidR3_GM.sf2`.
 
-   If you don't have root access to your machine, you can do the same by running the Bash script provided in the repo:
+   If you don't have root access to your machine, you can do the same by running the shell script provided in the repo:
    ```sh
    ./download_fluid_soundfont.sh soundfonts/
    ```
