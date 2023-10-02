@@ -134,7 +134,7 @@ Then, you can decompress the archive by using `tar`.
 
  You can train a new model from scratch by using the dedicated script:
 ```sh
-python3 train.py dataset_dir model_dir config_file
+python3 train.py dataset_dir model_dir config_file --use_gpu
 ```
 where `dataset_dir` is the directory of the preprocessed dataset to be used for training, `model_dir` is the directory to save the trained model, and `config_file` is the path to a JSON training configuration file. An example of this file is provided in the repo as `training.json`.
 
