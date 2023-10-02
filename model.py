@@ -468,7 +468,7 @@ class Encoder(nn.Module):
         z_s = self.s_encoder(graph)
         z_c = self.c_encoder(graph)
         
-        # Merge content and structure representation
+        # Merge content and structure representations
         z_g = torch.cat((z_c, z_s), dim=1)
         z_g = self.dropout_layer(z_g)
         z_g = self.linear_merge(z_g)
