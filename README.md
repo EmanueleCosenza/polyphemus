@@ -123,10 +123,11 @@ python3 preprocess.py midi_dataset_dir preprocessed_dir
 ```
 where `midi_dataset_dir` is the directory of the MIDI dataset and `preprocessed_dir` is the directory to save the preprocessed dataset. For the script to work, the `midi_dataset_dir` directory must only contain `.mid` files in a flat or hierarchical fashion (i.e. in a tree of subdirectories).
 
-If you want to preprocess the Lahk MIDI Dataset (`LMD-matched`), you can first download it from [here](https://colinraffel.com/projects/lmd/), or just use the following command:
+If you want to preprocess the Lahk MIDI Dataset (`LMD-matched`), you can first download it from [here](https://colinraffel.com/projects/lmd/), or just execute the following:
 ```sh
 wget http://hog.ee.columbia.edu/craffel/lmd/lmd_matched.tar.gz
 ```
+Then, you can decompress the archive by using `tar`.
 
 
 ### Training
