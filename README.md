@@ -40,7 +40,7 @@ To run Polyphemus, follow these steps:
    ```python
    python download_models.py models/
    ```
-   The script will download LMD2, a model that generates short 2-bar sequences of music, and LMD16, which generates longer 16-bar sequences. The models will be stored in the `models/` directory. The two models have been trained on 4/4 music. For them, the tracks (=instruments) in each sequence are 4 (in order, drums, bass, guitar and strings), while the number of timesteps for each bar is 32, which means that each timestep has rhythmic value 1/32.
+   The script will download LMD2, a model that generates short 2-bar sequences of music, and LMD16, which generates longer 16-bar sequences. The models will be stored in the `models/` directory. Both models have been trained on 4/4 music and are designed to process sequences comprising 4 tracks (=instruments). These are, in order, drums, bass, guitar and strings. Each bar in the sequence is composed of 32 timesteps, which means that each timestep has rhythmic value 1/32.
 
 
 ## Generation
