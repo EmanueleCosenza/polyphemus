@@ -11,14 +11,14 @@ The source code is written in Python 3.7, using PyTorch and [PyTorch Geometric](
 To run Polyphemus, follow these steps:
 
 1. **Create an Environment:**
-   Use conda to create a Python 3.7 environment:
+   Use conda to create a Python 3.7 environment and activate it:
    ```sh
    conda create -n polyphemus-env python=3.7
+   conda activate polyphemus-env
    ```
    Alternatively, you can install Python 3.7 and create a new virtual environment using `venv`.
 
 2. **Clone the Repository:**
-   Clone the repository with the following command:
    ```sh
    git clone https://github.com/EmanueleCosenza/polyphemus
    ```
@@ -26,7 +26,7 @@ To run Polyphemus, follow these steps:
 4. **Install the Required Python Packages:**
    Navigate to the directory where the repository is cloned and install the required packages from `requirements.txt`:
    ```sh
-   pip install -r requirements.txt
+   pip3 install -r requirements.txt
    ```
 
 5. **Prepare Your Environment for Audio Generation (Recommended):**
@@ -59,8 +59,8 @@ To run Polyphemus, follow these steps:
 
 6. **Download the Trained Models:**
    Run the `download_models.py` script to download the models trained on the LMD dataset from Polyphemus' Hugging Face model [repo](https://huggingface.co/EmanueleCosenza/polyphemus):
-   ```python
-   python download_models.py models/
+   ```sh
+   python3 download_models.py models/
    ```
    The script will download LMD2, a model that generates short 2-bar sequences of music, and LMD16, which generates longer 16-bar sequences, in the `models/` directory. Both models have been trained on 4/4 music and are designed to process sequences comprising 4 tracks (=instruments). These are, in order, drums, bass, guitar and strings. The guitar track typically plays accompaniment chords and it can also be intepreted as a piano/accompaniment track. The strings track typically contains a lead melody. Finally, for both models, each bar in the sequence is composed of 32 timesteps, which means that each timestep has a rhythmic value of 1/32.
 
@@ -69,7 +69,7 @@ To run Polyphemus, follow these steps:
 
 If you have already installed Polyphemus and downloaded the pretrained models, in order to generate music, you can just run the `generate.py` script as follows:
 ```sh
-python generate.py models/LMD2/ music/ --n 10 --n_loops 4
+python3 generate.py models/LMD2/ music/ --n 10 --n_loops 4
 ```
 By executing this command, the LMD2 model located in `models/LMD2/` will generate 10 sequences and the results will be saved in `music/`. The `--n_loops` argument tells the script to output, for each sequence, an additional extended sequence obtained by looping the generated one 4 times (this is advisable for 2-bar sequences, since they are quite short).
 
@@ -81,7 +81,7 @@ Run `generate.py` with the `--help` flag to get a complete list of all the argum
 
 With Polyphemus, you can condition generation by specifying which tracks (i.e. instruments) should be activated at specific timesteps. You can do so by editing the `structure.json` file and by passing the `--s_file` argument to `generate.py` as follows:
 ```sh
-python generate.py models/LMD2/ music/ --n 10 --n_loops 4 --s_file structure.json
+python3 generate.py models/LMD2/ music/ --n 10 --n_loops 4 --s_file structure.json
 ```
 
 The `structure.json` file represents the rhythmic structure of the music to be generated and can be interpreted as a sort of pianoroll for instrument activations. The file contains a JSON representation of a `[n_bars, n_tracks, n_timesteps]` binary tensor. To give a concrete example, consider the following JSON data:
@@ -119,7 +119,7 @@ When editing this file for the LMD2 and LMD16 models, remember that `n_timesteps
 
 Before you can train Polyphemus from scratch, you have to preprocess a MIDI dataset. This can be done by running the `preprocess.py` script as follows:
 ```sh
-python preprocess.py midi_dataset_dir preprocessed_dir
+python3 preprocess.py midi_dataset_dir preprocessed_dir
 ```
 where `midi_dataset_dir` is the directory of the MIDI dataset and `preprocessed_dir` is the directory to save the preprocessed dataset. For the script to work, the `midi_dataset_dir` directory must only contain `.mid` files in a flat or hierarchical fashion (i.e. in a tree of subdirectories).
 
@@ -130,7 +130,7 @@ If you want to preprocess the Lahk MIDI Dataset (`LMD-matched`), you can do so b
 
  You can train a new model from scratch by using the dedicated script:
 ```sh
-python train.py dataset_dir model_dir config_file
+python3 train.py dataset_dir model_dir config_file
 ```
 where `dataset_dir` is the directory of the preprocessed dataset to be used for training, `model_dir` is the directory to save the trained model, and `config_file` is the path to a JSON training configuration file. An example of this file is provided in the repo as `training.json`.
 
