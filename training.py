@@ -247,8 +247,6 @@ class PolyphemusTrainer():
 
         self._save_model('checkpoint')
 
-        print("Model saved.")
-
     def evaluate(self, loader):
 
         losses = defaultdict(list)
