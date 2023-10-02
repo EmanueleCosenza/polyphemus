@@ -14,7 +14,7 @@ To run Polyphemus, follow these steps:
    ```sh
    conda create -n polyphemus-env python=3.7
    ```
-   An alternative is to install Python 3.7 and create a new virtual environment with `venv`.
+   Alternatively, you can install Python 3.7 and create a new virtual environment using `venv`.
    
 2. **Install the Required Python Packages:**
    Navigate to the directory where the repository is cloned and install the required packages from `requirements.txt`:
@@ -56,7 +56,7 @@ If you have already installed Polyphemus and downloaded the pretrained models, i
 ```sh
 python generate.py models/LMD2/ music/ --n 10 --n_loops 4
 ```
-Executing this command, the LMD2 model located in `models/LMD2/` will generate 10 sequences and the results will be saved in `music/`. The `--n_loops` argument tells the script to output, for each sequence, an additional extended sequence obtained by looping the generated one 4 times (this is advisable for 2-bar sequences, since they are quite short).
+By executing this command, the LMD2 model located in `models/LMD2/` will generate 10 sequences and the results will be saved in `music/`. The `--n_loops` argument tells the script to output, for each sequence, an additional extended sequence obtained by looping the generated one 4 times (this is advisable for 2-bar sequences, since they are quite short).
 
 By default, `generate.py` outputs `.wav` audio files in addition to MIDI files. You can change the way audio is generated from MIDI data by editing the `generation_config.yaml` file. Here, you can specify the SoundFont file that has to be used while generating audio and the MIDI programs that have to be associated to each track.
 
@@ -66,7 +66,7 @@ Run `generate.py` with the `--help` flag to get a complete list of all the argum
 
 With Polyphemus, you can condition generation by specifying which tracks (i.e. instruments) should be activated at specific timesteps. You can do so by editing the `structure.json` file and by passing the `--s_file` argument to `generate.py` as follows:
 ```sh
-python generate.py models/LMD2/ music/ --n 10 --s_file structure.json
+python generate.py models/LMD2/ music/ --n 10 --n_loops 4 --s_file structure.json
 ```
 
 The `structure.json` file represents the rhythmic structure of the music to be generated and can be interpreted as a sort of pianoroll for instrument activations. The file contains a JSON representation of a `[n_bars, n_tracks, n_timesteps]` binary tensor. To give a concrete example, consider the following JSON data:
@@ -92,7 +92,7 @@ The `structure.json` file represents the rhythmic structure of the music to be g
 ```
 Here, for simplicity, `n_timesteps=8`. In the first bar, Track 2 and Track 4 will be activated, respectively, in the first and fifth timestep. In the second bar, just the second track will be activated in the fifth timestep. All other tracks will be silenced throughout the sequence.
 
-Notice that the binary activations above refer to actual note activations and that sustain is not considered. This means that a track could end up playing a sustained note even if the corresponding value has been set to 0 in the file. In the example above, Track 2, which has been activated in the first timestep of the sequence, could actually sustain its activated notes for more than a timestep.
+Notice that the binary activations above refer to actual note activations and that sustain is not considered. This means that a track could end up playing a sustained note even if the corresponding value has been set to 0 in the file. For instance, Track 2, which has been activated in the first timestep of the sequence, could actually sustain its activated notes for more than a timestep.
 
 The number of tracks for each bar in the JSON file must be strictly equal to the number of tracks used to train the model. The number of bars, instead, may be smaller than the number of bars that can be handled by the model. If this is the case, the script will just replicate the partial binary structure to reach `n_bars`. In this way, it is possible e.g. to compile the binary activations for just one bar and let the model use this same structure for each bar.
 
@@ -121,7 +121,7 @@ where `dataset_dir` is the directory of the preprocessed dataset to be used for 
 
 Make sure to run the command with the `--help` flag to find out how you can customize the training procedure.
 
-No integration with TensorBoard or W&B is provided, but you can still check the progress of training with the `training_info.ipynb` Jupyter Notebook. 
+No integration with TensorBoard or W&B is provided, but you can still check the progress of training with the `training_stats.ipynb` Jupyter Notebook. 
 
 ## License
 
