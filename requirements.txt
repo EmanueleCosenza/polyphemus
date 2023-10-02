@@ -18,3 +18,4 @@ pypianoroll==1.0.4
 # Various
 prettytable==2.4.0
 tqdm==4.62.3
+huggingface-hub==0.16.4
