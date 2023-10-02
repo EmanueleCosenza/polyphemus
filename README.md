@@ -22,36 +22,43 @@ To run Polyphemus, follow these steps:
    pip install -r requirements.txt
    ```
 
-3. **Prepare Your Environment for Audio Generation (Optional):**
-   If you intend to generate audio from MIDI files directly with the provided scripts, you will need a sound synthesizer like [`fluidsynth`](https://github.com/FluidSynth/fluidsynth/wiki), and a [SoundFont](https://github.com/FluidSynth/fluidsynth/wiki/SoundFont) file that tells `fluidsynth` what are the audio samples to play for each MIDI instrument. You can get both by doing the following:
-   ```sh
-   sudo apt-get install fluidsynth fluid-soundfont-gm
-   ```
-   where `fluid-soundfont-gm` is the Fluid (R3) General MIDI SoundFont, a SoundFont that is known to work well with `fluidsynth`. By default, after the installation, the SoundFont file will be found in `/usr/share/sounds/sf2`.
+3. **Prepare Your Environment for Audio Generation (Recommended):**
+   If you intend to generate audio from MIDI files directly with the provided scripts, you will need a sound synthesizer like [`fluidsynth`](https://github.com/FluidSynth/fluidsynth/wiki), and a [SoundFont](https://github.com/FluidSynth/fluidsynth/wiki/SoundFont) `.sf2` file that tells `fluidsynth` what are the audio samples to be played for each MIDI instrument.
    
-   If you don't have sudo access to your machine, you may install `fluidsynth` through `conda` as follows:
+   You can get `fluidsynth` with the following command:
+   ```sh
+   sudo apt-get install fluidsynth
+   ```
+   or, if you prefer, through `conda` as follows:
    ```sh
    conda install fluidsynth
    ```
-   You also can get the Fluid SoundFont and a bunch of other SoundFonts by following the links provided in the [FluidSynth project Wiki](https://github.com/FluidSynth/fluidsynth/wiki/SoundFont).
+
+   To quickly get a working SoundFont, you can run the following:
+   ```sh
+   sudo apt-get install fluid-soundfont-gm
+   ```
+   This installs the Fluid (R3) General MIDI SoundFont, a SoundFont that is known to work well with `fluidsynth`. By default, after the installation, the SoundFont will be stored in `/usr/share/sounds/sf2/FluidR3_GM.sf2`. You can also get the Fluid SoundFont and many other SoundFonts by following the links provided in the [FluidSynth project Wiki](https://github.com/FluidSynth/fluidsynth/wiki/SoundFont).
+   
+   ⚠️ After downloading the SoundFont in one of the ways shown above, make sure to properly set the `SOUNDFONT_PATH` variable in the `generation_config.yaml` file.
 
 4. **Download the Trained Models:**
-   Run the `download_models.py` script to download the models trained on the LMD dataset.
+   Run the `download_models.py` script to download the models trained on the LMD dataset from Polyphemus' Hugging Face model [repo](https://huggingface.co/EmanueleCosenza/polyphemus):
    ```python
    python download_models.py models/
    ```
-   The script will download LMD2, a model that generates short 2-bar sequences of music, and LMD16, which generates longer 16-bar sequences. The models will be stored in the `models/` directory. Both models have been trained on 4/4 music and are designed to process sequences comprising 4 tracks (=instruments). These are, in order, drums, bass, guitar and strings. Each bar in the sequence is composed of 32 timesteps, which means that each timestep has rhythmic value 1/32.
+   The script will download LMD2, a model that generates short 2-bar sequences of music, and LMD16, which generates longer 16-bar sequences, in the `models/` directory. Both models have been trained on 4/4 music and are designed to process sequences comprising 4 tracks (=instruments). These are, in order, drums, bass, guitar and strings. The guitar track typically plays accompaniment chords and it can also be intepreted as a piano/accompaniment track. The strings track typically contains a lead melody. Finally, for both models, each bar in the sequence is composed of 32 timesteps, which means that each timestep has a rhythmic value of 1/32.
 
 
 ## Generation
 
-If you have already installed Polyphemus and downloaded the pretrained models, to generate music, you can just run the `generate.py` script as follows:
+If you have already installed Polyphemus and downloaded the pretrained models, in order to generate music, you can just run the `generate.py` script as follows:
 ```sh
 python generate.py models/LMD2/ music/ --n 10 --n_loops 4
 ```
-Using this command, the LMD2 model located in `models/LMD2/` will generate 10 sequences and the results will be saved in `music/`. The `--n_loops` argument tells the application to output, for each sequence, an additional extended sequence obtained by looping the generated one 4 times (this is advisable for 2-bar sequences, since they are quite short).
+Executing this command, the LMD2 model located in `models/LMD2/` will generate 10 sequences and the results will be saved in `music/`. The `--n_loops` argument tells the script to output, for each sequence, an additional extended sequence obtained by looping the generated one 4 times (this is advisable for 2-bar sequences, since they are quite short).
 
-By default, `generate.py` outputs `.wav` audio files in addition to MIDI files. You can change the way audio is generated from MIDI by editing the `generation_config.yaml` file. Here, you can specify the SoundFont file that has to be used while generating audio and the MIDI programs that have to be associated to each track.
+By default, `generate.py` outputs `.wav` audio files in addition to MIDI files. You can change the way audio is generated from MIDI data by editing the `generation_config.yaml` file. Here, you can specify the SoundFont file that has to be used while generating audio and the MIDI programs that have to be associated to each track.
 
 Run `generate.py` with the `--help` flag to get a complete list of all the arguments you can pass to the script.
 
@@ -89,7 +96,7 @@ Notice that the binary activations above refer to actual note activations and th
 
 The number of tracks for each bar in the JSON file must be strictly equal to the number of tracks used to train the model. The number of bars, instead, may be smaller than the number of bars that can be handled by the model. If this is the case, the script will just replicate the partial binary structure to reach `n_bars`. In this way, it is possible e.g. to compile the binary activations for just one bar and let the model use this same structure for each bar.
 
-When editing this file for the LMD2 and LMD16 models, remember that `n_timesteps=32`, which means that each timestep has rhythmic value 1/32, and that the tracks used to train these models are, in order, drums, bass, guitar and strings.
+When editing this file for the LMD2 and LMD16 models, remember that `n_timesteps=32`, which means that each timestep has a rhythmic value of 1/32, and that the tracks used to train these models are, in order, drums, bass, guitar and strings.
 
 ## Training a New Model from Scratch
 
@@ -110,9 +117,11 @@ If you want to preprocess the Lahk MIDI Dataset (`LMD-matched`), you can do so b
 ```sh
 python train.py dataset_dir model_dir config_file
 ```
-where `dataset_dir` is the directory of the preprocessed dataset to be used for training, `model_dir` is the directory to save the trained model, and `config_file` is the path to a JSON training configuration file. An example of this file is provided in the repo directory as `training.json`.
+where `dataset_dir` is the directory of the preprocessed dataset to be used for training, `model_dir` is the directory to save the trained model, and `config_file` is the path to a JSON training configuration file. An example of this file is provided in the repo as `training.json`.
 
 Make sure to run the command with the `--help` flag to find out how you can customize the training procedure.
+
+No integration with TensorBoard or W&B is provided, but you can still check the progress of training with the `training_info.ipynb` Jupyter Notebook. 
 
 ## License
 
