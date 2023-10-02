@@ -4,6 +4,7 @@ A graph-based deep MIDI music generator. Official repository of the [paper](http
 
 You can listen to the samples generated in the experimental phase in the dedicated [site](https://emanuelecosenza.github.io/polyphemus/).
 
+The code is entirely written in Python 3.7, using PyTorch and [PyTorch Geometric](https://pytorch-geometric.readthedocs.io/en/latest/) to implement and train Deep Graph Networks.
 
 ## Prerequisites
 
