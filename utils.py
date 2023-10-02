@@ -79,7 +79,7 @@ def mtp_from_logits(c_logits, s_tensor):
     return mtp
 
 
-# mtp: n_batches x n_bars x n_tracks x n_timesteps x MAX_SIMU_TOKENS x d_token
+# mtp: n_bars x n_tracks x n_timesteps x MAX_SIMU_TOKENS x d_token
 def muspy_from_mtp(mtp):
 
     n_timesteps = mtp.size(2)
@@ -139,6 +139,26 @@ def muspy_from_mtp(mtp):
     music = muspy.Music(tracks=tracks, metadata=meta, resolution=resolution)
 
     return music
+
+
+def loop_muspy_music(muspy_music, n_loop, num_bars, resolution):
+    
+    # Get a deep copy of the original music object to avoid modifying it
+    looped_music = copy.deepcopy(muspy_music)
+    
+    # Loop over the number of times we want to repeat the sequence
+    for i in range(1, n_loop):
+        # Loop over each track in the original music object
+        for track_idx, track in enumerate(muspy_music.tracks):
+            # Adjust the start times of the notes for each repetition and 
+            # add them to the corresponding track in the looped_music object
+            for note in track.notes:
+                new_note = copy.deepcopy(note)
+                new_note.time += i * num_bars * 4 * resolution
+                looped_music.tracks[track_idx].notes.append(new_note)
+                
+    return looped_music
+
 
 
 def save_midi(muspy_song, save_dir, name):

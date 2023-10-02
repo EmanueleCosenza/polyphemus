@@ -14,7 +14,7 @@ from model import VAE
 from utils import set_seed
 from utils import mtp_from_logits, muspy_from_mtp, set_seed
 from utils import print_divider
-from utils import save_midi, save_audio
+from utils import loop_muspy_music, save_midi, save_audio
 from plots import plot_pianoroll, plot_structure
 
 
@@ -40,6 +40,8 @@ def generate_music(vae, z, s_cond=None, s_tensor_cond=None):
 def save(mtp, dir, s_tensor=None, n_loops=1, audio=True,
          looped_only=False, plot_proll=False, plot_struct=False):
 
+    n_bars = mtp.size(1)
+    resolution = mtp.size(3) // 4
     # Clear matplotlib cache (this solves formatting problems with first plot)
     plt.clf()
 
@@ -73,8 +75,8 @@ def save(mtp, dir, s_tensor=None, n_loops=1, audio=True,
             print("Saving MIDI sequence "
                   "{} looped {} times in {}...".format(str(i + 1), n_loops,
                                                        save_dir))
-            extended = mtp[i].repeat(n_loops, 1, 1, 1, 1)
-            extended = muspy_from_mtp(extended)
+            extended = loop_muspy_music(muspy_song, n_loops, 
+                                         n_bars, resolution)
             save_midi(extended, save_dir, name='extended')
             if audio:
                 print("Saving audio sequence "
