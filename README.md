@@ -17,15 +17,19 @@ To run Polyphemus, follow these steps:
    ```
    Alternatively, you can install Python 3.7 and create a new virtual environment using `venv`.
 
-2. **Clone the Repository**
+2. **Clone the Repository:**
+   Clone the repository with the following command:
+   ```sh
+   git clone https://github.com/EmanueleCosenza/polyphemus
+   ```
    
-3. **Install the Required Python Packages:**
+4. **Install the Required Python Packages:**
    Navigate to the directory where the repository is cloned and install the required packages from `requirements.txt`:
    ```sh
    pip install -r requirements.txt
    ```
 
-4. **Prepare Your Environment for Audio Generation (Recommended):**
+5. **Prepare Your Environment for Audio Generation (Recommended):**
    If you intend to generate audio from MIDI files directly with the provided scripts, you will need a sound synthesizer like [`fluidsynth`](https://github.com/FluidSynth/fluidsynth/wiki), and a [SoundFont](https://github.com/FluidSynth/fluidsynth/wiki/SoundFont) `.sf2` file that tells `fluidsynth` what are the audio samples to be played for each MIDI instrument.
    
    You can get `fluidsynth` with the following command:
@@ -45,7 +49,7 @@ To run Polyphemus, follow these steps:
    
    ⚠️ After downloading the SoundFont in one of the ways shown above, make sure to properly set the `SOUNDFONT_PATH` variable in the `generation_config.yaml` file.
 
-5. **Download the Trained Models:**
+6. **Download the Trained Models:**
    Run the `download_models.py` script to download the models trained on the LMD dataset from Polyphemus' Hugging Face model [repo](https://huggingface.co/EmanueleCosenza/polyphemus):
    ```python
    python download_models.py models/
