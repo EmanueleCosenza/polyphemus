@@ -147,6 +147,7 @@ def save_midi(muspy_song, save_dir, name):
 
 def save_audio(muspy_song, save_dir, name):
     soundfont_path = (generation_config.SOUNDFONT_PATH
-                      if os.path.exists(generation_config.SOUNDFONT_PATH) else None)
+                      if os.path.exists(generation_config.SOUNDFONT_PATH) 
+                      else None)
     muspy.write_audio(os.path.join(save_dir, name + ".wav"), muspy_song,
                       soundfont_path=soundfont_path)
