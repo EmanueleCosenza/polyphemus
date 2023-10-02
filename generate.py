@@ -37,7 +37,7 @@ def generate_music(vae, z, s_cond=None, s_tensor_cond=None):
     return mtp, s_tensor
 
 
-def save(mtp, dir, s_tensor=None, n_loops=1,
+def save(mtp, dir, s_tensor=None, n_loops=1, audio=True,
          looped_only=False, plot_proll=False, plot_struct=False):
 
     # Clear matplotlib cache (this solves formatting problems with first plot)
@@ -50,13 +50,16 @@ def save(mtp, dir, s_tensor=None, n_loops=1,
         save_dir = os.path.join(dir, str(i))
         os.makedirs(save_dir, exist_ok=True)
 
-        print("Saving MIDI sequence {}...".format(str(i + 1)))
-
         if not looped_only:
             # Generate MIDI song from multitrack pianoroll and save
             muspy_song = muspy_from_mtp(mtp[i])
+            print("Saving MIDI sequence {} in {}...".format(str(i + 1), 
+                                                            save_dir))
             save_midi(muspy_song, save_dir, name='generated')
-            save_audio(muspy_song, save_dir, name='generated')
+            if audio:
+                print("Saving audio sequence {} in {}...".format(str(i + 1),
+                                                                 save_dir))
+                save_audio(muspy_song, save_dir, name='generated')
 
         if plot_proll:
             plot_pianoroll(muspy_song, save_dir)
@@ -68,11 +71,16 @@ def save(mtp, dir, s_tensor=None, n_loops=1,
             # Copy the generated sequence n_loops times and save the looped
             # MIDI and audio files
             print("Saving MIDI sequence "
-                  "{} looped {} times...".format(str(i + 1), n_loops))
+                  "{} looped {} times in {}...".format(str(i + 1), n_loops,
+                                                       save_dir))
             extended = mtp[i].repeat(n_loops, 1, 1, 1, 1)
             extended = muspy_from_mtp(extended)
             save_midi(extended, save_dir, name='extended')
-            save_audio(extended, save_dir, name='extended')
+            if audio:
+                print("Saving audio sequence "
+                      "{} looped {} times in {}...".format(str(i + 1), n_loops,
+                                                           save_dir))
+                save_audio(extended, save_dir, name='extended')
 
         print()
 
@@ -132,6 +140,12 @@ def main():
         "the sequence looped n_loops times."
     )
     parser.add_argument(
+        '--no_audio',
+        action='store_true',
+        default=False,
+        help="Flag to disable audio files generation."
+    )
+    parser.add_argument(
         '--s_file',
         type=str,
         help='Path to the JSON file containing the binary structure tensor.'
@@ -140,7 +154,7 @@ def main():
         '--use_gpu',
         action='store_true',
         default=False,
-        help='Flag to enable or disable GPU usage. Default is False.'
+        help='Flag to enable GPU usage.'
     )
     parser.add_argument(
         '--gpu_id',
@@ -157,6 +171,8 @@ def main():
 
     if args.seed is not None:
         set_seed(args.seed)
+    
+    audio = not args.no_audio
 
     device = torch.device("cuda") if args.use_gpu else torch.device("cpu")
     if args.use_gpu:
@@ -229,7 +245,7 @@ def main():
 
     print()
     print("Saving MIDI files in {}...\n".format(output_dir))
-    save(mtp, output_dir, s_tensor, args.n_loops)
+    save(mtp, output_dir, s_tensor, args.n_loops, audio)
     print("Finished saving MIDI files.")
     print_divider()
 
