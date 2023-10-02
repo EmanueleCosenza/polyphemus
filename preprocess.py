@@ -284,6 +284,10 @@ if __name__ == "__main__":
     )
 
     args = parser.parse_args()
+    
+    # Create the output directory if it does not exist
+    if not os.path.exists(args.preprocessed_dir):
+        os.makedirs(args.preprocessed_dir)
 
     preprocess_midi_dataset(args.midi_dataset_dir, args.preprocessed_dir, 
                             args.n_bars, args.resolution, args.n_files,
