@@ -266,7 +266,7 @@ if __name__ == "__main__":
         '--resolution',
         type=int,
         default=8,
-        help="Number of timesteps per beat. When set to r, considering only "
+        help="Number of timesteps per beat. When set to r, given that only "
             "4/4 songs are preprocessed, there will be 4*r timesteps in a bar. "
             "Defaults to 8."
     )
