@@ -15,7 +15,7 @@ from utils import set_seed
 from utils import mtp_from_logits, muspy_from_mtp, set_seed
 from utils import print_divider
 from utils import save_midi, save_audio
-from plot import plot_pianoroll, plot_structure
+from plots import plot_pianoroll, plot_structure
 
 
 def generate_music(vae, z, s_cond=None, s_tensor_cond=None):

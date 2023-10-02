@@ -103,9 +103,9 @@ When editing this file for the LMD2 and LMD16 models, remember that `n_timesteps
 
 ### Preprocessing
 
-Before you can train Polyphemus from scratch, you have to preprocess a MIDI dataset. This can be done by running the `preprocessing.py` script as follows:
+Before you can train Polyphemus from scratch, you have to preprocess a MIDI dataset. This can be done by running the `preprocess.py` script as follows:
 ```sh
-python preprocessing.py midi_dataset_dir preprocessed_dir
+python preprocess.py midi_dataset_dir preprocessed_dir
 ```
 where `midi_dataset_dir` is the directory of the MIDI dataset and `preprocessed_dir` is the directory to save the preprocessed dataset. For the script to work, the `midi_dataset_dir` directory must only contain `.mid` files in a flat or hierarchical fashion (i.e. in a tree of subdirectories).
 
