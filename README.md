@@ -2,7 +2,7 @@
 
 A graph-based deep MIDI music generator. Official repository of the [paper](https://arxiv.org/abs/2307.14928) "Graph-based Polyphonic Multitrack Music Generation".
 
-You can interact with the model in the dedicated Hugging Face space. Listen to the samples from the experimental phase in the paper [site](https://emanuelecosenza.github.io/polyphemus/).
+You can interact with the model in the dedicated Hugging Face [space](https://huggingface.co/spaces/EmanueleCosenza/polyphemus). Listen to the samples from the experimental phase in the paper [site](https://emanuelecosenza.github.io/polyphemus/).
 
 The source code is written in Python 3.7, using PyTorch and [PyTorch Geometric](https://pytorch-geometric.readthedocs.io/en/latest/) to implement and train Deep Graph Networks.
 
